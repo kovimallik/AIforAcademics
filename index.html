@@ -3,1265 +3,625 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI for Academics — Master AI Tools for Research, Writing & Career</title>
-<meta name="description" content="Practical AI training for researchers, PhD students, and academics. Online courses, workshops, and consulting by a working research scientist.">
-<meta name="keywords" content="AI for researchers, academic AI tools, PhD productivity, research workflow, AI workshops, grant writing AI">
-<meta property="og:title" content="AI for Academics — by Kovi Consulting">
-<meta property="og:description" content="Practical AI skills for researchers. From a researcher who actually uses them.">
+<title>AI for Academics — Master AI Tools for Academic Success</title>
+<meta name="description" content="Practical AI tools and methods for researchers at every career stage. Built by a working research scientist with 15+ years in academia.">
+<meta property="og:title" content="AI for Academics — Master AI Tools for Academic Success">
+<meta property="og:description" content="Built by a research scientist who fell in love with AI tools. Set up your own private AI lab, write faster, and reclaim your time.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.aiforacademics.io">
+<link rel="canonical" href="https://www.aiforacademics.io">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════
-   DESIGN SYSTEM — AI FOR ACADEMICS
-   Editorial Academic · Dark + Warm Gold
-   ═══════════════════════════════════════ */
 :root {
-  /* Core palette */
-  --bg-deep: #070E1A;
-  --bg-card: #0C1626;
-  --bg-card-hover: #101D32;
-  --bg-surface: #0F1B2E;
-  --border: rgba(255,255,255,0.06);
-  --border-hover: rgba(255,255,255,0.12);
-  
-  /* Brand colors */
-  --gold: #E8B931;
-  --gold-dim: #C49B1A;
-  --gold-glow: rgba(232,185,49,0.15);
-  --teal: #2DD4A8;
-  --teal-dim: rgba(45,212,168,0.12);
-  --blue: #3B82F6;
-  --blue-dim: rgba(59,130,246,0.12);
-  --purple: #A78BFA;
-  --purple-dim: rgba(167,139,250,0.12);
-  --coral: #FB7185;
-  --coral-dim: rgba(251,113,133,0.12);
-  
-  /* Text */
-  --text: #E8EDF5;
-  --text-secondary: #8B9CC0;
-  --text-dim: #5A6A8A;
-  
-  /* Typography */
-  --serif: 'Instrument Serif', Georgia, serif;
-  --sans: 'DM Sans', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-  
-  /* Spacing */
-  --section-pad: clamp(4rem, 8vw, 7rem);
-  --container: min(72rem, 90vw);
+  --ink:#0c1220;--ink-deep:#070b14;--ink-mid:#111827;--ink-light:#1a2332;--ink-hover:#1f2b3d;
+  --gold:#d4a853;--gold-bright:#e8c06a;--gold-dim:#a88a3f;
+  --gold-glow:rgba(212,168,83,.10);--gold-border:rgba(212,168,83,.18);
+  --cyan:#22d3ee;--cyan-glow:rgba(34,211,238,.08);
+  --emerald:#34d399;--emerald-glow:rgba(52,211,153,.08);
+  --violet:#a78bfa;--violet-glow:rgba(167,139,250,.08);
+  --text:#cbd5e1;--text-dim:#94a3b8;--text-muted:#64748b;
+  --surface:rgba(17,24,39,.55);--glass:rgba(17,24,39,.45);
+  --border:rgba(148,163,184,.07);--border-hover:rgba(212,168,83,.15);
+  --serif:'Fraunces',Georgia,serif;--sans:'Outfit',-apple-system,sans-serif;--mono:'IBM Plex Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);--ease-bounce:cubic-bezier(.34,1.56,.64,1);
+  --max-w:1120px;--radius:16px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold-bright)}
+::selection{background:rgba(212,168,83,.25);color:#fff}
+
+/* Atmosphere layers */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(ellipse 1000px 800px at 10% 0%,rgba(212,168,83,.045) 0%,transparent 70%),
+  radial-gradient(ellipse 800px 700px at 90% 80%,rgba(34,211,238,.03) 0%,transparent 70%),
+  radial-gradient(ellipse 600px 600px at 50% 40%,rgba(167,139,250,.02) 0%,transparent 70%)}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.28;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E")}
+
+/* Cursor glow */
+.cursor-glow{position:fixed;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(212,168,83,.04) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .4s;opacity:0}
+.cursor-glow.active{opacity:1}
+
+/* Layout */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 2rem}
+.section{padding:7rem 0;position:relative;z-index:1}
+.section-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;font-weight:500}
+.section-title{font-family:var(--sans);font-size:clamp(1.9rem,4.2vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:1rem;font-weight:700;letter-spacing:-.02em}
+.section-desc{font-size:1.05rem;color:var(--text-dim);max-width:580px;line-height:1.75;font-weight:300}
+
+/* Animations */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+/* Fallback: if JS doesn't fire within 3s, show everything */
+@keyframes force-visible{to{opacity:1;transform:translateY(0)}}
+.reveal{animation:force-visible 0s ease 3s forwards}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes drift{0%{transform:translateY(0) translateX(0) scale(0);opacity:0}10%{opacity:.8;transform:scale(1)}90%{opacity:.6}100%{transform:translateY(-100vh) translateX(30px) scale(.5);opacity:0}}
+@keyframes glow-pulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.55;transform:scale(1.12)}}
+@keyframes hero-gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes rotate-slow{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes slide-in-r{0%{opacity:0;transform:translateX(-12px)}100%{opacity:1;transform:translateX(0)}}
+
+/* Particles */
+.hero-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.particle{position:absolute;border-radius:50%;opacity:0;animation:drift linear infinite}
+.particle:nth-child(odd){background:var(--cyan)}
+.particle:nth-child(even){background:var(--gold)}
+.particle:nth-child(3n){background:var(--emerald)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.7rem;border-radius:10px;font-family:var(--sans);font-weight:600;font-size:.88rem;transition:all .3s var(--ease);border:none;cursor:pointer;text-decoration:none;letter-spacing:.01em;position:relative}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:var(--ink);box-shadow:0 2px 16px rgba(212,168,83,.25),inset 0 1px 0 rgba(255,255,255,.15)}
+.btn-gold:hover{color:var(--ink);transform:translateY(-2px);box-shadow:0 8px 40px rgba(212,168,83,.45),inset 0 1px 0 rgba(255,255,255,.2)}
+.btn-gold::after{content:'';position:absolute;inset:-2px;border-radius:12px;background:linear-gradient(135deg,rgba(212,168,83,.4),rgba(232,192,106,.2));opacity:0;transition:opacity .3s;z-index:-1;filter:blur(8px)}
+.btn-gold:hover::after{opacity:1}
+.btn-ghost{background:rgba(255,255,255,.04);color:var(--text);border:1px solid rgba(148,163,184,.12);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:rgba(255,255,255,.07);border-color:var(--gold-border);color:#fff;transform:translateY(-1px)}
+
+/* Divider */
+.divider{height:1px;border:0;margin:0;background:linear-gradient(90deg,transparent 0%,rgba(212,168,83,.10) 15%,rgba(34,211,238,.06) 35%,rgba(167,139,250,.05) 55%,rgba(212,168,83,.10) 85%,transparent 100%)}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;background:rgba(12,18,32,.7);backdrop-filter:blur(28px) saturate(1.4);border-bottom:1px solid rgba(148,163,184,.05)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:68px}
+.nav-logo{font-family:var(--mono);font-size:.82rem;color:#fff;display:flex;align-items:center;gap:.6rem;font-weight:500;letter-spacing:.08em;position:relative}
+.nav-logo::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:1px;background:linear-gradient(90deg,var(--gold),transparent);opacity:.4}
+.nav-links{display:flex;align-items:center;gap:2.2rem}
+.nav-links a{font-size:.8rem;color:var(--text-dim);font-weight:500;transition:color .2s;letter-spacing:.02em;position:relative}
+.nav-links a:hover{color:#fff}
+.nav-links a:not(.nav-cta):hover::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1.5px;background:var(--gold);animation:slide-in-r .3s ease;border-radius:1px}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--gold-bright))!important;color:var(--ink)!important;padding:.42rem 1.1rem!important;border-radius:8px!important;font-size:.78rem!important;font-weight:600!important;box-shadow:0 2px 12px rgba(212,168,83,.2)!important;transition:all .25s var(--ease)!important}
+.nav-cta:hover{transform:translateY(-1px)!important;box-shadow:0 6px 24px rgba(212,168,83,.4)!important}
+.nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer;padding:.25rem}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:8rem 0 6rem;position:relative;z-index:1;overflow:hidden;background:linear-gradient(135deg,#040710 0%,#0a1020 25%,#0e1528 45%,#0c1525 65%,#060a15 100%);background-size:300% 300%;animation:hero-gradient 16s ease-in-out infinite}
+.hero::before{content:'';position:absolute;top:5%;left:40%;width:1100px;height:1100px;transform:translateX(-50%);border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(212,168,83,.055) 0%,rgba(34,211,238,.02) 35%,rgba(167,139,250,.01) 55%,transparent 70%);animation:glow-pulse 7s ease-in-out infinite}
+.hero::after{content:'';position:absolute;bottom:-20%;right:-10%;width:800px;height:800px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(34,211,238,.03) 0%,transparent 60%);animation:glow-pulse 9s ease-in-out infinite 3s}
+.hero-content{max-width:720px;position:relative;z-index:2}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;padding:.45rem 1.1rem;background:rgba(212,168,83,.06);border:1px solid var(--gold-border);border-radius:100px;margin-bottom:2rem;backdrop-filter:blur(12px)}
+.hero-eyebrow-dot{width:7px;height:7px;background:var(--emerald);border-radius:50%;animation:pulse-dot 2.5s ease infinite;box-shadow:0 0 8px rgba(52,211,153,.4)}
+.hero-eyebrow span{font-family:var(--mono);font-size:.68rem;color:var(--gold);letter-spacing:.06em;font-weight:500}
+.hero h1{font-family:var(--serif);font-size:clamp(2.6rem,5.8vw,4.4rem);color:#fff;line-height:1.06;margin-bottom:1.6rem;font-weight:700;letter-spacing:-.025em}
+.hero h1 .accent{background:linear-gradient(135deg,#c9963e,var(--gold),var(--gold-bright),#f2dfa0,var(--gold-bright),var(--gold));background-size:400% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 6s linear infinite;font-style:italic}
+.hero-sub{font-size:1.15rem;color:var(--text-dim);line-height:1.75;max-width:580px;margin-bottom:2.2rem;font-weight:300}
+.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:3rem}
+.hero-proof{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-proof-item{display:flex;align-items:center;gap:.5rem;font-size:.76rem;color:var(--text-dim);font-weight:400;background:rgba(17,24,39,.5);border:1px solid var(--border);padding:.5rem .9rem;border-radius:10px;backdrop-filter:blur(12px);transition:border-color .3s,transform .3s}
+.hero-proof-item:hover{border-color:var(--gold-border);transform:translateY(-1px)}
+.hero-proof-item .check{font-size:.85rem;flex-shrink:0}
+
+/* Hero orb */
+.hero-orb{position:absolute;right:3%;top:15%;width:480px;height:480px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(212,168,83,.05) 0%,rgba(34,211,238,.02) 40%,transparent 65%);animation:float 10s ease-in-out infinite}
+.hero-orb::before{content:'';position:absolute;inset:30px;border-radius:50%;border:1px solid rgba(212,168,83,.04);animation:rotate-slow 30s linear infinite}
+.hero-orb::after{content:'';position:absolute;inset:80px;border-radius:50%;border:1px dashed rgba(34,211,238,.04);animation:rotate-slow 45s linear infinite reverse}
+
+/* Pain grid */
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:3rem;background:rgba(148,163,184,.04);border-radius:var(--radius);overflow:hidden;border:1px solid rgba(148,163,184,.05)}
+.pain-cell{padding:2rem;background:rgba(15,21,35,.7);transition:all .4s var(--ease);position:relative;overflow:hidden}
+.pain-cell::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at center,rgba(212,168,83,.04) 0%,transparent 50%);opacity:0;transition:opacity .5s;pointer-events:none}
+.pain-cell:hover{background:rgba(20,28,45,.85)}
+.pain-cell:hover::before{opacity:1}
+.pain-cell .icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1rem;background:var(--gold-glow);border:1px solid var(--gold-border);transition:transform .35s var(--ease-bounce),box-shadow .35s}
+.pain-cell:hover .icon{transform:translateY(-3px) scale(1.08);box-shadow:0 10px 24px rgba(212,168,83,.12)}
+.pain-cell h3{font-size:.92rem;color:#fff;margin-bottom:.4rem;font-weight:600}
+.pain-cell p{font-size:.83rem;color:var(--text-muted);line-height:1.65;font-weight:300}
+
+/* Products */
+.products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-top:3rem}
+.p-card{padding:2.2rem;border-radius:var(--radius);position:relative;overflow:hidden;transition:all .45s var(--ease);background:rgba(15,21,35,.6);border:1px solid var(--border);backdrop-filter:blur(16px)}
+.p-card::before{content:'';position:absolute;top:-100px;right:-100px;width:350px;height:350px;border-radius:50%;pointer-events:none;opacity:0;transition:opacity .5s}
+.p-card[data-c="gold"]::before{background:radial-gradient(circle,rgba(212,168,83,.07),transparent 70%)}
+.p-card[data-c="cyan"]::before{background:radial-gradient(circle,rgba(34,211,238,.07),transparent 70%)}
+.p-card[data-c="violet"]::before{background:radial-gradient(circle,rgba(167,139,250,.07),transparent 70%)}
+.p-card[data-c="emerald"]::before{background:radial-gradient(circle,rgba(52,211,153,.07),transparent 70%)}
+.p-card:hover::before{opacity:1}
+.p-card:hover{transform:translateY(-6px);box-shadow:0 28px 70px rgba(0,0,0,.5)}
+.p-card[data-c="gold"]:hover{border-color:rgba(212,168,83,.2);box-shadow:0 28px 70px rgba(0,0,0,.5),0 0 40px rgba(212,168,83,.06)}
+.p-card[data-c="cyan"]:hover{border-color:rgba(34,211,238,.2);box-shadow:0 28px 70px rgba(0,0,0,.5),0 0 40px rgba(34,211,238,.05)}
+.p-card[data-c="violet"]:hover{border-color:rgba(167,139,250,.2);box-shadow:0 28px 70px rgba(0,0,0,.5),0 0 40px rgba(167,139,250,.05)}
+.p-card[data-c="emerald"]:hover{border-color:rgba(52,211,153,.2);box-shadow:0 28px 70px rgba(0,0,0,.5),0 0 40px rgba(52,211,153,.05)}
+.p-card .top-line{position:absolute;top:0;left:0;right:0;height:2px}
+.p-card[data-c="gold"] .top-line{background:linear-gradient(90deg,var(--gold-dim),var(--gold),var(--gold-bright))}
+.p-card[data-c="cyan"] .top-line{background:linear-gradient(90deg,#0891b2,var(--cyan))}
+.p-card[data-c="violet"] .top-line{background:linear-gradient(90deg,#7c3aed,var(--violet))}
+.p-card[data-c="emerald"] .top-line{background:linear-gradient(90deg,#059669,var(--emerald))}
+.p-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.22rem .6rem;border-radius:100px;font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem;font-weight:500}
+.p-card[data-c="gold"] .p-badge{background:var(--gold-glow);color:var(--gold);border:1px solid var(--gold-border)}
+.p-card[data-c="cyan"] .p-badge{background:var(--cyan-glow);color:var(--cyan);border:1px solid rgba(34,211,238,.15)}
+.p-card[data-c="violet"] .p-badge{background:var(--violet-glow);color:var(--violet);border:1px solid rgba(167,139,250,.15)}
+.p-card[data-c="emerald"] .p-badge{background:var(--emerald-glow);color:var(--emerald);border:1px solid rgba(52,211,153,.15)}
+.p-card h3{font-family:var(--serif);font-size:1.4rem;color:#fff;margin-bottom:.4rem;line-height:1.2;font-weight:600}
+.p-card .p-who{font-size:.8rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic;font-weight:300}
+.p-card .p-desc{font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.2rem;font-weight:300}
+.p-features{list-style:none;margin-bottom:1.5rem}
+.p-features li{font-size:.82rem;color:var(--text-dim);padding:.32rem 0 .32rem 1.5rem;position:relative;font-weight:400}
+.p-features li::before{content:'';position:absolute;left:0;top:.65rem;width:6px;height:6px;border-radius:2px;transform:rotate(45deg)}
+.p-card[data-c="gold"] .p-features li::before{background:var(--gold)}
+.p-card[data-c="cyan"] .p-features li::before{background:var(--cyan)}
+.p-card[data-c="violet"] .p-features li::before{background:var(--violet)}
+.p-card[data-c="emerald"] .p-features li::before{background:var(--emerald)}
+.p-footer{display:flex;align-items:center;justify-content:space-between;padding-top:1.2rem;border-top:1px solid var(--border)}
+.p-price{font-family:var(--mono);font-size:1.4rem;font-weight:700;color:#fff}
+.p-price small{font-size:.7rem;font-weight:400;color:var(--text-muted);margin-left:.2rem}
+.p-btn{padding:.5rem 1.15rem;border-radius:8px;font-size:.78rem;font-weight:600;border:none;cursor:pointer;transition:all .25s var(--ease);text-decoration:none;color:#fff}
+.p-card[data-c="gold"] .p-btn{background:var(--gold);color:var(--ink)}
+.p-card[data-c="gold"] .p-btn:hover{background:var(--gold-bright)}
+.p-card[data-c="cyan"] .p-btn{background:#0891b2}
+.p-card[data-c="cyan"] .p-btn:hover{background:var(--cyan);color:var(--ink)}
+.p-card[data-c="violet"] .p-btn{background:#7c3aed}
+.p-card[data-c="violet"] .p-btn:hover{background:var(--violet)}
+.p-card[data-c="emerald"] .p-btn{background:#059669}
+.p-card[data-c="emerald"] .p-btn:hover{background:var(--emerald);color:var(--ink)}
+
+/* Method flow */
+.method-track{display:flex;align-items:stretch;gap:0;margin:3.5rem 0 2rem;position:relative}
+.method-track::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--gold-border),rgba(34,211,238,.12),rgba(167,139,250,.12),rgba(52,211,153,.12));z-index:0}
+.m-step{flex:1;text-align:center;padding:1.5rem 1rem;position:relative;z-index:1}
+.m-step-dot{width:52px;height:52px;border-radius:13px;margin:0 auto .8rem;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:var(--ink-mid);border:1px solid var(--border);transition:all .35s var(--ease)}
+.m-step:hover .m-step-dot{transform:translateY(-4px) scale(1.08)}
+.m-step:nth-child(1) .m-step-dot{border-color:var(--gold-border);background:var(--gold-glow)}
+.m-step:nth-child(2) .m-step-dot{border-color:rgba(34,211,238,.15);background:var(--cyan-glow)}
+.m-step:nth-child(3) .m-step-dot{border-color:rgba(167,139,250,.15);background:var(--violet-glow)}
+.m-step:nth-child(4) .m-step-dot{border-color:rgba(52,211,153,.15);background:var(--emerald-glow)}
+.m-step:nth-child(1):hover .m-step-dot{box-shadow:0 8px 24px rgba(212,168,83,.15)}
+.m-step:nth-child(2):hover .m-step-dot{box-shadow:0 8px 24px rgba(34,211,238,.12)}
+.m-step:nth-child(3):hover .m-step-dot{box-shadow:0 8px 24px rgba(167,139,250,.12)}
+.m-step:nth-child(4):hover .m-step-dot{box-shadow:0 8px 24px rgba(52,211,153,.12)}
+.m-step-num{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.25rem}
+.m-step h4{font-size:.85rem;color:#fff;font-weight:600;margin-bottom:.15rem}
+.m-step p{font-size:.72rem;color:var(--text-muted);font-weight:400}
+
+/* Newsletter */
+.nl-box{background:linear-gradient(135deg,rgba(20,30,48,.85),rgba(14,20,34,.85));border:1px solid rgba(212,168,83,.12);border-radius:22px;padding:3.5rem;text-align:center;position:relative;overflow:hidden;margin:2.5rem 0;backdrop-filter:blur(16px)}
+.nl-box::before{content:'';position:absolute;top:-60%;right:-15%;width:450px;height:450px;background:radial-gradient(circle,rgba(212,168,83,.06),transparent 65%);pointer-events:none;animation:float 12s ease-in-out infinite}
+.nl-box::after{content:'';position:absolute;bottom:-40%;left:-10%;width:350px;height:350px;background:radial-gradient(circle,rgba(34,211,238,.03),transparent 65%);pointer-events:none;animation:float 15s ease-in-out infinite reverse}
+.nl-form{display:flex;gap:.5rem;max-width:460px;margin:1.5rem auto 0;position:relative}
+.nl-form input{flex:1;padding:.78rem 1.1rem;background:rgba(0,0,0,.4);border:1px solid rgba(148,163,184,.1);border-radius:10px;color:var(--text);font-family:var(--sans);font-size:.88rem;outline:none;transition:border-color .3s,box-shadow .3s;font-weight:400}
+.nl-form input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,168,83,.1)}
+.nl-form input::placeholder{color:var(--text-muted)}
+
+/* Modules */
+.mod-list{display:grid;gap:.6rem;margin-top:2rem}
+.mod-item{display:flex;align-items:center;gap:1rem;padding:1.05rem 1.4rem;background:rgba(15,21,35,.5);border:1px solid var(--border);border-radius:13px;transition:all .35s var(--ease);backdrop-filter:blur(10px)}
+.mod-item:hover{border-color:var(--border-hover);background:rgba(22,32,50,.6);transform:translateX(6px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.mod-num{font-family:var(--mono);font-size:.7rem;color:var(--gold);min-width:26px;font-weight:500}
+.mod-title{font-size:.86rem;color:#fff;font-weight:500;flex:1}
+.mod-tag{font-family:var(--mono);font-size:.58rem;padding:.2rem .6rem;border-radius:100px;letter-spacing:.05em;font-weight:500}
+.mod-tag.live{background:rgba(52,211,153,.12);color:var(--emerald);box-shadow:0 0 8px rgba(52,211,153,.1)}
+.mod-tag.soon{background:rgba(212,168,83,.08);color:var(--gold)}
+
+/* Workshops */
+.ws-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.ws-card{padding:2.2rem;background:rgba(15,21,35,.55);border:1px solid var(--border);border-radius:var(--radius);text-align:center;transition:all .4s var(--ease);backdrop-filter:blur(12px);position:relative;overflow:hidden}
+.ws-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;background:linear-gradient(180deg,rgba(212,168,83,.035) 0%,transparent 55%)}
+.ws-card:hover{border-color:rgba(212,168,83,.15);transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.35),0 0 30px rgba(212,168,83,.04)}
+.ws-card:hover::before{opacity:1}
+.ws-card .ws-icon{font-size:1.8rem;margin-bottom:.8rem;transition:transform .3s var(--ease-bounce)}
+.ws-card:hover .ws-icon{transform:scale(1.15) translateY(-2px)}
+.ws-card h3{font-size:.95rem;color:#fff;margin-bottom:.4rem;font-weight:600;position:relative}
+.ws-card p{font-size:.8rem;color:var(--text-muted);line-height:1.6;font-weight:300;position:relative}
+.ws-card .ws-dur{font-family:var(--mono);font-size:.68rem;color:var(--gold);margin-top:.8rem;font-weight:500;position:relative}
+.ws-bar{margin-top:1.8rem;padding:1.4rem 1.8rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;backdrop-filter:blur(8px)}
+.ws-bar p{color:#fff;font-weight:600;font-size:.9rem;margin-bottom:.2rem}
+.ws-bar-tags{display:flex;gap:1.2rem;flex-wrap:wrap}
+.ws-bar-tags span{font-size:.75rem;color:var(--text-muted);font-weight:400}
+
+/* About */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;margin-top:2.5rem;align-items:start}
+.about-text p{font-size:.95rem;color:var(--text-dim);margin-bottom:1.1rem;line-height:1.75;font-weight:300}
+.about-text strong{color:#fff;font-weight:600}
+.about-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1.2rem}
+.about-tags span{padding:.28rem .7rem;background:var(--glass);border:1px solid var(--border);border-radius:100px;font-size:.7rem;color:var(--text-muted);font-weight:400;transition:all .25s}
+.about-tags span:hover{border-color:var(--gold-border);color:var(--gold)}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.stat-card{padding:1.6rem;background:rgba(15,21,35,.6);border:1px solid var(--border);border-radius:16px;text-align:center;transition:all .4s var(--ease);backdrop-filter:blur(12px);position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;inset:-1px;border-radius:16px;padding:1px;background:linear-gradient(135deg,transparent 30%,rgba(212,168,83,.18) 50%,transparent 70%);background-size:300% 300%;animation:shimmer 6s linear infinite;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s}
+.stat-card:hover{border-color:transparent;transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.stat-card:hover::before{opacity:1}
+.stat-val{font-family:var(--serif);font-size:2.2rem;font-weight:700;line-height:1;margin-bottom:.3rem;background:linear-gradient(135deg,var(--gold),var(--gold-bright));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:.72rem;color:var(--text-muted);line-height:1.35;font-weight:400}
+
+/* FAQ */
+.faq-list{margin-top:2rem;max-width:680px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{font-size:.92rem;color:#fff;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;transition:color .2s}
+.faq-q:hover{color:var(--gold)}
+.faq-q::after{content:'+';font-family:var(--mono);font-size:1rem;color:var(--text-muted);transition:all .35s var(--ease);width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:6px;background:var(--surface);flex-shrink:0}
+.faq-item.open .faq-q::after{content:'\2212';color:var(--gold);background:var(--gold-glow)}
+.faq-a{font-size:.86rem;color:var(--text-dim);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .5s var(--ease),padding .3s;padding:0;font-weight:300}
+.faq-item.open .faq-a{max-height:400px;padding:0 0 1.2rem 0}
+
+/* Final CTA */
+.final-cta{text-align:center;padding:7rem 0;position:relative;overflow:hidden}
+.final-cta::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(212,168,83,.05),rgba(34,211,238,.025) 35%,rgba(167,139,250,.015) 55%,transparent 70%);pointer-events:none;animation:glow-pulse 8s ease-in-out infinite}
+.final-cta::after{content:'';position:absolute;bottom:-30%;left:30%;width:500px;height:500px;background:radial-gradient(circle,rgba(52,211,153,.03),transparent 60%);pointer-events:none;animation:glow-pulse 10s ease-in-out infinite 4s}
+
+/* Footer */
+footer{padding:3rem 0 2.5rem;border-top:1px solid rgba(148,163,184,.05);text-align:center;position:relative;z-index:1}
+footer p{font-size:.73rem;color:var(--text-muted);font-weight:400}
+footer a{color:var(--text-dim);transition:color .2s}
+footer a:hover{color:var(--gold)}
+.foot-links{display:flex;gap:1.5rem;justify-content:center;margin-bottom:.8rem}
+.foot-links a{font-size:.78rem;position:relative}
+.foot-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s var(--ease)}
+.foot-links a:hover::after{width:100%}
+
+/* Responsive */
+@media(max-width:768px){
+  .container{padding:0 1.25rem}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:rgba(12,18,32,.97);backdrop-filter:blur(20px);padding:1.5rem 2rem;gap:1rem;border-bottom:1px solid var(--border)}
+  .nav-toggle{display:block}
+  .products-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .ws-grid{grid-template-columns:1fr}
+  .pain-grid{grid-template-columns:1fr}
+  .method-track{flex-direction:column;gap:0}
+  .method-track::before{display:none}
+  .hero h1{font-size:2.2rem}
+  .nl-form{flex-direction:column}
+  .section{padding:4.5rem 0}
+  .hero{padding:6rem 0 4rem;min-height:auto}
+  .hero-orb{display:none}
+  .hero-particles{display:none}
+  .hero-proof{flex-direction:column;gap:.5rem}
+  .cursor-glow{display:none}
+  .ws-bar{flex-direction:column;text-align:center}
+  .peek-grid{grid-template-columns:1fr}
+  .ticker-track{animation-duration:30s}
+  .wave-divider svg{height:40px}
 }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+/* ── PEEK INSIDE (animated terminal) ── */
+.peek-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:3rem;align-items:center}
+.peek-text h3{font-family:var(--serif);font-size:1.6rem;color:#fff;margin-bottom:.8rem;font-weight:600;line-height:1.25}
+.peek-text p{font-size:.92rem;color:var(--text-dim);line-height:1.75;font-weight:300;margin-bottom:1.2rem}
+.peek-badges{display:flex;gap:.5rem;flex-wrap:wrap}
+.peek-badges span{font-family:var(--mono);font-size:.62rem;padding:.25rem .6rem;border-radius:100px;border:1px solid var(--border);color:var(--text-muted);background:var(--glass);letter-spacing:.04em}
 
-html { scroll-behavior: smooth; }
+.terminal{background:#080c15;border:1px solid rgba(148,163,184,.08);border-radius:16px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.02),0 0 60px rgba(212,168,83,.03)}
+.terminal-bar{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;background:rgba(255,255,255,.025);border-bottom:1px solid rgba(148,163,184,.05)}
+.terminal-dot{width:10px;height:10px;border-radius:50%}
+.terminal-dot:nth-child(1){background:#ff5f57}
+.terminal-dot:nth-child(2){background:#ffbd2e}
+.terminal-dot:nth-child(3){background:#28c840}
+.terminal-title{font-family:var(--mono);font-size:.62rem;color:var(--text-muted);margin-left:.6rem;letter-spacing:.04em}
+.terminal-body{padding:1.2rem;font-family:var(--mono);font-size:.72rem;line-height:2;min-height:200px}
+.t-prompt{color:var(--emerald)}
+.t-cmd{color:var(--text)}
+.t-comment{color:var(--text-muted);font-style:italic}
+.t-output{color:var(--gold)}
+.t-line{opacity:0;animation:typeLine .4s ease forwards}
+@keyframes typeLine{0%{opacity:0;transform:translateX(-6px)}100%{opacity:1;transform:translateX(0)}}
+.t-cursor{display:inline-block;width:7px;height:14px;background:var(--gold);animation:blink 1s step-end infinite;vertical-align:middle;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-body {
-  font-family: var(--sans);
-  background: var(--bg-deep);
-  color: var(--text);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
+/* ── SOCIAL PROOF TICKER ── */
+.ticker-wrap{overflow:hidden;padding:2rem 0;position:relative;z-index:1}
+.ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2}
+.ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--ink),transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(90deg,transparent,var(--ink))}
+.ticker-label{text-align:center;font-family:var(--mono);font-size:.62rem;color:var(--text-muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem}
+.ticker-track{display:flex;gap:3rem;animation:ticker 45s linear infinite;width:max-content}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{font-size:.82rem;color:var(--text-muted);white-space:nowrap;display:flex;align-items:center;gap:.5rem;font-weight:400}
+.ticker-item strong{color:var(--text-dim);font-weight:600}
 
-/* ── Utility ── */
-.container { max-width: var(--container); margin: 0 auto; padding: 0 1.5rem; }
-.section { padding: var(--section-pad) 0; }
-.section-label {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.75rem;
-  font-weight: 500;
-}
-.section-title {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
-  line-height: 1.15;
-  color: var(--text);
-  margin-bottom: 1rem;
-  font-weight: 400;
-}
-.section-desc {
-  font-size: 1.05rem;
-  color: var(--text-secondary);
-  max-width: 38rem;
-  line-height: 1.7;
-}
+/* ── WAVE DIVIDERS ── */
+.wave-divider{position:relative;z-index:1;margin:-1px 0;line-height:0}
+.wave-divider svg{width:100%;height:50px;display:block}
+.wave-divider.flip svg{transform:scaleY(-1)}
 
-/* Reveal animation */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-
-/* ── Navigation ── */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 0.9rem 0;
-  background: rgba(7,14,26,0.7);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  transition: all 0.3s;
-}
-.nav.scrolled { background: rgba(7,14,26,0.95); }
-.nav-inner {
-  max-width: var(--container); margin: 0 auto; padding: 0 1.5rem;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.nav-brand {
-  font-family: var(--serif);
-  font-size: 1.2rem;
-  color: var(--text);
-  text-decoration: none;
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.nav-brand .mark {
-  display: inline-block;
-  width: 1.8rem; height: 1.8rem;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--sans);
-  font-weight: 700;
-  font-size: 0.75rem;
-  color: var(--bg-deep);
-  line-height: 1.8rem;
-  text-align: center;
-}
-.nav-links { display: flex; align-items: center; gap: 1.8rem; }
-.nav-links a {
-  font-size: 0.82rem; font-weight: 500;
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--text); }
-.nav-cta {
-  font-size: 0.78rem !important;
-  color: var(--bg-deep) !important;
-  background: var(--gold);
-  padding: 0.45rem 1rem;
-  border-radius: 6px;
-  font-weight: 600 !important;
-  transition: all 0.2s !important;
-}
-.nav-cta:hover { background: #f0c640 !important; transform: translateY(-1px); }
-
-/* Mobile nav */
-.nav-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
-
-@media (max-width: 768px) {
-  .nav-toggle { display: block; }
-  .nav-links {
-    display: none; flex-direction: column; gap: 1.2rem;
-    position: absolute; top: 100%; left: 0; right: 0;
-    background: rgba(7,14,26,0.97); backdrop-filter: blur(16px);
-    padding: 1.5rem; border-bottom: 1px solid var(--border);
-  }
-  .nav-links.open { display: flex; }
-}
-
-/* ── Buttons ── */
-.btn {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-family: var(--sans);
-  font-size: 0.88rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.25s ease;
-  cursor: pointer;
-  border: none;
-}
-.btn-primary {
-  background: var(--gold);
-  color: var(--bg-deep);
-}
-.btn-primary:hover { background: #f0c640; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,185,49,0.25); }
-.btn-outline {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border-hover);
-}
-.btn-outline:hover { border-color: var(--text-secondary); background: rgba(255,255,255,0.03); }
-.btn-sm { padding: 0.55rem 1.1rem; font-size: 0.8rem; }
-.btn-teal { background: var(--teal); color: var(--bg-deep); }
-.btn-teal:hover { background: #3ae8b8; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(45,212,168,0.2); }
-.btn-purple { background: var(--purple); color: var(--bg-deep); }
-.btn-purple:hover { background: #b8a0fb; transform: translateY(-2px); }
-.btn-blue { background: var(--blue); color: white; }
-.btn-blue:hover { background: #5b9af7; transform: translateY(-2px); }
-
-/* ═══════════════════════════════════════
-   HERO
-   ═══════════════════════════════════════ */
-.hero {
-  min-height: 100vh;
-  display: flex; align-items: center;
-  padding-top: 5rem;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -20%; right: -10%;
-  width: 60vw; height: 60vw;
-  background: radial-gradient(ellipse, rgba(232,185,49,0.06) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: -10%; left: -10%;
-  width: 40vw; height: 40vw;
-  background: radial-gradient(ellipse, rgba(45,212,168,0.04) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-content { position: relative; z-index: 1; max-width: 42rem; }
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.4rem 0.9rem;
-  background: var(--gold-glow);
-  border: 1px solid rgba(232,185,49,0.2);
-  border-radius: 100px;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--gold);
-  letter-spacing: 0.04em;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-}
-.hero h1 {
-  font-family: var(--serif);
-  font-size: clamp(2.8rem, 6vw, 4.2rem);
-  line-height: 1.08;
-  color: var(--text);
-  margin-bottom: 1.2rem;
-  font-weight: 400;
-}
-.hero h1 em {
-  font-style: italic;
-  color: var(--gold);
-}
-.hero-sub {
-  font-size: 1.12rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: 2rem;
-  max-width: 34rem;
-}
-.hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
-.hero-proof {
-  display: flex; gap: 2rem; flex-wrap: wrap;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-}
-.hero-proof-item {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.8rem; color: var(--text-dim);
-}
-.hero-proof-item svg { width: 16px; height: 16px; color: var(--teal); flex-shrink: 0; }
-
-/* ═══════════════════════════════════════
-   PRODUCTS OVERVIEW
-   ═══════════════════════════════════════ */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.2rem;
-  margin-top: 2.5rem;
-}
-@media (max-width: 900px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 550px) { .products-grid { grid-template-columns: 1fr; } }
-
-.product-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-  overflow: hidden;
-}
-.product-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-4px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
-}
-.product-card .card-accent {
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 3px;
-  border-radius: 12px 12px 0 0;
-}
-.product-card .card-icon {
-  width: 2.8rem; height: 2.8rem;
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  margin-top: 0.3rem;
-}
-.product-card .card-tag {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-.product-card h3 {
-  font-family: var(--serif);
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.25;
-}
-.product-card p {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  line-height: 1.55;
-  margin-bottom: 1rem;
-}
-.product-card .card-price {
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  font-weight: 600;
-}
-.product-card .card-arrow {
-  position: absolute; bottom: 1.2rem; right: 1.2rem;
-  width: 24px; height: 24px;
-  color: var(--text-dim);
-  transition: all 0.3s;
-}
-.product-card:hover .card-arrow { color: var(--text); transform: translateX(3px); }
-
-/* Accent colors per product */
-.card-gold .card-accent { background: var(--gold); }
-.card-gold .card-icon { background: var(--gold-glow); color: var(--gold); }
-.card-gold .card-tag { color: var(--gold); }
-.card-gold .card-price { color: var(--gold); }
-
-.card-teal .card-accent { background: var(--teal); }
-.card-teal .card-icon { background: var(--teal-dim); color: var(--teal); }
-.card-teal .card-tag { color: var(--teal); }
-.card-teal .card-price { color: var(--teal); }
-
-.card-purple .card-accent { background: var(--purple); }
-.card-purple .card-icon { background: var(--purple-dim); color: var(--purple); }
-.card-purple .card-tag { color: var(--purple); }
-.card-purple .card-price { color: var(--purple); }
-
-.card-blue .card-accent { background: var(--blue); }
-.card-blue .card-icon { background: var(--blue-dim); color: var(--blue); }
-.card-blue .card-tag { color: var(--blue); }
-.card-blue .card-price { color: var(--blue); }
-
-/* ═══════════════════════════════════════
-   INDIVIDUAL PRODUCT SECTIONS
-   ═══════════════════════════════════════ */
-.product-section {
-  padding: var(--section-pad) 0;
-  border-top: 1px solid var(--border);
-}
-.product-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-@media (max-width: 768px) { .product-header { grid-template-columns: 1fr; } }
-
-.product-header .ph-left { max-width: 30rem; }
-.product-header .ph-right {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
-}
-
-.module-list { list-style: none; }
-.module-list li {
-  padding: 0.65rem 0;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: flex-start; gap: 0.7rem;
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-}
-.module-list li:last-child { border-bottom: none; }
-.module-list li .mod-num {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  min-width: 1.5rem;
-  padding-top: 0.1rem;
-}
-.module-list li .mod-name { font-weight: 500; color: var(--text); }
-.module-list li .mod-badge {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  margin-left: auto;
-  flex-shrink: 0;
-}
-.badge-live { background: rgba(45,212,168,0.15); color: var(--teal); }
-.badge-soon { background: rgba(255,255,255,0.06); color: var(--text-dim); }
-
-/* Feature grid */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
-  margin-top: 2.5rem;
-}
-@media (max-width: 700px) { .features-grid { grid-template-columns: 1fr; } }
-
-.feature-item {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.3rem;
-}
-.feature-item .fi-icon {
-  font-size: 1.2rem;
-  margin-bottom: 0.6rem;
-}
-.feature-item h4 {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 0.35rem;
-}
-.feature-item p {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  line-height: 1.55;
-}
-
-/* Pricing box */
-.pricing-box {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
-  max-width: 28rem;
-  margin-top: 2rem;
-}
-.pricing-box .price {
-  font-family: var(--serif);
-  font-size: 2.5rem;
-}
-.pricing-box .price-note {
-  font-size: 0.82rem;
-  color: var(--text-dim);
-  margin-bottom: 1rem;
-}
-.pricing-box .price-features {
-  list-style: none;
-  margin-bottom: 1.5rem;
-}
-.pricing-box .price-features li {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  padding: 0.3rem 0;
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.pricing-box .price-features li::before {
-  content: '✓';
-  color: var(--teal);
-  font-weight: 700;
-  font-size: 0.75rem;
-}
-
-/* ═══════════════════════════════════════
-   LEAD MAGNET / NEWSLETTER
-   ═══════════════════════════════════════ */
-.lead-section {
-  padding: 3rem 0;
-}
-.lead-box {
-  background: linear-gradient(135deg, rgba(232,185,49,0.08) 0%, rgba(45,212,168,0.05) 100%);
-  border: 1px solid rgba(232,185,49,0.15);
-  border-radius: 16px;
-  padding: 2.5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: center;
-}
-@media (max-width: 768px) { .lead-box { grid-template-columns: 1fr; } }
-
-.lead-box h3 {
-  font-family: var(--serif);
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.2;
-}
-.lead-box p {
-  color: var(--text-secondary);
-  font-size: 0.92rem;
-  margin-bottom: 0.3rem;
-}
-.lead-form {
-  display: flex; gap: 0.5rem;
-}
-.lead-form input {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-hover);
-  border-radius: 8px;
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: 0.88rem;
-  outline: none;
-}
-.lead-form input::placeholder { color: var(--text-dim); }
-.lead-form input:focus { border-color: var(--gold); }
-.lead-form button {
-  padding: 0.75rem 1.3rem;
-  background: var(--gold);
-  color: var(--bg-deep);
-  border: none;
-  border-radius: 8px;
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-.lead-form button:hover { background: #f0c640; }
-.lead-note {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  margin-top: 0.5rem;
-}
-
-/* ═══════════════════════════════════════
-   ABOUT
-   ═══════════════════════════════════════ */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  margin-top: 2rem;
-}
-@media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
-
-.about-text p {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-  line-height: 1.7;
-}
-.about-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.3rem;
-  text-align: center;
-}
-.stat-card .stat-num {
-  font-family: var(--serif);
-  font-size: 2rem;
-  color: var(--gold);
-}
-.stat-card .stat-label {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  margin-top: 0.2rem;
-}
-
-/* Tags */
-.tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
-.tag {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  padding: 0.3rem 0.6rem;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text-dim);
-}
-
-/* ═══════════════════════════════════════
-   WORKSHOPS / CONSULTING
-   ═══════════════════════════════════════ */
-.workshop-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
-  margin-top: 2rem;
-}
-@media (max-width: 700px) { .workshop-cards { grid-template-columns: 1fr; } }
-
-.ws-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: all 0.3s;
-}
-.ws-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
-.ws-card .ws-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
-.ws-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
-.ws-card p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 0.8rem; }
-.ws-card .ws-meta {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--text-dim);
-}
-
-/* ═══════════════════════════════════════
-   FAQ
-   ═══════════════════════════════════════ */
-.faq-list { max-width: 38rem; margin-top: 2rem; }
-.faq-item {
-  border-bottom: 1px solid var(--border);
-  padding: 1.2rem 0;
-}
-.faq-q {
-  font-weight: 600;
-  font-size: 0.92rem;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: space-between;
-  transition: color 0.2s;
-}
-.faq-q:hover { color: var(--gold); }
-.faq-q .faq-toggle {
-  font-size: 1.2rem; color: var(--text-dim);
-  transition: transform 0.3s;
-}
-.faq-item.open .faq-toggle { transform: rotate(45deg); }
-.faq-a {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease;
-}
-.faq-item.open .faq-a { max-height: 300px; }
-.faq-a p {
-  padding-top: 0.8rem;
-  font-size: 0.86rem;
-  color: var(--text-secondary);
-  line-height: 1.65;
-}
-
-/* ═══════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════ */
-footer {
-  padding: 2.5rem 0;
-  border-top: 1px solid var(--border);
-}
-.footer-inner {
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 1rem;
-}
-.footer-left p {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-}
-.footer-links { display: flex; gap: 1.5rem; }
-.footer-links a {
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.footer-links a:hover { color: var(--text); }
-
-/* ═══════════════════════════════════════
-   CTA SECTION
-   ═══════════════════════════════════════ */
-.cta-section {
-  padding: var(--section-pad) 0;
-  text-align: center;
-  position: relative;
-}
-.cta-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(232,185,49,0.06) 0%, transparent 60%);
-  pointer-events: none;
-}
-.cta-section .section-title { margin-bottom: 0.8rem; }
-.cta-section .section-desc { margin: 0 auto 2rem; text-align: center; }
-.cta-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
-
-/* Guarantee badge */
-.guarantee {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(45,212,168,0.08);
-  border: 1px solid rgba(45,212,168,0.15);
-  border-radius: 8px;
-  margin-top: 1.5rem;
-  font-size: 0.8rem;
-  color: var(--teal);
-}
-
-/* Divider line */
-.divider {
-  height: 1px;
-  background: var(--border);
-  margin: 0;
-}
-
-/* PPP banner */
-.ppp-note {
-  text-align: center;
-  margin-top: 1rem;
-  font-size: 0.72rem;
-  color: var(--text-dim);
-}
+/* ── ENHANCED MODULE ITEMS ── */
+.mod-item{position:relative}
+.mod-item .mod-num{position:relative}
+.mod-item.is-live .mod-num::before{content:'';position:absolute;left:50%;top:50%;width:6px;height:6px;border-radius:50%;background:var(--emerald);transform:translate(-50%,-50%);box-shadow:0 0 8px rgba(52,211,153,.4);animation:pulse-dot 2s ease infinite}
 </style>
 </head>
 <body>
+<div class="cursor-glow" id="cursorGlow"></div>
 
-<!-- ═══════ NAVIGATION ═══════ -->
-<nav class="nav" id="navbar">
-  <div class="nav-inner">
-    <a href="#" class="nav-brand">
-      <span class="mark">Ai</span>
-      AI for Academics
-    </a>
-    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">☰</button>
-    <div class="nav-links">
-      <a href="#products">Products</a>
-      <a href="#course">Course</a>
-      <a href="#phd-compass">PhD Compass</a>
-      <a href="#research-lab">Research Lab</a>
-      <a href="#workshops">Workshops</a>
-      <a href="#about">About</a>
-      <a href="#start" class="nav-cta">Get Started →</a>
+<nav class="nav"><div class="nav-inner">
+<a href="#" class="nav-logo">AI_FOR_ACADEMICS</a>
+<button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+<div class="nav-links">
+<a href="#modules">Course</a>
+<a href="#products">What You'll Build</a>
+<a href="#workshops">Workshops</a>
+<a href="#about">About</a>
+<a href="#start" class="nav-cta">Get the Course &rarr;</a>
+</div></div></nav>
+
+<section class="hero" id="home">
+<div class="hero-orb"></div>
+<div class="hero-particles" id="particles"></div>
+<div class="container"><div class="hero-content">
+<div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span><span>A passion project by a research scientist</span></div>
+<h1>Master <span class="accent">AI tools</span> for academic success</h1>
+<p class="hero-sub">Built by a research scientist who fell in love with AI tools and started building them in his free time. Now sharing everything &mdash; so you can set up your own private AI lab, write faster, read smarter, and reclaim your time for actual research.</p>
+<div class="hero-actions">
+  <a href="#start" class="btn btn-gold">&#x1F525; Early Bird &mdash; $12 &rarr;</a>
+  <a href="#products" class="btn btn-ghost">Explore the Course</a>
+</div>
+<div class="hero-proof">
+  <div class="hero-proof-item"><div class="check">&#x1F512;</div>100% Private &middot; Run AI on your own laptop</div>
+  <div class="hero-proof-item"><div class="check">&#x26A1;</div>Save 10+ hrs/week</div>
+  <div class="hero-proof-item"><div class="check">&#x2705;</div>Ethically Sound &middot; Funder compliant</div>
+</div>
+</div></div></section>
+
+<!-- SOCIAL PROOF TICKER -->
+<div class="ticker-wrap">
+<div class="ticker-label">Built for researchers at every career stage</div>
+<div class="ticker-track" id="ticker">
+  <div class="ticker-item"><strong>PhD Students</strong> &middot; Thesis writing &amp; lit reviews</div>
+  <div class="ticker-item"><strong>Postdocs</strong> &middot; Grant proposals &amp; publications</div>
+  <div class="ticker-item"><strong>PIs &amp; Group Leaders</strong> &middot; Project management &amp; budgets</div>
+  <div class="ticker-item"><strong>Research Institutes</strong> &middot; Team AI training</div>
+  <div class="ticker-item"><strong>Plant Science</strong> &middot; Genomics &amp; bioinformatics</div>
+  <div class="ticker-item"><strong>Social Sciences</strong> &middot; Interview analysis &amp; coding</div>
+  <div class="ticker-item"><strong>Medicine &amp; Health</strong> &middot; Systematic reviews</div>
+  <div class="ticker-item"><strong>Engineering</strong> &middot; Data analysis &amp; reporting</div>
+  <!-- duplicate for seamless loop -->
+  <div class="ticker-item"><strong>PhD Students</strong> &middot; Thesis writing &amp; lit reviews</div>
+  <div class="ticker-item"><strong>Postdocs</strong> &middot; Grant proposals &amp; publications</div>
+  <div class="ticker-item"><strong>PIs &amp; Group Leaders</strong> &middot; Project management &amp; budgets</div>
+  <div class="ticker-item"><strong>Research Institutes</strong> &middot; Team AI training</div>
+  <div class="ticker-item"><strong>Plant Science</strong> &middot; Genomics &amp; bioinformatics</div>
+  <div class="ticker-item"><strong>Social Sciences</strong> &middot; Interview analysis &amp; coding</div>
+  <div class="ticker-item"><strong>Medicine &amp; Health</strong> &middot; Systematic reviews</div>
+  <div class="ticker-item"><strong>Engineering</strong> &middot; Data analysis &amp; reporting</div>
+</div>
+</div>
+
+<section class="section" id="problem"><div class="container">
+<div class="reveal"><div class="section-label">The Reality</div><h2 class="section-title">AI exists. You just don't know how<br>to make it actually useful.</h2><p class="section-desc">Every researcher hits the same walls. AI can break through most of them &mdash; if someone shows you how.</p></div>
+<div class="pain-grid reveal">
+  <div class="pain-cell"><div class="icon">&#x1F4DD;</div><h3>Writing takes forever</h3><p>Papers, grants, reviewer responses, emails &mdash; more time writing than researching.</p></div>
+  <div class="pain-cell"><div class="icon">&#x1F4DA;</div><h3>Literature overload</h3><p>Hundreds of papers bookmarked. None summarized. Sound familiar?</p></div>
+  <div class="pain-cell"><div class="icon">&#x1F4BB;</div><h3>Code struggles</h3><p>You need R or Python but you're not a developer. Stack Overflow doesn't help.</p></div>
+  <div class="pain-cell"><div class="icon">&#x1F512;</div><h3>Privacy concerns</h3><p>Sensitive data, GDPR, unpublished results &mdash; you can't paste it all into ChatGPT.</p></div>
+  <div class="pain-cell"><div class="icon">&#x1F3AF;</div><h3>Project chaos</h3><p>Multiple deadlines, projects, students. No single system holds it together.</p></div>
+  <div class="pain-cell"><div class="icon">&#x1F4B0;</div><h3>Grant writing grind</h3><p>Weeks on proposals. Budget justifications, impact statements &mdash; all manual.</p></div>
+</div>
+</div></section>
+
+<!-- WAVE -->
+<div class="wave-divider"><svg viewBox="0 0 1440 50" preserveAspectRatio="none"><path d="M0,25 C360,50 720,0 1080,25 C1260,37.5 1380,12.5 1440,25 L1440,50 L0,50 Z" fill="#0c1220" opacity="0.5"/><path d="M0,30 C480,5 960,45 1440,20 L1440,50 L0,50 Z" fill="#0c1220" opacity="0.3"/></svg></div>
+
+<!-- PEEK INSIDE -->
+<section class="section" id="peek"><div class="container">
+<div class="peek-grid">
+  <div class="peek-text reveal">
+    <div class="section-label">See It In Action</div>
+    <h3>Real prompts. Real research output. In seconds.</h3>
+    <p>Every prompt in the course was tested on actual research tasks &mdash; drafting papers, analyzing data, writing grant proposals, responding to reviewers. What you see here runs on your own laptop, privately.</p>
+    <div class="peek-badges">
+      <span>ChatGPT</span><span>Claude</span><span>Ollama (local)</span><span>Open WebUI</span><span>AnythingLLM</span>
     </div>
   </div>
-</nav>
-
-<!-- ═══════ HERO ═══════ -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-content">
-      <div class="hero-badge reveal">🔬 Built by a working research scientist</div>
-      <h1 class="reveal reveal-delay-1">AI skills that <em>actually work</em> in academia</h1>
-      <p class="hero-sub reveal reveal-delay-2">
-        Practical training for researchers, PhD students, and academics who want to save 
-        10+ hours per week using AI — without the hype, without the jargon.
-      </p>
-      <div class="hero-actions reveal reveal-delay-3">
-        <a href="#products" class="btn btn-primary">Explore Products →</a>
-        <a href="#free-guide" class="btn btn-outline">Get Free Prompt Guide</a>
-      </div>
-      <div class="hero-proof reveal reveal-delay-3">
-        <div class="hero-proof-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          8 structured modules
-        </div>
-        <div class="hero-proof-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          100+ tested prompts
-        </div>
-        <div class="hero-proof-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          Private AI setup included
-        </div>
-      </div>
+  <div class="terminal reveal" id="terminalDemo">
+    <div class="terminal-bar">
+      <div class="terminal-dot"></div><div class="terminal-dot"></div><div class="terminal-dot"></div>
+      <span class="terminal-title">AI for Academics &mdash; Module 2 Demo</span>
     </div>
+    <div class="terminal-body" id="terminalBody"></div>
   </div>
-</section>
+</div>
+</div></section>
 
-<!-- ═══════ PRODUCTS OVERVIEW ═══════ -->
-<section class="section" id="products">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-label">What We Offer</div>
-      <h2 class="section-title">Four products for every stage<br>of your academic career</h2>
-      <p class="section-desc">From your first AI prompt to transforming how your entire department works.</p>
-    </div>
+<div class="wave-divider flip"><svg viewBox="0 0 1440 50" preserveAspectRatio="none"><path d="M0,25 C360,50 720,0 1080,25 C1260,37.5 1380,12.5 1440,25 L1440,50 L0,50 Z" fill="#0c1220" opacity="0.5"/><path d="M0,30 C480,5 960,45 1440,20 L1440,50 L0,50 Z" fill="#0c1220" opacity="0.3"/></svg></div>
 
-    <div class="products-grid">
-      <a href="#course" class="product-card card-gold reveal">
-        <div class="card-accent"></div>
-        <div class="card-icon">🎓</div>
-        <div class="card-tag">Online Course</div>
-        <h3>AI for Academics</h3>
-        <p>Go from zero to confidently using AI in your daily research. Writing, code, grants, literature — all covered.</p>
-        <div class="card-price">From $12</div>
-        <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+<!-- 4 PRODUCTS -->
+<section class="section" id="products"><div class="container">
+<div class="reveal"><div class="section-label">What We Offer</div><h2 class="section-title">Four products for every stage<br>of your academic career</h2><p class="section-desc">Whether you're a PhD student trying to survive or a PI running a research group &mdash; there's a method built for exactly where you are.</p></div>
+<div class="products-grid">
 
-      <a href="#phd-compass" class="product-card card-teal reveal reveal-delay-1">
-        <div class="card-accent"></div>
-        <div class="card-icon">🧭</div>
-        <div class="card-tag">For PhD Students</div>
-        <h3>The PhD Compass</h3>
-        <p>A complete navigation system for your doctoral journey. Structure the chaos, finish on time.</p>
-        <div class="card-price">Coming Summer 2026</div>
-        <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+<div class="p-card reveal" data-c="gold"><div class="top-line"></div><div class="p-badge">&#x1F680; Available Now</div><h3>AI for Academics</h3><p class="p-who">For any researcher wanting to start using AI effectively</p><p class="p-desc">The complete starter course. Go from zero to producing real academic output with AI in one weekend. Eight video modules covering writing, code, private AI, grant writing, RAG, automation, and ethics.</p><ul class="p-features"><li>8 video modules with live demos on real research</li><li>50+ tested prompts you can copy and use today</li><li>Downloadable cheat sheets for every module</li><li>Install your own private AI (Ollama + Open WebUI)</li><li>Build a personal knowledge base with RAG</li><li>Lifetime access &mdash; all future updates included free</li></ul><div class="p-footer"><div class="p-price">$12<small>early bird</small></div><a href="products/ai-for-academics/index.html" class="p-btn">Try Demo &rarr;</a></div></div>
 
-      <a href="#research-lab" class="product-card card-purple reveal reveal-delay-2">
-        <div class="card-accent"></div>
-        <div class="card-icon">⚡</div>
-        <div class="card-tag">For Group Leaders</div>
-        <h3>AI-Powered Research Lab</h3>
-        <p>Run your research group like a well-oiled machine. Projects, people, papers, proposals — one system.</p>
-        <div class="card-price">Coming Autumn 2026</div>
-        <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+<div class="p-card reveal" data-c="cyan"><div class="top-line"></div><div class="p-badge">&#x1F9ED; Coming Soon</div><h3>The PhD Compass</h3><p class="p-who">For Master's and PhD students navigating a major research project</p><p class="p-desc">Not a course tracker. A complete navigation system for structuring your thesis, managing your supervisor relationship, publishing your first papers, and maintaining your sanity through it all.</p><ul class="p-features"><li>Thesis Architect &mdash; break the impossible into weekly targets</li><li>Literature Command Center &mdash; never lose a paper's insight</li><li>Publication Pipeline &mdash; from idea to journal submission</li><li>Supervisor Meeting System &mdash; structured agendas &amp; action tracking</li><li>The 15-Minute Daily Method &mdash; AI-assisted planning each morning</li><li>Progress Dashboard with visual milestone tracking</li></ul><div class="p-footer"><div class="p-price">$39<small>one-time</small></div><a href="products/phd-compass/index.html" class="p-btn">Try Demo &rarr;</a></div></div>
 
-      <a href="#workshops" class="product-card card-blue reveal reveal-delay-3">
-        <div class="card-accent"></div>
-        <div class="card-icon">🏛️</div>
-        <div class="card-tag">For Teams</div>
-        <h3>Workshops &amp; Consulting</h3>
-        <p>Hands-on training for your research group, department, or company. In-person or online.</p>
-        <div class="card-price">From 8,000 NOK</div>
-        <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
+<div class="p-card reveal" data-c="violet"><div class="top-line"></div><div class="p-badge">&#x1F52C; Coming Q3 2026</div><h3>The AI-Powered Research Lab</h3><p class="p-who">For PIs and group leaders managing projects, people &amp; funding</p><p class="p-desc">The complete method for running a research group without drowning. Project dashboards, grant monitoring, student supervision templates, literature triage, and budget oversight &mdash; all powered by AI and free tools.</p><ul class="p-features"><li>Project Command Center &mdash; one view across all your projects</li><li>Grant Radar &mdash; never miss a funding deadline again</li><li>Smart Email Triage &mdash; AI categorizes and drafts responses</li><li>Student Tracker &mdash; structured supervision made effortless</li><li>Budget Watchdog &mdash; no more end-of-year spending surprises</li><li>Built on free tools: Notion, Ollama, Google Alerts</li></ul><div class="p-footer"><div class="p-price">$49<small>one-time</small></div><a href="products/research-lab/index.html" class="p-btn">Try Demo &rarr;</a></div></div>
+
+<div class="p-card reveal" data-c="emerald"><div class="top-line"></div><div class="p-badge">&#x1F3DB; For Institutions</div><h3>Department AI Transformation</h3><p class="p-who">For department heads, deans, and research directors</p><p class="p-desc">A tailored consulting engagement for your institution. Needs assessment, customized workshop series, private AI infrastructure setup, ethical policy templates, and ongoing support. In-person across Norway or online worldwide.</p><ul class="p-features"><li>Needs assessment and research skills gap analysis</li><li>Customized workshop series &mdash; half-day or full-day</li><li>Private AI infrastructure setup for your team</li><li>Ethical guidelines and institutional policy templates</li><li>Follow-up support, office hours, and Q&amp;A sessions</li><li>Available in English or Norwegian</li></ul><div class="p-footer"><div class="p-price">Custom<small>pricing</small></div><a href="products/department-transform/index.html" class="p-btn">Try Demo &rarr;</a></div></div>
+
+</div></div></section>
+
+<hr class="divider">
+
+<section class="section" id="method"><div class="container">
+<div class="reveal" style="text-align:center"><div class="section-label">The Kovi Method</div><h2 class="section-title">One system. Every career stage.</h2><p class="section-desc" style="margin:0 auto">Each product builds on the last. Start wherever you are &mdash; the skills compound as you advance.</p></div>
+<div class="method-track reveal">
+  <div class="m-step"><div class="m-step-num">Step 01</div><div class="m-step-dot">&#x26A1;</div><h4>Learn the Tools</h4><p>AI for Academics</p></div>
+  <div class="m-step"><div class="m-step-num">Step 02</div><div class="m-step-dot">&#x1F9ED;</div><h4>Navigate Your Thesis</h4><p>PhD Compass</p></div>
+  <div class="m-step"><div class="m-step-num">Step 03</div><div class="m-step-dot">&#x1F52C;</div><h4>Lead Your Lab</h4><p>Research Lab Method</p></div>
+  <div class="m-step"><div class="m-step-num">Step 04</div><div class="m-step-dot">&#x1F3DB;</div><h4>Transform Your Dept</h4><p>Institutional Training</p></div>
+</div>
+<div class="nl-box reveal" id="newsletter">
+  <h3 style="font-family:var(--serif);font-size:1.5rem;color:#fff;margin-bottom:.4rem;position:relative;font-weight:600">Get the Free AI Prompts Cheat Sheet</h3>
+  <p style="color:var(--text-dim);font-size:.92rem;position:relative;font-weight:300">50+ tested prompts for academic writing, code generation, grant proposals, and literature reviews. Plus a monthly newsletter with new tools and real examples from my research.</p>
+  <div class="nl-form"><input type="email" placeholder="your@university.edu" aria-label="Email address"><button class="btn btn-gold">Download Free &rarr;</button></div>
+  <p style="font-size:.68rem;color:var(--text-muted);margin-top:.75rem;position:relative;font-weight:400">No spam. Unsubscribe anytime. Your data stays private &mdash; I literally teach privacy in Module 4.</p>
+</div>
+</div></section>
+
+<hr class="divider">
+
+<section class="section" id="modules"><div class="container">
+<div class="reveal"><div class="section-label">Inside AI for Academics</div><h2 class="section-title">Eight modules. Real research.<br>Tested on real projects.</h2><p class="section-desc">Every module starts with a problem from my daily work and ends with you solving it on your own machine.</p></div>
+<div class="mod-list reveal">
+  <div class="mod-item"><span class="mod-num">01</span><span class="mod-title">Your First AI Win &mdash; prompts, tools, and 8 quick wins in under an hour</span><span class="mod-tag live">LIVE</span></div>
+  <div class="mod-item"><span class="mod-num">02</span><span class="mod-title">AI for Academic Writing &mdash; the 3-pass method, reviewer responses, cover letters</span><span class="mod-tag live">LIVE</span></div>
+  <div class="mod-item"><span class="mod-num">03</span><span class="mod-title">AI for Code &amp; Data &mdash; R and Python in plain English, debugging, publication figures</span><span class="mod-tag live">LIVE</span></div>
+  <div class="mod-item"><span class="mod-num">04</span><span class="mod-title">Local AI: Your Private Assistant &mdash; Ollama + Open WebUI installation walkthrough</span><span class="mod-tag soon">WEEK 2</span></div>
+  <div class="mod-item"><span class="mod-num">05</span><span class="mod-title">AI for Grant Writing &mdash; call analysis, proposal drafting, self-critique, budget justification</span><span class="mod-tag soon">WEEK 3</span></div>
+  <div class="mod-item"><span class="mod-num">06</span><span class="mod-title">Build Your Knowledge Base (RAG) &mdash; AnythingLLM, document Q&amp;A, private search</span><span class="mod-tag soon">WEEK 5</span></div>
+  <div class="mod-item"><span class="mod-num">07</span><span class="mod-title">Automate Your Workflow &mdash; project dashboards, templates, literature monitoring</span><span class="mod-tag soon">WEEK 7</span></div>
+  <div class="mod-item"><span class="mod-num">08</span><span class="mod-title">Ethics, Boundaries &amp; The Future &mdash; journal policies, disclosure, responsible use</span><span class="mod-tag soon">WEEK 7</span></div>
+</div>
+<div style="text-align:center;margin-top:2rem" class="reveal">
+  <p style="font-size:.83rem;color:var(--text-dim);font-weight:300;margin-bottom:1rem">&#x1F513; Buy once &rarr; access all 8 modules from day one &rarr; free updates for life</p>
+  <a href="#start" class="btn btn-gold">&#x1F525; Early Bird &mdash; $12 &rarr;</a>
+</div>
+</div></section>
+
+<hr class="divider">
+
+<section class="section" id="workshops"><div class="container">
+<div class="reveal"><div class="section-label">For Teams &amp; Institutions</div><h2 class="section-title">Hands-on workshops where everyone<br>leaves with working AI tools</h2><p class="section-desc">I come to your research group, department, or company. Every participant installs real tools on their own laptop and uses them on their own data during the session.</p></div>
+<div class="ws-grid reveal">
+  <div class="ws-card"><div class="ws-icon">&#x1F52C;</div><h3>Research Groups</h3><p>Private AI setup, grant writing workflows, literature automation, and a shared knowledge base for your team.</p><div class="ws-dur">Half-day &middot; 3&ndash;4 hours</div></div>
+  <div class="ws-card"><div class="ws-icon">&#x1F3DB;</div><h3>University Departments</h3><p>PhD students, postdocs, and faculty trained together. Ethical guidelines, local AI setup, and practical workflows.</p><div class="ws-dur">Full-day &middot; 6 hours</div></div>
+  <div class="ws-card"><div class="ws-icon">&#x1F3E2;</div><h3>Companies &amp; R&amp;D</h3><p>AI for agriculture, biotech, and R&amp;D organizations. Private data handling, document intelligence, and analysis pipelines.</p><div class="ws-dur">Custom &middot; Tailored</div></div>
+</div>
+<div class="ws-bar reveal"><div><p>Available in-person across Norway and online worldwide</p><div class="ws-bar-tags"><span>&#x2713; English or Norwegian</span><span>&#x2713; Faktura / EHF invoicing</span><span>&#x2713; 5&ndash;50 participants</span></div></div><a href="mailto:hello@aiforacademics.io" class="btn btn-gold">Book a Workshop &rarr;</a></div>
+</div></section>
+
+<hr class="divider">
+
+<section class="section" id="about"><div class="container">
+<div class="reveal"><div class="section-label">About the Instructor</div><h2 class="section-title">A researcher who builds<br>in his free time</h2></div>
+<div class="about-grid">
+  <div class="about-text reveal">
+    <p>By day, I'm a <strong>research scientist</strong> specializing in plant genomics and sustainable agriculture, based in Norway. I lead a research group, manage multiple funded projects, and supervise PhD students.</p>
+    <p>By evening and weekend, I'm an <strong>AI tinkerer</strong>. I started experimenting with local AI models, building dashboards, and creating knowledge bases &mdash; simply because I was curious and wanted to make my own work more efficient.</p>
+    <p>The tools worked so well that colleagues started asking: <em>"Can you show me how to do that?"</em> That question became this course. Everything here is something I built in my free time and use in my daily research life.</p>
+    <p>I'm sharing it because I believe <strong>every student and researcher deserves access to these tools</strong> &mdash; not just those with a computer science background.</p>
+    <div class="about-tags"><span>Plant Genomics</span><span>Sustainable Agriculture</span><span>AI &amp; Machine Learning</span><span>Local LLMs</span><span>Grant Writing</span><span>Bioinformatics</span><span>Automation</span><span>Open Source</span></div>
   </div>
-</section>
-
-<!-- ═══════ PRODUCT 1: AI FOR ACADEMICS COURSE ═══════ -->
-<section class="product-section" id="course">
-  <div class="container">
-    <div class="product-header">
-      <div class="ph-left reveal">
-        <div class="section-label" style="color: var(--gold);">Product 01 — Online Course</div>
-        <h2 class="section-title">AI for Academics</h2>
-        <p class="section-desc" style="margin-bottom:1.5rem;">
-          Eight modules that take you from "I've tried ChatGPT once" to running a complete 
-          AI-powered research workflow. Every lesson uses real academic examples — grant proposals, 
-          reviewer responses, R scripts, and literature reviews.
-        </p>
-        <div class="pricing-box" style="border-color: rgba(232,185,49,0.15);">
-          <div class="price" style="color: var(--gold);">
-            <span style="font-size:1rem;color:var(--text-dim);text-decoration:line-through;margin-right:0.5rem;">$19</span>$12
-          </div>
-          <div class="price-note">Early bird price · One-time payment · Lifetime access</div>
-          <ul class="price-features">
-            <li>All 8 modules with video walkthroughs</li>
-            <li>100+ tested prompt templates</li>
-            <li>Downloadable cheat sheets for every module</li>
-            <li>Private AI installation guide (Ollama + RAG)</li>
-            <li>Free updates as AI tools evolve</li>
-          </ul>
-          <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;">Get Early Bird Access →</a>
-          <p class="ppp-note">🌍 Prices adjust by country · Quality education for everyone</p>
-        </div>
-      </div>
-      <div class="ph-right reveal reveal-delay-1">
-        <div style="font-family:var(--mono);font-size:0.7rem;color:var(--gold);letter-spacing:0.1em;margin-bottom:1rem;">CURRICULUM</div>
-        <ul class="module-list">
-          <li>
-            <span class="mod-num">01</span>
-            <span class="mod-name">Your First AI Win</span>
-            <span class="mod-badge badge-live">LIVE</span>
-          </li>
-          <li>
-            <span class="mod-num">02</span>
-            <span class="mod-name">AI for Academic Writing</span>
-            <span class="mod-badge badge-live">LIVE</span>
-          </li>
-          <li>
-            <span class="mod-num">03</span>
-            <span class="mod-name">AI for Code &amp; Data</span>
-            <span class="mod-badge badge-live">LIVE</span>
-          </li>
-          <li>
-            <span class="mod-num">04</span>
-            <span class="mod-name">Local AI — Your Private Assistant</span>
-            <span class="mod-badge badge-soon">WEEK 2</span>
-          </li>
-          <li>
-            <span class="mod-num">05</span>
-            <span class="mod-name">AI for Grant Writing</span>
-            <span class="mod-badge badge-soon">WEEK 3</span>
-          </li>
-          <li>
-            <span class="mod-num">06</span>
-            <span class="mod-name">Build Your Knowledge Base — RAG</span>
-            <span class="mod-badge badge-soon">WEEK 5</span>
-          </li>
-          <li>
-            <span class="mod-num">07</span>
-            <span class="mod-name">Automate Your Research Workflow</span>
-            <span class="mod-badge badge-soon">WEEK 7</span>
-          </li>
-          <li>
-            <span class="mod-num">08</span>
-            <span class="mod-name">Ethics, Boundaries &amp; The Future</span>
-            <span class="mod-badge badge-soon">WEEK 7</span>
-          </li>
-        </ul>
-        <p style="font-size:0.75rem;color:var(--text-dim);margin-top:1rem;line-height:1.5;">
-          🔓 Buy once, access all modules forever. New modules release weekly — you get them automatically.
-        </p>
-      </div>
-    </div>
+  <div class="stats-grid reveal">
+    <div class="stat-card"><div class="stat-val">15+</div><div class="stat-label">Years of experience<br>in academia</div></div>
+    <div class="stat-card"><div class="stat-val">6</div><div class="stat-label">Active funded<br>research projects</div></div>
+    <div class="stat-card"><div class="stat-val">50+</div><div class="stat-label">Prompts tested on<br>real research tasks</div></div>
+    <div class="stat-card"><div class="stat-val">10+</div><div class="stat-label">Hours saved<br>per week with AI</div></div>
   </div>
-</section>
+</div>
+</div></section>
 
-<!-- ═══════ PRODUCT 2: PHD COMPASS ═══════ -->
-<section class="product-section" id="phd-compass">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-label" style="color: var(--teal);">Product 02 — For PhD Students</div>
-      <h2 class="section-title">The PhD Compass</h2>
-      <p class="section-desc" style="margin-bottom:1rem;">
-        Your PhD is a 3-4 year journey with no clear map. The PhD Compass gives you 
-        a complete navigation system — using AI to structure the chaos, track your progress, 
-        and actually finish on time.
-      </p>
-      <p style="font-size:0.85rem;color:var(--teal);font-weight:600;margin-bottom:0.5rem;">Coming Summer 2026</p>
-      <a href="#free-guide" class="btn btn-teal btn-sm">Join Waitlist →</a>
-    </div>
+<hr class="divider">
 
-    <div class="features-grid" style="margin-top:2.5rem;">
-      <div class="feature-item reveal">
-        <div class="fi-icon">🏗️</div>
-        <h4>Thesis Architect</h4>
-        <p>Break your thesis into chapters, sections, and weekly writing targets. AI helps structure the outline and set realistic timelines.</p>
-      </div>
-      <div class="feature-item reveal reveal-delay-1">
-        <div class="fi-icon">📚</div>
-        <h4>Literature Command Center</h4>
-        <p>Never lose a paper's key insight again. Organized reading with AI-generated summaries and a personal RAG knowledge base.</p>
-      </div>
-      <div class="feature-item reveal reveal-delay-2">
-        <div class="fi-icon">📝</div>
-        <h4>Publication Pipeline</h4>
-        <p>Step-by-step from idea to submission. The 3-pass writing method, journal selection, cover letter templates, reviewer responses.</p>
-      </div>
-      <div class="feature-item reveal reveal-delay-1">
-        <div class="fi-icon">🤝</div>
-        <h4>Supervisor Meeting System</h4>
-        <p>Structured agendas, AI-summarized notes, tracked action items. Never forget what you agreed on three meetings ago.</p>
-      </div>
-      <div class="feature-item reveal reveal-delay-2">
-        <div class="fi-icon">📊</div>
-        <h4>Progress Dashboard</h4>
-        <p>Visual milestone tracker for your training component, publications, thesis chapters. Always know if you're on track.</p>
-      </div>
-      <div class="feature-item reveal reveal-delay-3">
-        <div class="fi-icon">☀️</div>
-        <h4>The 15-Minute Daily Method</h4>
-        <p>Every morning, 15 minutes of AI-assisted planning. End the "I don't know what to do today" paralysis.</p>
-      </div>
-    </div>
+<section class="section" id="faq"><div class="container">
+<div class="reveal"><div class="section-label">Questions</div><h2 class="section-title">Frequently asked</h2></div>
+<div class="faq-list reveal">
+  <div class="faq-item"><div class="faq-q">Do I need programming experience?</div><div class="faq-a">No. The course is designed for researchers who are not programmers. Module 3 teaches you to generate R and Python code by describing what you need in plain English. If you can write an email, you can use these tools.</div></div>
+  <div class="faq-item"><div class="faq-q">Is this just prompt templates I could find online for free?</div><div class="faq-a">The prompts are part of it, but the real value is the method &mdash; how to structure your workflow, when to use which tool, and how to integrate AI into a real research routine. Every prompt was tested on actual papers, grants, and reviewer responses. Free resources give you fragments. This gives you a system.</div></div>
+  <div class="faq-item"><div class="faq-q">Can I use this with sensitive or unpublished data?</div><div class="faq-a">Yes. Module 4 teaches you to install completely private AI on your own laptop using Ollama. Your data never leaves your machine &mdash; no cloud, no API calls, no data sharing. GDPR compliant by design.</div></div>
+  <div class="faq-item"><div class="faq-q">My university already offers AI training. How is this different?</div><div class="faq-a">Most university AI training covers the basics: "here's ChatGPT, here's what it can do." This goes far deeper &mdash; practical integration into your specific academic workflow including grant writing, reviewer responses, code generation, literature management, and building your own private AI knowledge base.</div></div>
+  <div class="faq-item"><div class="faq-q">Is AI use ethical in academic research?</div><div class="faq-a">Yes, when disclosed properly. Module 8 covers policies from Nature, Science, Elsevier, the Norwegian Research Council, and EU Horizon Europe. The universal rule: use AI freely, disclose it transparently. No major journal bans AI use &mdash; they ban hiding it.</div></div>
+  <div class="faq-item"><div class="faq-q">Can you run a workshop at our institution?</div><div class="faq-a">Yes. I offer half-day and full-day workshops for research groups, university departments, and companies. Available in-person across Norway or online worldwide. Email hello@aiforacademics.io for availability and pricing.</div></div>
+</div>
+</div></section>
+
+<hr class="divider">
+
+<section class="final-cta" id="start"><div class="container"><div class="reveal" style="position:relative;z-index:1">
+  <div class="section-label">Get Started</div>
+  <h2 class="section-title">Ready to reclaim your time?</h2>
+  <p class="section-desc" style="margin:0 auto 2rem;text-align:center">Start with the full course at the early bird price of $12. Or grab the free cheat sheet to see what the method looks like in practice.</p>
+  <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem">
+    <a href="https://aiforacademics.lemonsqueezy.com/checkout/buy/COURSE-ID" class="btn btn-gold" target="_blank" rel="noopener">&#x1F525; Early Bird &mdash; $12 &rarr;</a>
+    <a href="#newsletter" class="btn btn-ghost">Free Cheat Sheet &rarr;</a>
   </div>
-</section>
+  <p style="font-size:.78rem;color:var(--text-muted);font-weight:300">&#x1F30D; Prices adjust by country &middot; Lifetime access &middot; All future updates included</p>
+</div></div></section>
 
-<!-- ═══════ PRODUCT 3: AI-POWERED RESEARCH LAB ═══════ -->
-<section class="product-section" id="research-lab">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-label" style="color: var(--purple);">Product 03 — For Group Leaders &amp; PIs</div>
-      <h2 class="section-title">The AI-Powered Research Lab</h2>
-      <p class="section-desc" style="margin-bottom:1rem;">
-        You manage multiple projects, supervise students, write grants, and somehow need to do 
-        actual research too. This method gives you a complete system for running your research 
-        group efficiently — with AI handling the administrative overhead.
-      </p>
-      <p style="font-size:0.85rem;color:var(--purple);font-weight:600;margin-bottom:0.5rem;">Coming Autumn 2026</p>
-      <a href="#free-guide" class="btn btn-purple btn-sm">Join Waitlist →</a>
-    </div>
+<footer><div class="container">
+  <div class="foot-links"><a href="mailto:hello@aiforacademics.io">Contact</a><a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">Twitter / X</a></div>
+  <p>&copy; 2026 AI for Academics &middot; Kovi Consulting &middot; Org.nr 937 270 208 &middot; &Aring;s, Norway</p>
+</div></footer>
 
-    <div class="features-grid" style="margin-top:2.5rem;">
-      <div class="feature-item reveal">
-        <div class="fi-icon">🎯</div>
-        <h4>Project Command Center</h4>
-        <p>Single dashboard for all projects, deadlines, and budgets. See everything at a glance instead of drowning in spreadsheets and emails.</p>
-      </div>
-      <div class="feature-item reveal reveal-delay-1">
-        <div class="fi-icon">📬</div>
-        <h4>Smart Email Triage</h4>
-        <p>AI categorizes incoming emails, drafts responses, and flags deadlines. Cut your email time by 60%.</p>
-      </div>
-      <div class="feature-item reveal reveal-delay-2">
-        <div class="fi-icon">🔭</div>
-        <h4>Grant Radar</h4>
-        <p>Automated monitoring of NFR, EU Horizon, and Nordic funding calls. Never find out about a perfect call too late again.</p>
-      </div>
-      <div class="feature-item reveal reveal-delay-1">
-        <div class="fi-icon">📡</div>
-        <h4>Literature Sentinel</h4>
-        <p>AI triages new papers in your field weekly. Read only what matters, skip the rest with confidence.</p>
-      </div>
-      <div class="feature-item reveal reveal-delay-2">
-        <div class="fi-icon">👥</div>
-        <h4>Student &amp; Team Tracker</h4>
-        <p>Structured supervision meetings, progress tracking, and AI-summarized notes for every team member.</p>
-      </div>
-      <div class="feature-item reveal reveal-delay-3">
-        <div class="fi-icon">💰</div>
-        <h4>Budget Watchdog</h4>
-        <p>Simple tracking that prevents budget surprises. Know exactly how much you've spent on every project at any time.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+!function(){var c=document.getElementById('particles');if(!c)return;for(var i=0;i<35;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*3+1;p.style.cssText='width:'+s+'px;height:'+s+'px;left:'+Math.random()*100+'%;bottom:-10px;animation-duration:'+(Math.random()*14+8)+'s;animation-delay:'+(Math.random()*10)+'s;';c.appendChild(p)}}();
 
-<!-- ═══════ FREE LEAD MAGNET ═══════ -->
-<section class="lead-section" id="free-guide">
-  <div class="container">
-    <div class="lead-box reveal">
-      <div>
-        <h3>Get the free <span style="color:var(--gold);">AI Prompt Guide</span> for Academics</h3>
-        <p>50+ tested prompts for writing, code, grants, and literature reviews. Used daily by working researchers.</p>
-        <p style="font-size:0.78rem;color:var(--text-dim);">Plus: monthly tips on new AI tools and techniques. Unsubscribe anytime.</p>
-      </div>
-      <div>
-        <div class="lead-form">
-          <input type="email" placeholder="Your academic email" id="email-input">
-          <button onclick="handleSubscribe()">Get Free Guide →</button>
-        </div>
-        <p class="lead-note">No spam. No selling your data. Just useful research tools.</p>
-      </div>
-    </div>
-  </div>
-</section>
+!function(){if(window.innerWidth<768)return;var g=document.getElementById('cursorGlow'),r;document.addEventListener('mousemove',function(e){cancelAnimationFrame(r);r=requestAnimationFrame(function(){g.style.left=e.clientX+'px';g.style.top=e.clientY+'px';g.classList.add('active')})});document.addEventListener('mouseleave',function(){g.classList.remove('active')})}();
 
-<!-- ═══════ PRODUCT 4: WORKSHOPS & CONSULTING ═══════ -->
-<section class="product-section" id="workshops">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-label" style="color: var(--blue);">Product 04 — For Teams &amp; Institutions</div>
-      <h2 class="section-title">Workshops &amp; Consulting</h2>
-      <p class="section-desc">
-        Hands-on training where every participant leaves with working AI tools on their laptop. 
-        Available in-person across Norway or online worldwide.
-      </p>
-    </div>
+var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
 
-    <div class="workshop-cards">
-      <div class="ws-card reveal">
-        <div class="ws-icon">🔬</div>
-        <h4>Research Groups</h4>
-        <p>Set up private AI for your team. Grant writing workflows, literature automation, and a shared knowledge base for your projects.</p>
-        <div class="ws-meta">Half-day · 3–4 hours · From 8,000 NOK</div>
-      </div>
-      <div class="ws-card reveal reveal-delay-1">
-        <div class="ws-icon">🏛️</div>
-        <h4>University Departments</h4>
-        <p>Train PhD students, postdocs, and faculty together. Covers ethical guidelines, local AI setup, and practical writing workflows.</p>
-        <div class="ws-meta">Full-day · 6 hours · From 15,000 NOK</div>
-      </div>
-      <div class="ws-card reveal reveal-delay-2">
-        <div class="ws-icon">🏢</div>
-        <h4>Companies &amp; R&amp;D</h4>
-        <p>AI tools for agriculture, biotech, and R&amp;D teams. Private data handling, document intelligence, and AI-assisted analysis.</p>
-        <div class="ws-meta">Custom · Tailored to your needs</div>
-      </div>
-    </div>
+document.querySelectorAll('.pain-grid .pain-cell,.products-grid .p-card,.mod-list .mod-item,.ws-grid .ws-card').forEach(function(el,i){el.style.transitionDelay=(i*.08)+'s'});
 
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;" class="reveal">
-      <div>
-        <h4 style="font-size:1.05rem;margin-bottom:0.3rem;">Want to bring AI skills to your team?</h4>
-        <p style="font-size:0.85rem;color:var(--text-secondary);">Available in English · In-person or online · Faktura / EHF available · 5–50 participants</p>
-      </div>
-      <a href="/cdn-cgi/l/email-protection#49212c2525260928202f263b282a282d2c24202a3a672026" class="btn btn-blue">Get in Touch →</a>
-    </div>
-  </div>
-</section>
+if(window.innerWidth>=768){window.addEventListener('mousemove',function(e){var o=document.querySelector('.hero-orb');if(!o)return;var x=(e.clientX/window.innerWidth-.5)*35,y=(e.clientY/window.innerHeight-.5)*25;o.style.transform='translate('+x+'px,'+y+'px)';o.style.transition='transform .5s ease-out'})}
 
-<!-- ═══════ ABOUT ═══════ -->
-<section class="section" id="about">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-label">About the Instructor</div>
-      <h2 class="section-title">A researcher who builds<br>in his free time</h2>
-    </div>
+var cObs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting&&!x.target.dataset.counted){x.target.dataset.counted='true';var el=x.target.querySelector('.stat-val');if(!el)return;var t=el.textContent,n=parseInt(t);if(isNaN(n))return;var sf=t.replace(/[\d]/g,''),cur=0,st=Math.ceil(n/35),ti=setInterval(function(){cur+=st;if(cur>=n){cur=n;clearInterval(ti)}el.textContent=cur+sf},35)}})},{threshold:.5});
+document.querySelectorAll('.stat-card').forEach(function(el){cObs.observe(el)});
 
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <p>
-          By day, I'm a <strong>research scientist specializing in plant genomics and sustainable 
-          agriculture</strong>, based in Norway. I lead a research group, manage multiple funded 
-          projects, and supervise PhD students.
-        </p>
-        <p>
-          By evening and weekend, I'm an AI tinkerer. I started building local AI setups, research 
-          dashboards, and knowledge bases because I wanted to make my own work more efficient. 
-          The tools worked so well that colleagues started asking: <strong>"Can you show me how to do that?"</strong>
-        </p>
-        <p>
-          That question became these products. Everything here is something I built and use in my daily 
-          research life. I'm sharing it because every researcher deserves access to these tools — 
-          not just those with a computer science background.
-        </p>
-        <div class="tag-list">
-          <span class="tag">Plant Genomics</span>
-          <span class="tag">Sustainable Agriculture</span>
-          <span class="tag">Genomic Selection</span>
-          <span class="tag">CRISPR</span>
-          <span class="tag">Precision Ag</span>
-          <span class="tag">AI/ML</span>
-          <span class="tag">Python &amp; R</span>
-          <span class="tag">Grant Writing</span>
-        </div>
-      </div>
-      <div class="about-stats reveal reveal-delay-1">
-        <div class="stat-card">
-          <div class="stat-num">10+</div>
-          <div class="stat-label">Years in<br>academic research</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">6</div>
-          <div class="stat-label">Active funded<br>research projects</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">44M+</div>
-          <div class="stat-label">NOK in active<br>grant funding</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">10+</div>
-          <div class="stat-label">Hours saved<br>per week with AI</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+document.querySelectorAll('.faq-q').forEach(function(q){q.addEventListener('click',function(){var it=q.parentElement,w=it.classList.contains('open');document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open')});if(!w)it.classList.add('open')})});
 
-<!-- ═══════ FAQ ═══════ -->
-<section class="section" id="faq" style="border-top:1px solid var(--border);">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-label">Questions</div>
-      <h2 class="section-title">Frequently asked</h2>
-    </div>
-    <div class="faq-list reveal">
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          Do I need programming experience?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a"><p>Not at all. The entire course is designed for researchers who are NOT programmers. You'll learn to describe what you need in plain English and let AI generate the code. If you can write a research question, you can use these tools.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          Is my research data safe with AI tools?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a"><p>Module 4 covers setting up completely private, local AI that runs entirely on your laptop. Your data never leaves your machine. For sensitive research, grant drafts, or anything covered by GDPR, local AI is the responsible choice — and we show you exactly how to set it up.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          Will journals reject my paper if I used AI?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a"><p>No major journal bans AI use. Nature, Science, and Elsevier all say the same thing: use AI freely, disclose it honestly, and take responsibility for your content. Module 8 covers all journal and funder policies with ready-to-use disclosure templates.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          What if I already know the basics of ChatGPT?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a"><p>Good — then you'll move quickly through Module 1 and get straight to the advanced material: the 3-pass writing method, grant proposal workflows, private AI setup, and building a RAG knowledge base from your own papers. Most of the value is in Modules 4-8.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          Can my institution book a workshop?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a"><p>Absolutely. I run hands-on workshops for research groups, university departments, and companies across Norway and online. Everyone leaves with working AI tools on their laptop. Email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91f9f4fdfdfed1f0f8f7fee3f0f2f0f5f4fcf8f2e2bff8fe">[email&#160;protected]</a> or use the contact form above.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          Do you offer purchasing power parity pricing?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a"><p>Yes. Prices adjust automatically based on your country. Researchers in lower-income countries pay significantly less. Quality AI education should be accessible everywhere, regardless of where you work.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t){t.scrollIntoView({behavior:'smooth',block:'start'});document.querySelector('.nav-links').classList.remove('open')}})});
 
-<!-- ═══════ FINAL CTA ═══════ -->
-<section class="cta-section" id="start">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-label">Get Started</div>
-      <h2 class="section-title">Ready to work smarter?</h2>
-      <p class="section-desc">Start with the course, grab the free prompt guide, or reach out about workshops. Your first AI win is 30 minutes away.</p>
-      <div class="cta-actions">
-        <a href="#" class="btn btn-primary">🔥 Get Early Bird — $12</a>
-        <a href="#free-guide" class="btn btn-outline">Free Prompt Guide →</a>
-        <a href="/cdn-cgi/l/email-protection#c3aba6afafac83a2aaa5acb1a2a0a2a7a6aeaaa0b0edaaac" class="btn btn-outline">Book a Workshop →</a>
-      </div>
-      <div class="guarantee">
-        🛡️ 30-day money-back guarantee · No questions asked
-      </div>
-    </div>
-  </div>
-</section>
+var lastY=0;window.addEventListener('scroll',function(){var nav=document.querySelector('.nav'),y=window.scrollY;nav.style.background=y>60?'rgba(12,18,32,.92)':'rgba(12,18,32,.75)';if(y>lastY&&y>400)nav.style.transform='translateY(-100%)';else nav.style.transform='translateY(0)';nav.style.transition='transform .35s,background .3s';lastY=y});
 
-<!-- ═══════ FOOTER ═══════ -->
-<footer>
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <p>© 2026 AI for Academics · Kovi Consulting · Org.nr 937 270 208 · Ås, Norway</p>
-      </div>
-      <div class="footer-links">
-        <a href="https://linkedin.com/in/" target="_blank">LinkedIn</a>
-        <a href="https://youtube.com/@aiforacademics" target="_blank">YouTube</a>
-        <a href="/cdn-cgi/l/email-protection#96fef3fafaf9d6f7fff0f9e4f7f5f7f2f3fbfff5e5b8fff9">Contact</a>
-      </div>
-    </div>
-  </div>
-</footer>
+document.addEventListener('DOMContentLoaded',function(){if(window.innerWidth<768)return;var els=document.querySelectorAll('.hero-eyebrow,.hero h1,.hero-sub,.hero-actions,.hero-proof');els.forEach(function(el,i){el.style.opacity='0';el.style.transform='translateY(24px)';setTimeout(function(){el.style.transition='opacity .7s ease,transform .7s ease';el.style.opacity='1';el.style.transform='translateY(0)'},300+i*140)})});
 
-<!-- ═══════ SCRIPTS ═══════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// Reveal on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
-  });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Navbar scroll effect
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
-  const nav = document.getElementById('navbar');
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-});
-
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) {
-      t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      document.querySelector('.nav-links')?.classList.remove('open');
+/* Terminal typing animation */
+!function(){
+var lines=[
+  {type:'comment',text:'# Module 2: AI for Academic Writing'},
+  {type:'prompt',text:'You: '},
+  {type:'cmd',text:'Rewrite this paragraph for a Nature-style audience.'},
+  {type:'cmd',text:'Keep the technical depth but improve flow.'},
+  {type:'blank',text:''},
+  {type:'output',text:'Claude: Here\'s your revised paragraph with'},
+  {type:'output',text:'improved cohesion and journal-appropriate tone:'},
+  {type:'blank',text:''},
+  {type:'comment',text:'# Result: 3 minutes vs 45 minutes manually'},
+  {type:'prompt',text:'You: '},
+  {type:'cmd',text:'Now draft a reviewer response for Comment #3.'},
+  {type:'output',text:'Claude: Point-by-point response drafted. ✓'},
+];
+var body=document.getElementById('terminalBody');
+if(!body)return;
+var tObs=new IntersectionObserver(function(e){
+  if(e[0].isIntersecting&&!body.dataset.typed){
+    body.dataset.typed='true';
+    var i=0;
+    function addLine(){
+      if(i>=lines.length){
+        var cur=document.createElement('span');cur.className='t-cursor';body.lastChild.appendChild(cur);return;
+      }
+      var l=lines[i],div=document.createElement('div');
+      div.className='t-line';
+      div.style.animationDelay=(i*.08)+'s';
+      if(l.type==='comment')div.innerHTML='<span class="t-comment">'+l.text+'</span>';
+      else if(l.type==='prompt')div.innerHTML='<span class="t-prompt">'+l.text+'</span>';
+      else if(l.type==='cmd')div.innerHTML='<span class="t-cmd">  '+l.text+'</span>';
+      else if(l.type==='output')div.innerHTML='<span class="t-output">'+l.text+'</span>';
+      else div.innerHTML='&nbsp;';
+      body.appendChild(div);i++;
+      setTimeout(addLine,l.type==='blank'?200:120);
     }
-  });
-});
-
-// Email form handler (placeholder — replace with real form service)
-function handleSubscribe() {
-  const email = document.getElementById('email
+    setTimeout(addLine,600);
+  }
+},{threshold:.3});
+tObs.observe(document.getElementById('terminalDemo'));
+}();
+</script>
+</body>
+</html>
