@@ -19,7 +19,8 @@ a{color:var(--gold);text-decoration:none}
 .main{margin-left:280px;padding:2.5rem 3rem;max-width:900px;width:calc(100% - 280px)}
 
 /* Sidebar */
-.sb-logo{padding:0 1.5rem 1.5rem;border-bottom:1px solid var(--border);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.sb-logo{padding:0 1.5rem 1.5rem;border-bottom:1px solid var(--border);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;cursor:pointer;transition:opacity .2s}
+.sb-logo:hover{opacity:.8}
 .sb-logo-mark{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,#a88a3f,var(--gold));display:flex;align-items:center;justify-content:center;font-size:.7rem}
 .sb-logo span{font-family:var(--serif);font-size:.95rem;color:#fff;font-weight:600}
 .sb-progress{padding:0 1.5rem;margin-bottom:1.5rem}
@@ -124,20 +125,20 @@ a{color:var(--gold);text-decoration:none}
 <body>
 
 <div class="mobile-header">
-  <div style="display:flex;align-items:center;gap:.5rem">
+  <a href="/AIforAcademics/" style="display:flex;align-items:center;gap:.5rem;text-decoration:none">
     <div class="sb-logo-mark">⚡</div>
     <span style="font-family:var(--serif);color:#fff;font-size:.9rem;font-weight:600">AI for Academics</span>
-  </div>
+  </a>
   <button onclick="toggleSidebar()">☰</button>
 </div>
 <div class="sb-overlay" onclick="toggleSidebar()"></div>
 
 <div class="app">
 <aside class="sidebar" id="sidebar">
-  <div class="sb-logo">
+  <a href="/AIforAcademics/" class="sb-logo" style="text-decoration:none">
     <div class="sb-logo-mark">⚡</div>
     <span>AI for Academics</span>
-  </div>
+  </a>
   <div class="sb-progress">
     <div class="sb-progress-label">Your Progress</div>
     <div class="sb-progress-bar"><div class="sb-progress-fill" id="progressFill" style="width:0%"></div></div>
