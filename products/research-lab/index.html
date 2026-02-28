@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Powered Research Lab — Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0c1220;--ink-mid:#111827;--ink-light:#1a2332;--violet:#a78bfa;--violet-dim:#7c3aed;--violet-glow:rgba(167,139,250,.10);--violet-border:rgba(167,139,250,.18);--gold:#d4a853;--emerald:#34d399;--cyan:#22d3ee;--rose:#fb7185;--amber:#fbbf24;--text:#cbd5e1;--text-dim:#94a3b8;--text-muted:#64748b;--surface:rgba(17,24,39,.55);--border:rgba(148,163,184,.07);--border-hover:rgba(167,139,250,.15);--sans:'Outfit',sans-serif;--mono:'IBM Plex Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(167,139,250,.2);color:#fff}
+
+.topbar{background:var(--ink-mid);border-bottom:1px solid var(--border);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.topbar-logo{display:flex;align-items:center;gap:.5rem;font-weight:600;color:#fff;font-size:.95rem}
+.topbar-logo .mark{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--violet-dim),var(--violet));display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.topbar-tabs{display:flex;gap:0}
+.topbar-tab{padding:.5rem 1rem;font-size:.78rem;color:var(--text-muted);font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.topbar-tab:hover{color:var(--text)}
+.topbar-tab.active{color:var(--violet);border-bottom-color:var(--violet)}
+
+.container{max-width:1100px;margin:0 auto;padding:2rem}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+
+/* Stat cards */
+.stat-row{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;margin-bottom:2rem}
+.stat{padding:1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;text-align:center}
+.stat .lbl{font-size:.62rem;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
+.stat .num{font-size:1.4rem;font-weight:700;color:#fff}
+.stat .sub{font-size:.65rem;color:var(--text-dim);margin-top:.15rem}
+
+/* Project Cards */
+.proj-card{padding:1.3rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;transition:all .2s}
+.proj-card:hover{border-color:var(--border-hover)}
+.proj-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:.8rem}
+.proj-name{font-size:.95rem;color:#fff;font-weight:600}
+.proj-tag{font-family:var(--mono);font-size:.55rem;padding:.15rem .4rem;border-radius:4px;letter-spacing:.05em}
+.proj-tag.active{background:rgba(52,211,153,.12);color:var(--emerald)}
+.proj-tag.planning{background:rgba(212,168,83,.1);color:var(--gold)}
+.proj-tag.closing{background:rgba(251,113,133,.1);color:var(--rose)}
+.proj-meta{display:flex;gap:1.2rem;margin-bottom:.6rem;flex-wrap:wrap}
+.proj-meta span{font-size:.72rem;color:var(--text-muted)}
+.proj-meta strong{color:var(--text-dim)}
+.proj-bar{height:5px;background:var(--ink-light);border-radius:3px;overflow:hidden;margin-bottom:.4rem}
+.proj-bar-fill{height:100%;border-radius:3px}
+.proj-budget{font-family:var(--mono);font-size:.68rem;color:var(--text-dim);display:flex;justify-content:space-between}
+
+/* Team */
+.team-card{padding:1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;gap:.8rem;transition:all .2s}
+.team-card:hover{border-color:var(--border-hover)}
+.team-avatar{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:600;flex-shrink:0}
+.team-info{flex:1}
+.team-name{font-size:.85rem;color:#fff;font-weight:500}
+.team-role{font-size:.7rem;color:var(--text-muted)}
+.team-status{font-family:var(--mono);font-size:.6rem;padding:.15rem .4rem;border-radius:4px}
+
+/* Grant radar */
+.grant-item{padding:1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:.5rem;transition:all .2s}
+.grant-item:hover{border-color:var(--border-hover)}
+.grant-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem}
+.grant-name{font-size:.88rem;color:#fff;font-weight:500}
+.grant-deadline{font-family:var(--mono);font-size:.7rem;padding:.2rem .5rem;border-radius:4px}
+.grant-deadline.urgent{background:rgba(251,113,133,.12);color:var(--rose)}
+.grant-deadline.soon{background:rgba(212,168,83,.1);color:var(--gold)}
+.grant-deadline.later{background:rgba(100,116,139,.15);color:var(--text-muted)}
+.grant-details{font-size:.78rem;color:var(--text-dim);line-height:1.5}
+
+/* Email triage */
+.email-item{display:flex;gap:.8rem;padding:.8rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;align-items:center}
+.email-priority{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.email-priority.high{background:var(--rose)}
+.email-priority.med{background:var(--gold)}
+.email-priority.low{background:var(--text-muted)}
+.email-from{font-size:.78rem;color:var(--text);font-weight:500;min-width:120px}
+.email-subject{font-size:.78rem;color:var(--text-dim);flex:1}
+.email-action{font-family:var(--mono);font-size:.6rem;padding:.15rem .4rem;border-radius:4px;flex-shrink:0}
+.email-action.reply{background:rgba(34,211,238,.1);color:var(--cyan)}
+.email-action.delegate{background:rgba(167,139,250,.1);color:var(--violet)}
+.email-action.archive{background:rgba(100,116,139,.15);color:var(--text-muted)}
+
+/* Budget */
+.budget-row{display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.82rem}
+.budget-row:last-child{border:none}
+.budget-cat{color:var(--text-dim)}
+.budget-amt{font-family:var(--mono);color:var(--text)}
+.budget-bar{width:100px;height:5px;background:var(--ink-light);border-radius:3px;margin:0 1rem}
+.budget-bar-fill{height:100%;border-radius:3px;background:var(--violet)}
+
+.tab-content{display:none}.tab-content.active{display:block}
+.section{margin-bottom:2rem}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.section-title{font-size:1.05rem;color:#fff;font-weight:600;display:flex;align-items:center;gap:.5rem}
+@media(max-width:768px){.stat-row{grid-template-columns:repeat(2,1fr)}.grid-2,.grid-3{grid-template-columns:1fr}.container{padding:1.5rem}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo"><div class="mark">🔬</div>Research Lab</div>
+  <div class="topbar-tabs">
+    <div class="topbar-tab active" onclick="switchTab('overview',this)">Overview</div>
+    <div class="topbar-tab" onclick="switchTab('projects',this)">Projects</div>
+    <div class="topbar-tab" onclick="switchTab('team',this)">Team</div>
+    <div class="topbar-tab" onclick="switchTab('grants',this)">Grant Radar</div>
+    <div class="topbar-tab" onclick="switchTab('email',this)">Email Triage</div>
+    <div class="topbar-tab" onclick="switchTab('budget',this)">Budget</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- OVERVIEW -->
+<div class="tab-content active" id="tab-overview">
+<div class="stat-row">
+  <div class="stat"><div class="lbl">Active Projects</div><div class="num" style="color:var(--violet)">6</div><div class="sub">44M+ NOK total</div></div>
+  <div class="stat"><div class="lbl">Team Members</div><div class="num" style="color:var(--cyan)">9</div><div class="sub">3 PhD · 2 PD · 4 MSc</div></div>
+  <div class="stat"><div class="lbl">Papers 2026</div><div class="num" style="color:var(--emerald)">3</div><div class="sub">1 published · 2 in prep</div></div>
+  <div class="stat"><div class="lbl">Grant Deadlines</div><div class="num" style="color:var(--rose)">2</div><div class="sub">Next 60 days</div></div>
+  <div class="stat"><div class="lbl">Budget Health</div><div class="num" style="color:var(--emerald)">OK</div><div class="sub">72% year remaining</div></div>
+</div>
+
+<div class="grid-2">
+  <div class="section">
+    <div class="section-title" style="margin-bottom:.8rem">⚡ Priority Actions This Week</div>
+    <div style="display:grid;gap:.4rem">
+      <div style="padding:.7rem .9rem;background:rgba(251,113,133,.06);border:1px solid rgba(251,113,133,.12);border-radius:8px;font-size:.82rem;color:var(--text)">🔴 ProteGrass proposal — final budget to partners by Wed</div>
+      <div style="padding:.7rem .9rem;background:rgba(212,168,83,.06);border:1px solid rgba(212,168,83,.12);border-radius:8px;font-size:.82rem;color:var(--text)">🟡 Review PhD student Anna's chapter draft — promised by Friday</div>
+      <div style="padding:.7rem .9rem;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.12);border-radius:8px;font-size:.82rem;color:var(--text)">🔵 GE-Sustain potato RNA-seq — check DESeq2 results from postdoc</div>
+      <div style="padding:.7rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:.82rem;color:var(--text-dim)">⚪ Order drone parts for spring field season — DLT-Farming</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title" style="margin-bottom:.8rem">📅 Upcoming Deadlines</div>
+    <div style="display:grid;gap:.4rem">
+      <div class="grant-item" style="margin:0"><div class="grant-head"><span class="grant-name">ProteGrass KSP Submission</span><span class="grant-deadline urgent">Mar 12</span></div></div>
+      <div class="grant-item" style="margin:0"><div class="grant-head"><span class="grant-name">Mitovirus collab — decision to Christine</span><span class="grant-deadline urgent">Mar 3</span></div></div>
+      <div class="grant-item" style="margin:0"><div class="grant-head"><span class="grant-name">TWIN-NUE Annual Report</span><span class="grant-deadline soon">Apr 1</span></div></div>
+      <div class="grant-item" style="margin:0"><div class="grant-head"><span class="grant-name">ARD Innovation meeting — AS structure</span><span class="grant-deadline later">TBD</span></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- PROJECTS -->
+<div class="tab-content" id="tab-projects">
+<div class="section">
+  <div class="section-head"><div class="section-title">🗂️ Project Portfolio</div></div>
+  <div class="grid-2">
+    <div class="proj-card">
+      <div class="proj-head"><span class="proj-name">Soil2Milk</span><span class="proj-tag active">ACTIVE</span></div>
+      <div class="proj-meta"><span>PI: <strong>Mallik</strong></span><span>Partners: <strong>TINE, Yara, NMBU</strong></span><span>End: <strong>Dec 2026</strong></span></div>
+      <div class="proj-bar"><div class="proj-bar-fill" style="width:65%;background:var(--emerald)"></div></div>
+      <div class="proj-budget"><span>Budget: 8.2M NOK</span><span>Spent: 5.3M (65%)</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-head"><span class="proj-name">DLT-Farming</span><span class="proj-tag active">ACTIVE</span></div>
+      <div class="proj-meta"><span>PI: <strong>Mallik</strong></span><span>Partners: <strong>NMBU, Graminor</strong></span><span>End: <strong>Jun 2027</strong></span></div>
+      <div class="proj-bar"><div class="proj-bar-fill" style="width:40%;background:var(--cyan)"></div></div>
+      <div class="proj-budget"><span>Budget: 7.5M NOK</span><span>Spent: 3.0M (40%)</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-head"><span class="proj-name">TWIN-NUE</span><span class="proj-tag active">ACTIVE</span></div>
+      <div class="proj-meta"><span>PI: <strong>Mallik</strong></span><span>Partners: <strong>NIBIO, Yara</strong></span><span>End: <strong>Dec 2027</strong></span></div>
+      <div class="proj-bar"><div class="proj-bar-fill" style="width:30%;background:var(--violet)"></div></div>
+      <div class="proj-budget"><span>Budget: 9.8M NOK</span><span>Spent: 2.9M (30%)</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-head"><span class="proj-name">GE-Sustain</span><span class="proj-tag active">ACTIVE</span></div>
+      <div class="proj-meta"><span>PI: <strong>Mallik</strong></span><span>Focus: <strong>CRISPR, Potato</strong></span><span>End: <strong>Dec 2026</strong></span></div>
+      <div class="proj-bar"><div class="proj-bar-fill" style="width:55%;background:var(--gold)"></div></div>
+      <div class="proj-budget"><span>Budget: 6.1M NOK</span><span>Spent: 3.4M (55%)</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-head"><span class="proj-name">ProteinSense</span><span class="proj-tag active">ACTIVE</span></div>
+      <div class="proj-meta"><span>PI: <strong>Mallik</strong></span><span>Partners: <strong>TINE, MIMIRO</strong></span><span>End: <strong>Sep 2027</strong></span></div>
+      <div class="proj-bar"><div class="proj-bar-fill" style="width:25%;background:var(--cyan)"></div></div>
+      <div class="proj-budget"><span>Budget: 7.2M NOK</span><span>Spent: 1.8M (25%)</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-head"><span class="proj-name">ProteGrass (KSP)</span><span class="proj-tag planning">PLANNING</span></div>
+      <div class="proj-meta"><span>PI: <strong>Mallik</strong></span><span>Partners: <strong>9 partners</strong></span><span>Submit: <strong>Mar 2026</strong></span></div>
+      <div class="proj-bar"><div class="proj-bar-fill" style="width:80%;background:var(--amber)"></div></div>
+      <div class="proj-budget"><span>Requested: 12M NOK</span><span>Proposal: 80% done</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- TEAM -->
+<div class="tab-content" id="tab-team">
+<div class="section">
+  <div class="section-head"><div class="section-title">👥 Team Overview</div></div>
+  <div class="grid-3">
+    <div class="team-card"><div class="team-avatar" style="background:rgba(251,113,133,.12);color:var(--rose)">AS</div><div class="team-info"><div class="team-name">Anna Sørensen</div><div class="team-role">PhD Student · GE-Sustain</div></div><span class="team-status" style="background:rgba(52,211,153,.12);color:var(--emerald)">On track</span></div>
+    <div class="team-card"><div class="team-avatar" style="background:rgba(34,211,238,.12);color:var(--cyan)">KN</div><div class="team-info"><div class="team-name">Kjetil Nordby</div><div class="team-role">PhD Student · TWIN-NUE</div></div><span class="team-status" style="background:rgba(212,168,83,.1);color:var(--gold)">Needs check-in</span></div>
+    <div class="team-card"><div class="team-avatar" style="background:rgba(167,139,250,.12);color:var(--violet)">LW</div><div class="team-info"><div class="team-name">Li Wei</div><div class="team-role">PhD Student · DLT-Farming</div></div><span class="team-status" style="background:rgba(52,211,153,.12);color:var(--emerald)">On track</span></div>
+    <div class="team-card"><div class="team-avatar" style="background:rgba(52,211,153,.12);color:var(--emerald)">MR</div><div class="team-info"><div class="team-name">Maria Rossi</div><div class="team-role">Postdoc · ProteinSense</div></div><span class="team-status" style="background:rgba(52,211,153,.12);color:var(--emerald)">On track</span></div>
+    <div class="team-card"><div class="team-avatar" style="background:rgba(212,168,83,.12);color:var(--gold)">TH</div><div class="team-info"><div class="team-name">Thomas Hansen</div><div class="team-role">Postdoc · Soil2Milk</div></div><span class="team-status" style="background:rgba(34,211,238,.1);color:var(--cyan)">Paper writing</span></div>
+    <div class="team-card"><div class="team-avatar" style="background:rgba(251,113,133,.12);color:var(--rose)">EB</div><div class="team-info"><div class="team-name">Emma Berg</div><div class="team-role">MSc Student · GE-Sustain</div></div><span class="team-status" style="background:rgba(52,211,153,.12);color:var(--emerald)">On track</span></div>
+  </div>
+  <div style="margin-top:1.5rem;padding:1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:12px">
+    <div class="section-title" style="margin-bottom:.6rem;font-size:.9rem">📋 Next Supervision Meetings</div>
+    <div style="display:grid;gap:.35rem">
+      <div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.82rem"><span style="color:var(--text)">Anna Sørensen — Chapter 3 review</span><span style="font-family:var(--mono);font-size:.72rem;color:var(--rose)">Mon Mar 2</span></div>
+      <div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.82rem"><span style="color:var(--text)">Kjetil Nordby — Progress check + timeline</span><span style="font-family:var(--mono);font-size:.72rem;color:var(--gold)">Tue Mar 3</span></div>
+      <div style="display:flex;justify-content:space-between;padding:.4rem 0;font-size:.82rem"><span style="color:var(--text)">Maria Rossi — ProteinSense manuscript draft</span><span style="font-family:var(--mono);font-size:.72rem;color:var(--text-muted)">Thu Mar 5</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- GRANT RADAR -->
+<div class="tab-content" id="tab-grants">
+<div class="section">
+  <div class="section-head"><div class="section-title">📡 Grant Radar</div></div>
+  <div class="grant-item"><div class="grant-head"><span class="grant-name">NFR KSP FFL/JA — ProteGrass</span><span class="grant-deadline urgent">Mar 12, 2026</span></div><div class="grant-details">Knowledge-building for industry. 9-partner consortium. Budget: 12M NOK. Status: 80% complete, awaiting partner letters and final budget.</div></div>
+  <div class="grant-item"><div class="grant-head"><span class="grant-name">NFR FRIPRO — N-SWITCH</span><span class="grant-deadline soon">Jun 2026</span></div><div class="grant-details">Researcher project. Spatial transcriptomics for NUE regulatory networks. 10x Visium pilot planned. Budget: ~8M NOK. Status: Concept stage.</div></div>
+  <div class="grant-item"><div class="grant-head"><span class="grant-name">EU Horizon — Sustainable Protein Crops</span><span class="grant-deadline later">Sep 2026</span></div><div class="grant-details">Large collaborative project. Potential WP leader role. Monitoring call text release expected June 2026.</div></div>
+  <div class="grant-item"><div class="grant-head"><span class="grant-name">ERC Consolidator Grant</span><span class="grant-deadline later">Oct 2026</span></div><div class="grant-details">Individual excellence grant. Possible application on AI-integrated plant breeding. Requires strong publication record — assess feasibility by July.</div></div>
+</div>
+</div>
+
+<!-- EMAIL TRIAGE -->
+<div class="tab-content" id="tab-email">
+<div class="section">
+  <div class="section-head"><div class="section-title">📧 Smart Email Triage</div><span style="font-size:.72rem;color:var(--text-muted)">AI-categorized · 14 unread</span></div>
+  <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap">
+    <span style="padding:.3rem .6rem;background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.15);border-radius:6px;font-size:.7rem;color:var(--rose);cursor:pointer">Urgent (3)</span>
+    <span style="padding:.3rem .6rem;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.15);border-radius:6px;font-size:.7rem;color:var(--cyan);cursor:pointer">Reply Needed (5)</span>
+    <span style="padding:.3rem .6rem;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.15);border-radius:6px;font-size:.7rem;color:var(--violet);cursor:pointer">Delegate (2)</span>
+    <span style="padding:.3rem .6rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:.7rem;color:var(--text-muted);cursor:pointer">Archive (4)</span>
+  </div>
+  <div class="email-item"><div class="email-priority high"></div><span class="email-from">Christine Roden</span><span class="email-subject">Re: Mitovirus RNAi project — need decision by Mon</span><span class="email-action reply">REPLY</span></div>
+  <div class="email-item"><div class="email-priority high"></div><span class="email-from">NFR Portfolio</span><span class="email-subject">KSP FFL/JA: Updated submission guidelines</span><span class="email-action reply">REPLY</span></div>
+  <div class="email-item"><div class="email-priority high"></div><span class="email-from">Graminor AS</span><span class="email-subject">Urgent: Field trial seed shipment — confirm varieties</span><span class="email-action reply">REPLY</span></div>
+  <div class="email-item"><div class="email-priority med"></div><span class="email-from">Anna Sørensen</span><span class="email-subject">Chapter 3 draft ready for review (attached)</span><span class="email-action reply">REPLY</span></div>
+  <div class="email-item"><div class="email-priority med"></div><span class="email-from">TINE SA</span><span class="email-subject">Soil2Milk quarterly meeting — agenda review</span><span class="email-action delegate">DELEGATE</span></div>
+  <div class="email-item"><div class="email-priority med"></div><span class="email-from">BMKGene</span><span class="email-subject">Updated quote: 10x Visium pricing for pilot</span><span class="email-action reply">REPLY</span></div>
+  <div class="email-item"><div class="email-priority low"></div><span class="email-from">NMBU HR</span><span class="email-subject">Reminder: Annual employee survey due Mar 15</span><span class="email-action archive">ARCHIVE</span></div>
+  <div class="email-item"><div class="email-priority low"></div><span class="email-from">Springer Nature</span><span class="email-subject">Call for papers: Special Issue on Precision Agriculture</span><span class="email-action archive">ARCHIVE</span></div>
+</div>
+</div>
+
+<!-- BUDGET -->
+<div class="tab-content" id="tab-budget">
+<div class="section">
+  <div class="section-head"><div class="section-title">💰 Budget Overview — 2026</div></div>
+  <div class="stat-row" style="grid-template-columns:repeat(3,1fr)">
+    <div class="stat"><div class="lbl">Total Budget</div><div class="num" style="color:var(--violet)">44.8M</div><div class="sub">NOK across all projects</div></div>
+    <div class="stat"><div class="lbl">Spent YTD</div><div class="num" style="color:var(--gold)">16.4M</div><div class="sub">36.6% of total</div></div>
+    <div class="stat"><div class="lbl">Remaining</div><div class="num" style="color:var(--emerald)">28.4M</div><div class="sub">On track ✓</div></div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.3rem">
+    <div style="font-size:.9rem;color:#fff;font-weight:600;margin-bottom:1rem">By Category</div>
+    <div class="budget-row"><span class="budget-cat">Salaries & Personnel</span><div class="budget-bar"><div class="budget-bar-fill" style="width:42%"></div></div><span class="budget-amt">18.8M NOK (42%)</span></div>
+    <div class="budget-row"><span class="budget-cat">Equipment & Consumables</span><div class="budget-bar"><div class="budget-bar-fill" style="width:22%"></div></div><span class="budget-amt">9.9M NOK (22%)</span></div>
+    <div class="budget-row"><span class="budget-cat">Travel & Conferences</span><div class="budget-bar"><div class="budget-bar-fill" style="width:8%"></div></div><span class="budget-amt">3.6M NOK (8%)</span></div>
+    <div class="budget-row"><span class="budget-cat">Sequencing & Lab Services</span><div class="budget-bar"><div class="budget-bar-fill" style="width:15%"></div></div><span class="budget-amt">6.7M NOK (15%)</span></div>
+    <div class="budget-row"><span class="budget-cat">Overhead & Indirect Costs</span><div class="budget-bar"><div class="budget-bar-fill" style="width:13%"></div></div><span class="budget-amt">5.8M NOK (13%)</span></div>
+  </div>
+</div>
+</div>
+
+</div>
+<script>
+function switchTab(n,el){document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.topbar-tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');el.classList.add('active')}
+</script>
+</body>
+</html>

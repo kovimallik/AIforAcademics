@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI for Academics — Course Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0c1220;--ink-mid:#111827;--ink-light:#1a2332;--ink-hover:#1f2b3d;--gold:#d4a853;--gold-bright:#e8c06a;--gold-glow:rgba(212,168,83,.10);--gold-border:rgba(212,168,83,.18);--emerald:#34d399;--cyan:#22d3ee;--text:#cbd5e1;--text-dim:#94a3b8;--text-muted:#64748b;--surface:rgba(17,24,39,.55);--border:rgba(148,163,184,.07);--border-hover:rgba(212,168,83,.15);--serif:'Fraunces',Georgia,serif;--sans:'Outfit',sans-serif;--mono:'IBM Plex Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--gold);text-decoration:none}
+::selection{background:rgba(212,168,83,.25);color:#fff}
+
+/* Layout */
+.app{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
+.sidebar{background:var(--ink-mid);border-right:1px solid var(--border);padding:1.5rem 0;position:fixed;width:280px;height:100vh;overflow-y:auto;z-index:10}
+.main{margin-left:280px;padding:2.5rem 3rem;max-width:900px}
+
+/* Sidebar */
+.sb-logo{padding:0 1.5rem 1.5rem;border-bottom:1px solid var(--border);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.sb-logo-mark{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,#a88a3f,var(--gold));display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.sb-logo span{font-family:var(--serif);font-size:.95rem;color:#fff;font-weight:600}
+.sb-progress{padding:0 1.5rem;margin-bottom:1.5rem}
+.sb-progress-label{font-size:.7rem;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem}
+.sb-progress-bar{height:6px;background:var(--ink-light);border-radius:3px;overflow:hidden}
+.sb-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:3px;transition:width .5s var(--ease)}
+.sb-progress-text{font-size:.72rem;color:var(--text-dim);margin-top:.35rem}
+.sb-section{padding:.5rem 1.5rem;margin-bottom:.25rem}
+.sb-section-title{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.5rem}
+.sb-item{display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;border-radius:8px;cursor:pointer;transition:all .2s;margin-bottom:2px}
+.sb-item:hover{background:var(--ink-light)}
+.sb-item.active{background:var(--gold-glow);border:1px solid var(--gold-border)}
+.sb-item.completed .sb-check{background:var(--emerald);color:var(--ink);font-size:.55rem}
+.sb-check{width:22px;height:22px;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:transparent;flex-shrink:0;transition:all .2s}
+.sb-item.active .sb-check{border-color:var(--gold-border)}
+.sb-item-text{font-size:.8rem;color:var(--text-dim);font-weight:400;line-height:1.3}
+.sb-item.active .sb-item-text{color:#fff;font-weight:500}
+.sb-item.completed .sb-item-text{color:var(--text-dim)}
+.sb-tag{font-family:var(--mono);font-size:.55rem;padding:.1rem .35rem;border-radius:4px;margin-left:auto;flex-shrink:0}
+.sb-tag.live{background:rgba(52,211,153,.12);color:var(--emerald)}
+.sb-tag.soon{background:rgba(212,168,83,.1);color:var(--gold)}
+
+/* Main Content */
+.mod-header{margin-bottom:2rem}
+.mod-badge{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.mod-title{font-family:var(--sans);font-size:1.8rem;color:#fff;font-weight:700;margin-bottom:.5rem;letter-spacing:-.01em}
+.mod-desc{font-size:.95rem;color:var(--text-dim);line-height:1.7;font-weight:300;max-width:640px}
+
+/* Video Player */
+.video-wrap{background:var(--ink-mid);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:2rem;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:border-color .3s}
+.video-wrap:hover{border-color:var(--border-hover)}
+.video-play{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-bright));display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--ink);box-shadow:0 4px 24px rgba(212,168,83,.3);transition:transform .3s}
+.video-wrap:hover .video-play{transform:scale(1.08)}
+.video-label{position:absolute;bottom:1rem;left:1rem;font-family:var(--mono);font-size:.65rem;color:var(--text-muted);background:rgba(0,0,0,.5);padding:.25rem .6rem;border-radius:4px}
+
+/* Content Sections */
+.content-section{margin-bottom:2.5rem}
+.content-section h2{font-size:1.1rem;color:#fff;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.content-section h2 .ico{font-size:1rem}
+
+/* Key Takeaways */
+.takeaways{display:grid;gap:.5rem}
+.takeaway{display:flex;align-items:start;gap:.6rem;padding:.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.takeaway-dot{width:8px;height:8px;border-radius:3px;background:var(--gold);margin-top:.35rem;flex-shrink:0}
+.takeaway p{font-size:.85rem;color:var(--text-dim);line-height:1.6;font-weight:300}
+
+/* Prompts Library */
+.prompt-card{background:var(--ink-mid);border:1px solid var(--border);border-radius:10px;margin-bottom:.6rem;overflow:hidden;transition:border-color .2s}
+.prompt-card:hover{border-color:var(--border-hover)}
+.prompt-header{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;cursor:pointer}
+.prompt-header h4{font-size:.82rem;color:#fff;font-weight:500}
+.prompt-copy{font-family:var(--mono);font-size:.6rem;color:var(--gold);background:var(--gold-glow);border:1px solid var(--gold-border);padding:.2rem .5rem;border-radius:4px;cursor:pointer;border:none;transition:all .2s}
+.prompt-copy:hover{background:var(--gold);color:var(--ink)}
+.prompt-body{padding:0 1rem .75rem;display:none}
+.prompt-card.open .prompt-body{display:block}
+.prompt-code{font-family:var(--mono);font-size:.78rem;color:var(--cyan);background:rgba(0,0,0,.3);padding:.75rem 1rem;border-radius:8px;line-height:1.6;white-space:pre-wrap;border:1px solid rgba(34,211,238,.08)}
+.prompt-note{font-size:.75rem;color:var(--text-muted);margin-top:.5rem;font-style:italic}
+
+/* Cheat Sheet */
+.cheatsheet{background:linear-gradient(135deg,var(--ink-light),var(--ink-mid));border:1px solid var(--border-hover);border-radius:14px;padding:1.5rem;display:flex;align-items:center;gap:1.2rem}
+.cheatsheet-icon{width:52px;height:52px;border-radius:12px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.cheatsheet-text h3{font-size:.9rem;color:#fff;font-weight:600;margin-bottom:.2rem}
+.cheatsheet-text p{font-size:.78rem;color:var(--text-muted);font-weight:300}
+.cheatsheet-btn{margin-left:auto;padding:.5rem 1rem;background:var(--gold);color:var(--ink);border:none;border-radius:7px;font-family:var(--sans);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;flex-shrink:0}
+.cheatsheet-btn:hover{background:var(--gold-bright)}
+
+/* Complete Button */
+.complete-btn{display:flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;background:var(--emerald);color:var(--ink);border:none;border-radius:9px;font-family:var(--sans);font-size:.88rem;font-weight:600;cursor:pointer;transition:all .25s;margin-top:2rem}
+.complete-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(52,211,153,.3)}
+.complete-btn.done{background:var(--ink-light);color:var(--emerald);border:1px solid rgba(52,211,153,.2)}
+
+/* Nav buttons */
+.mod-nav{display:flex;justify-content:space-between;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.mod-nav-btn{padding:.6rem 1.2rem;border-radius:8px;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:transparent;color:var(--text-dim);font-family:var(--sans)}
+.mod-nav-btn:hover{border-color:var(--border-hover);color:#fff}
+.mod-nav-btn.next{background:var(--gold);color:var(--ink);border:none;font-weight:600}
+.mod-nav-btn.next:hover{background:var(--gold-bright)}
+
+/* Mobile */
+.mobile-header{display:none;padding:1rem 1.5rem;background:var(--ink-mid);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:20}
+.mobile-header button{background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer}
+
+/* Locked Module */
+.locked-overlay{background:linear-gradient(135deg,var(--ink-light),var(--ink-mid));border:1px solid var(--border);border-radius:14px;padding:3rem 2rem;text-align:center;margin:2rem 0}
+.locked-overlay .lock-icon{font-size:2.5rem;margin-bottom:1rem}
+.locked-overlay h3{font-size:1.1rem;color:#fff;font-weight:600;margin-bottom:.5rem}
+.locked-overlay p{font-size:.88rem;color:var(--text-muted);max-width:420px;margin:0 auto .5rem;font-weight:300;line-height:1.6}
+.locked-prompt{opacity:.4;pointer-events:none;filter:blur(2px);user-select:none}
+.sb-item.locked{opacity:.5}
+.sb-item.locked .sb-check{border-color:rgba(148,163,184,.1)}
+.prompt-count-badge{font-family:var(--mono);font-size:.6rem;color:var(--text-muted);background:var(--surface);padding:.15rem .4rem;border-radius:4px;margin-left:.5rem}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s var(--ease);z-index:30}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:5rem 1.5rem 2rem}
+  .mobile-header{display:flex;align-items:center;justify-content:space-between}
+  .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:25}
+  .sb-overlay.show{display:block}
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-header">
+  <div style="display:flex;align-items:center;gap:.5rem">
+    <div class="sb-logo-mark">⚡</div>
+    <span style="font-family:var(--serif);color:#fff;font-size:.9rem;font-weight:600">AI for Academics</span>
+  </div>
+  <button onclick="toggleSidebar()">☰</button>
+</div>
+<div class="sb-overlay" onclick="toggleSidebar()"></div>
+
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-mark">⚡</div>
+    <span>AI for Academics</span>
+  </div>
+  <div class="sb-progress">
+    <div class="sb-progress-label">Your Progress</div>
+    <div class="sb-progress-bar"><div class="sb-progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="sb-progress-text" id="progressText">0 of 8 modules completed</div>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-title">Modules</div>
+    <div id="moduleList"></div>
+  </div>
+  <div class="sb-section" style="margin-top:1rem">
+    <div class="sb-section-title">Resources</div>
+    <div class="sb-item" onclick="showPromptLibrary()" style="cursor:pointer">
+      <div class="sb-check" style="background:var(--gold-glow);border-color:var(--gold-border);color:var(--gold);font-size:.7rem">📋</div>
+      <span class="sb-item-text">Full Prompt Library</span>
+    </div>
+  </div>
+</aside>
+
+<main class="main" id="mainContent"></main>
+</div>
+
+<script>
+const MODULES = [
+  {
+    id:1, title:"Your First AI Win", status:"live",
+    desc:"Get your first real academic output from AI in under an hour. We'll set up your tools, learn the fundamentals of prompting, and walk away with 8 quick wins you can use immediately.",
+    video:"Module 1 — Your First AI Win (45 min)",
+    takeaways:[
+      "Choose the right AI tool for your needs (ChatGPT vs Claude vs local)",
+      "Write prompts that produce academic-quality output, not generic fluff",
+      "8 instant wins you can use today across writing, literature, and admin",
+      "Understand token limits, context windows, and when AI hallucinates",
+      "Set up your workspace: browser tabs, keyboard shortcuts, save workflows"
+    ],
+    prompts:[
+      {title:"Polish My Abstract", code:"I'm submitting a paper to [JOURNAL NAME] in the field of [FIELD]. Below is my draft abstract. Please improve clarity, tighten the language, and ensure it follows the structure: Background → Gap → Method → Results → Significance. Keep it under [WORD LIMIT] words. Maintain my scientific voice — do not make it sound like marketing.\n\n[PASTE ABSTRACT]", note:"Works best with Claude or GPT-4. Always review the output against your original data."},
+      {title:"Summarize a Paper in 60 Seconds", code:"Read the following paper and provide:\n1. The main research question (1 sentence)\n2. The key method used (1 sentence)\n3. The principal finding (1 sentence)\n4. Why it matters for the field (1 sentence)\n5. One limitation the authors acknowledge\n\nPaper:\n[PASTE PAPER TEXT OR ABSTRACT]", note:"Paste the full text for best results. For PDFs, use your local AI with RAG (Module 6)."},
+      {title:"Draft a Professional Email", code:"Draft a professional email to [RECIPIENT ROLE, e.g., 'a journal editor' / 'a potential collaborator' / 'my department head'].\n\nContext: [EXPLAIN THE SITUATION]\nTone: [formal / friendly-professional / diplomatic]\nKey points to include: [LIST YOUR POINTS]\nDesired outcome: [WHAT YOU WANT THEM TO DO]\n\nKeep it concise — under 150 words.", note:"Always personalize the output. AI drafts the skeleton, you add the human touch."},
+      {title:"Generate a Literature Search Strategy", code:"I'm writing a [review paper / grant proposal / thesis chapter] on [TOPIC]. Help me build a systematic literature search strategy:\n\n1. Suggest 5 keyword combinations for database searches (Web of Science, Scopus, PubMed)\n2. Recommend Boolean operators to combine them\n3. Suggest 3 inclusion and 3 exclusion criteria\n4. List 5 seminal papers I should definitely cite\n5. Identify 2-3 related fields I might be missing", note:"Use this as a starting point, then refine based on your domain expertise."},
+      {title:"Rewrite for a Non-Expert Audience", code:"Rewrite the following text for [TARGET AUDIENCE: e.g., 'a policy brief' / 'a university press release' / 'a general public blog post'].\n\nOriginal text:\n[PASTE YOUR ACADEMIC TEXT]\n\nRequirements:\n- Remove all jargon or explain it in parentheses\n- Keep the scientific accuracy intact\n- Make it engaging — use concrete examples\n- Target length: [WORD COUNT] words\n- Tone: [accessible / conversational / formal-but-clear]", note:"Essential for impact case studies, media outreach, and grant impact statements."},
+      {title:"Meeting Notes to Action Items", code:"Here are my raw notes from a [meeting type: supervisor meeting / project meeting / committee meeting]:\n\n[PASTE MESSY NOTES]\n\nPlease organize into:\n1. KEY DECISIONS made (bullet points)\n2. ACTION ITEMS with responsible person and deadline\n3. OPEN QUESTIONS that need follow-up\n4. NEXT MEETING agenda suggestions\n\nFormat cleanly so I can paste directly into an email to participants.", note:"Take messy notes during the meeting without worrying about structure — AI cleans it up after."},
+      {title:"Format References to Any Style", code:"Convert the following references to [TARGET STYLE: APA 7th / Vancouver / Harvard / Nature / specific journal style]:\n\n[PASTE REFERENCES IN ANY FORMAT]\n\nFor each reference, provide the correctly formatted version. Flag any references that are missing required information (DOI, volume, pages, etc.).", note:"Always double-check DOIs and page numbers — AI sometimes fabricates these."},
+      {title:"Generate a Teaching Outline", code:"Create a [lecture / seminar / workshop] outline for:\n\nTopic: [TOPIC]\nAudience: [e.g., 'MSc students in plant biology' / 'PhD students, mixed backgrounds']\nDuration: [e.g., '2 hours' / '45-minute lecture']\nLearning objectives (if known): [LIST OR SAY 'suggest appropriate ones']\n\nPlease provide:\n1. 3-4 learning objectives\n2. Structured outline with timing for each section\n3. 2-3 discussion questions\n4. One in-class activity or exercise\n5. 3 recommended readings", note:"Adapt the output to your teaching style — AI gives the skeleton, you add your expertise and examples."}
+    ],
+    cheatsheet:"Module 1 Cheat Sheet — 8 essential prompts for daily academic work"
+  },
+  {
+    id:2, title:"AI for Academic Writing", status:"live",
+    desc:"Master the 3-pass writing method that turns rough ideas into polished manuscripts. Cover reviewer responses, cover letters, and the art of getting AI to write in YOUR voice.",
+    video:"Module 2 — AI for Academic Writing (55 min)",
+    takeaways:[
+      "The 3-Pass Method: Draft → Refine → Polish with AI at each stage",
+      "Train AI to write in your personal academic voice",
+      "Generate and respond to reviewer comments systematically",
+      "Write cover letters that editors actually read",
+      "Avoid the 5 most common AI writing mistakes in academia"
+    ],
+    prompts:[
+      {title:"The 3-Pass Writing Method", code:"PASS 1 — DRAFT:\nI need to write a [section type: Introduction / Methods / Discussion] for a paper about [TOPIC] targeting [JOURNAL]. Here are my key points:\n- [POINT 1]\n- [POINT 2]\n- [POINT 3]\nGenerate a rough draft covering all points. Don't worry about polish — focus on logical flow and completeness.\n\nPASS 2 — REFINE:\nRefine this draft for a [JOURNAL NAME] submission. Improve: (1) logical transitions between paragraphs, (2) precision of scientific claims, (3) remove any vague language. Flag any claims that need citations.\n\nPASS 3 — POLISH:\nFinal polish. Check for: (1) consistent tense usage, (2) active vs passive voice balance, (3) remove redundancy, (4) ensure every sentence adds value. Target: [WORD COUNT] words.", note:"Run each pass as a separate message for best results."},
+      {title:"Respond to Reviewer Comments", code:"I received reviewer comments on my manuscript. Help me draft a point-by-point response.\n\nFor each comment below:\n1. Acknowledge the reviewer's concern (be respectful)\n2. Explain what we did to address it\n3. Quote the specific changes made in the manuscript\n4. If we disagree, provide a diplomatic but evidence-based rebuttal\n\nReviewer Comment:\n[PASTE COMMENT]\n\nOur available evidence/data:\n[DESCRIBE WHAT YOU CAN OFFER]", note:"Never let AI write the response without your input on the evidence. The diplomacy is AI's job, the science is yours."},
+      {title:"Write a Cover Letter to Editor", code:"Write a cover letter for submitting our manuscript titled '[TITLE]' to [JOURNAL NAME].\n\nKey selling points:\n- [MAIN FINDING AND WHY IT MATTERS]\n- [WHY THIS JOURNAL SPECIFICALLY]\n- [TIMELINESS OR RELEVANCE]\n\nTone: Professional, confident but not arrogant. Under 250 words.\nInclude: Confirmation of originality, no simultaneous submission, and suggested reviewers section.", note:"Always add 2-3 suggested reviewers manually — AI cannot know who is appropriate."},
+      {title:"Train AI to Write in Your Voice", code:"Here are 3 paragraphs from my previous published papers that represent my writing style:\n\nParagraph 1:\n[PASTE]\n\nParagraph 2:\n[PASTE]\n\nParagraph 3:\n[PASTE]\n\nAnalyze my writing style — sentence length, vocabulary level, use of hedging language, active vs passive voice ratio, and overall tone. Then write a new paragraph about [TOPIC] that matches my style exactly.", note:"Feed it text from the same type of section (e.g., all Discussion paragraphs) for best style matching."},
+      {title:"Write a Structured Introduction", code:"Write an Introduction section for a paper about [TOPIC] targeting [JOURNAL].\n\nFollow this structure:\n1. BROAD CONTEXT (2-3 sentences): Why does this field matter?\n2. SPECIFIC BACKGROUND (1 paragraph): What do we know already?\n3. THE GAP (2-3 sentences): What is missing or unknown?\n4. OUR AIM (1-2 sentences): What did we do and why?\n5. APPROACH (1-2 sentences): Brief method overview\n\nKey references to work in: [LIST 3-5 KEY PAPERS]\nOur main finding (to hint at): [ONE SENTENCE]\nTarget length: [WORD COUNT] words", note:"The Introduction is where most reviewers form their first impression. Get the Gap statement right and the rest follows."},
+      {title:"Strengthen a Discussion Section", code:"Here is my Discussion section draft:\n\n[PASTE DISCUSSION]\n\nPlease:\n1. Identify the 2-3 weakest arguments and suggest how to strengthen them\n2. Flag any claims not supported by the results I've presented\n3. Suggest 2 counter-arguments I should address preemptively\n4. Identify where I should connect my findings back to the literature\n5. Check that I've addressed all the limitations a reviewer would raise\n6. Suggest a stronger concluding paragraph", note:"The Discussion is where papers get accepted or rejected. Anticipate every reviewer objection."},
+      {title:"Write an Annotated Bibliography", code:"For each of the following papers, write a structured annotation:\n\n[PASTE TITLES/ABSTRACTS OF 5-10 PAPERS]\n\nFor each paper provide:\n- ONE-SENTENCE SUMMARY: What they did and found\n- METHOD: Key approach (1 sentence)\n- RELEVANCE: How this relates to my research on [YOUR TOPIC]\n- STRENGTH: One methodological strength\n- GAP: One thing they didn't address that I could\n\nFormat as a clean table or structured list.", note:"Perfect for thesis literature review chapters and grant proposal background sections."},
+      {title:"Translate Academic to Grant Language", code:"Rewrite the following research findings as an IMPACT STATEMENT for a grant application to [FUNDER: e.g., NFR / Horizon Europe / ERC]:\n\n[PASTE YOUR RESEARCH DESCRIPTION]\n\nThe impact statement should:\n1. Lead with the societal/economic problem, not the science\n2. Show how our research directly addresses this problem\n3. Include specific, quantifiable impacts where possible\n4. Use language the funder's evaluation panel would respond to\n5. Be under [WORD COUNT] words\n\nTone: Confident, evidence-based, forward-looking.", note:"Funders fund solutions to problems, not interesting science. Lead with the problem."}
+    ],
+    cheatsheet:"Module 2 Cheat Sheet — The 3-Pass Method + reviewer response templates"
+  },
+  {
+    id:3, title:"AI for Code & Data", status:"live",
+    desc:"Generate R and Python scripts by describing what you need in plain English. Debug errors, create publication-ready figures, and automate repetitive data tasks — no programming background needed.",
+    video:"Module 3 — AI for Code & Data (50 min)",
+    takeaways:[
+      "Generate working R/Python code by describing your analysis in plain English",
+      "Debug error messages by pasting them directly to AI",
+      "Create publication-quality figures with customized themes",
+      "Automate repetitive data cleaning and formatting tasks",
+      "Understand enough code to verify AI output (you don't need to write it)"
+    ],
+    prompts:[
+      {title:"Generate R Code from Description", code:"I need an R script to:\n1. Read a CSV file with columns: [LIST YOUR COLUMNS]\n2. [DESCRIBE ANALYSIS, e.g., 'Run a mixed linear model with genotype as random effect and treatment as fixed effect']\n3. Create a publication-ready figure showing [DESCRIBE PLOT]\n4. Export results as a formatted table\n\nPackages I have: tidyverse, lme4, ggplot2\nData structure: [DESCRIBE — e.g., '200 rows, 4 treatments, 50 genotypes, 2 replicates']\n\nPlease add comments explaining each step.", note:"Always test generated code on a subset of your data first."},
+      {title:"Debug an Error Message", code:"I'm running this [R/Python] code:\n\n```\n[PASTE YOUR CODE]\n```\n\nAnd getting this error:\n\n```\n[PASTE ERROR MESSAGE]\n```\n\nMy data looks like: [DESCRIBE BRIEFLY]\n\nPlease: (1) Explain what the error means in plain English, (2) Show me the fix, (3) Explain why the fix works.", note:"Include the full error message — partial messages lead to wrong diagnoses."},
+      {title:"Publication-Ready ggplot Figure", code:"Create a ggplot2 figure for a [JOURNAL NAME] submission:\n- Data: [DESCRIBE DATA AND VARIABLES]\n- Plot type: [bar chart / boxplot / scatter / heatmap / line plot]\n- Requirements:\n  - Clean white background (no grey grid)\n  - Font size suitable for single-column (8-10pt)\n  - Color-blind friendly palette\n  - Error bars showing [SE / SD / 95% CI]\n  - Export as 300 DPI TIFF, [WIDTH]x[HEIGHT] inches\n\nInclude the complete theme() customization.", note:"Journals typically want 300 DPI TIFF. Check your target journal's figure guidelines."},
+      {title:"Generate Python Code from Description", code:"I need a Python script to:\n1. Read a CSV file with columns: [LIST YOUR COLUMNS]\n2. [DESCRIBE ANALYSIS, e.g., 'Run PCA on all numeric columns and plot the first two components colored by treatment group']\n3. Create a publication-ready figure using matplotlib/seaborn\n4. Save results to a new CSV\n\nLibraries available: pandas, numpy, scipy, matplotlib, seaborn, scikit-learn\nData structure: [DESCRIBE]\n\nPlease add comments explaining each step and print summary statistics.", note:"Python is better for machine learning tasks; R is better for mixed models and bioinformatics."},
+      {title:"Explain This Code", code:"I inherited this [R/Python] code from [a colleague / a paper's supplementary materials / a previous student]. I need to understand what it does before I modify it.\n\n```\n[PASTE CODE]\n```\n\nPlease:\n1. Explain what the overall script does in 2-3 sentences\n2. Walk through each major block and explain it in plain English\n3. Identify any potential issues or outdated functions\n4. Suggest improvements for readability or performance\n5. List all input files it expects and output files it creates", note:"Understanding inherited code is one of the most common time sinks. Let AI read it first."},
+      {title:"Convert Between R and Python", code:"Convert the following [R → Python / Python → R] code:\n\n```\n[PASTE CODE]\n```\n\nRequirements:\n- Use idiomatic [target language] conventions\n- Preserve the exact same analysis logic and output\n- Use equivalent packages: [e.g., 'ggplot2 → matplotlib+seaborn' / 'pandas → tidyverse']\n- Add comments noting where the languages handle things differently\n- Test data format: [DESCRIBE YOUR DATA BRIEFLY]", note:"Useful when collaborators work in different languages or when a reviewer asks for replication."},
+      {title:"Clean Messy Data", code:"I have a messy dataset with these problems:\n[DESCRIBE ISSUES, e.g.:\n- Missing values coded as 'NA', 'N/A', '-999', and empty cells\n- Date formats inconsistent (some DD/MM/YYYY, some YYYY-MM-DD)\n- Duplicate rows\n- Column names with spaces and special characters\n- Numeric columns stored as text because of one typo value]\n\nWrite a [R/Python] cleaning pipeline that:\n1. Standardizes missing values\n2. Fixes date formats to ISO standard\n3. Removes exact duplicates\n4. Cleans column names\n5. Identifies and flags suspicious values\n6. Exports a clean CSV and a cleaning log\n\nMy data has [N] rows and [N] columns.", note:"Always keep the original file untouched. Clean into a new file and log every change."}
+    ],
+    cheatsheet:"Module 3 Cheat Sheet — Code generation templates + debugging workflow"
+  },
+  {
+    id:4, title:"Local AI: Your Private Assistant", status:"soon",
+    desc:"Install completely private AI on your own laptop. Your data never leaves your machine — no cloud, no API, no GDPR concerns. Step-by-step setup of Ollama + Open WebUI.",
+    video:"Module 4 — Local AI Setup (40 min)",
+    takeaways:["Run AI models locally — zero data leaves your laptop","Install Ollama in 5 minutes on Mac, Windows, or Linux","Set up Open WebUI for a ChatGPT-like interface","Choose the right model size for your hardware","Handle sensitive, unpublished, and GDPR-protected data safely"],
+    prompts:[
+      {title:"Test Your Local AI Setup", code:"Once Ollama is running, test with:\n\n> ollama run llama3.1\n\nThen try: 'Summarize the key methods used in CRISPR-Cas9 gene editing for crop improvement, focusing on delivery mechanisms. Keep it under 200 words.'\n\nIf you get a coherent response, your local AI is working.", note:"Llama 3.1 8B needs ~5GB RAM. For older machines, try Phi-3 or Gemma 2B."},
+      {title:"Compare Model Performance", code:"Use this standardized test to benchmark different models on YOUR tasks.\n\nRun the same prompt on each model and rate the output:\n\nTest prompt: 'Write a 150-word methods paragraph describing [YOUR ACTUAL METHOD]. Use formal academic tone suitable for [YOUR TARGET JOURNAL].'\n\nModels to test:\n> ollama run llama3.1:8b\n> ollama run llama3.1:70b\n> ollama run mistral\n> ollama run phi3\n\nRate each on: accuracy (1-5), writing quality (1-5), speed (seconds).", note:"The biggest model isn't always best. For quick tasks, 8B models are fast and good enough."},
+      {title:"Ollama Model Management", code:"Essential Ollama commands for daily use:\n\n# List installed models and their sizes\nollama list\n\n# Download a new model\nollama pull llama3.1:70b\n\n# Remove a model to free disk space\nollama rm mistral\n\n# Show model details (parameters, size, quantization)\nollama show llama3.1:8b\n\n# Run with specific context length\nollama run llama3.1:8b --ctx-size 8192\n\n# Copy a model to create a variant\nollama cp llama3.1:8b my-research-assistant", note:"Models are stored in ~/.ollama/models. Check disk space with: du -sh ~/.ollama"},
+      {title:"Custom Modelfile for Your Field", code:"Create a file called 'Modelfile' with this content:\n\nFROM llama3.1:8b\nSYSTEM \"You are a research assistant specializing in [YOUR FIELD]. You are precise with terminology, cautious about making unsupported claims, and always remind the user to verify citations. When writing, match the style of [YOUR TARGET JOURNALS]. When coding, use [R/Python] and comment every step.\"\nPARAMETER temperature 0.4\nPARAMETER num_ctx 4096\n\nThen run:\n> ollama create my-research-ai -f Modelfile\n> ollama run my-research-ai", note:"Lower temperature (0.2-0.5) gives more precise, deterministic outputs — better for academic writing."},
+      {title:"Batch Process Documents Locally", code:"# Python script to process multiple text files through your local Ollama\nimport requests, os, json\n\nMODEL = 'llama3.1:8b'\nINPUT_DIR = './papers_to_summarize/'\nOUTPUT_DIR = './summaries/'\nPROMPT = 'Summarize this paper in 5 bullet points focusing on methods and key findings:\\n\\n'\n\nos.makedirs(OUTPUT_DIR, exist_ok=True)\nfor fname in os.listdir(INPUT_DIR):\n    if fname.endswith('.txt'):\n        with open(f'{INPUT_DIR}/{fname}') as f:\n            text = f.read()\n        resp = requests.post('http://localhost:11434/api/generate',\n            json={'model': MODEL, 'prompt': PROMPT + text, 'stream': False})\n        summary = resp.json()['response']\n        with open(f'{OUTPUT_DIR}/{fname}', 'w') as f:\n            f.write(summary)\n        print(f'Done: {fname}')", note:"Convert PDFs to text first using: pdftotext paper.pdf paper.txt"}
+    ],
+    cheatsheet:"Module 4 Cheat Sheet — Ollama commands + model recommendations by hardware"
+  },
+  {
+    id:5, title:"AI for Grant Writing", status:"soon",
+    desc:"Analyze funding calls, draft proposal sections, self-critique before submission, and generate budget justifications. Tested on real NFR, EU Horizon, and ERC applications.",
+    video:"Module 5 — AI for Grant Writing (60 min)",
+    takeaways:["Analyze a funding call to identify exactly what evaluators want","Draft each proposal section with AI while keeping your scientific vision","Self-critique your proposal using AI as a mock reviewer","Generate budget justifications that pass finance office scrutiny","Build a reusable proposal template library"],
+    prompts:[
+      {title:"Analyze a Funding Call", code:"Analyze this funding call and help me plan my application:\n\n[PASTE CALL TEXT]\n\nPlease provide:\n1. The 3 most important evaluation criteria (ranked)\n2. Keywords and phrases I MUST include\n3. What the funder is really asking for (read between the lines)\n4. Red flags to avoid\n5. A suggested structure for the proposal\n6. Estimated effort level (small/medium/large application)", note:"Works brilliantly for NFR, Horizon Europe, and most national funding agencies."},
+      {title:"Draft a Project Summary", code:"Write a project summary (max 300 words) for a [FUNDER] application.\n\nProject title: [TITLE]\nMain objective: [ONE SENTENCE]\nKey methods: [LIST 2-3 APPROACHES]\nExpected outcomes: [LIST 2-3 RESULTS]\nSocietal relevance: [WHY IT MATTERS]\n\nThe summary must:\n- Hook the reader in the first sentence\n- Hit the evaluation criteria from the call: [LIST THEM]\n- Be accessible to a panel member outside my exact specialty\n- End with a clear statement of impact", note:"The project summary is often the first (and sometimes only) thing a panel member reads carefully."},
+      {title:"Write a Budget Justification", code:"Write a budget justification narrative for the following line items in a [FUNDER] grant application:\n\n[PASTE BUDGET TABLE OR LIST ITEMS, e.g.:\n- 1 PhD student, 3 years, 100% — 2,400,000 NOK\n- 1 Postdoc, 2 years, 50% — 1,100,000 NOK\n- Sequencing costs (RNA-seq, 48 samples) — 350,000 NOK\n- Travel to 2 international conferences — 80,000 NOK\n- Consumables and lab supplies — 200,000 NOK]\n\nFor each item, write 2-3 sentences explaining:\n1. Why this resource is necessary for the project\n2. How the amount was calculated\n3. Why it cannot be covered by existing resources", note:"Finance reviewers want specificity. '48 samples × 7,000 NOK/sample' is better than 'sequencing costs'."},
+      {title:"Generate Impact Statements", code:"Generate impact statements for a [FUNDER] grant application based on this research:\n\n[DESCRIBE YOUR PROJECT IN 3-5 SENTENCES]\n\nProvide separate paragraphs for:\n1. SCIENTIFIC IMPACT — how this advances the field\n2. SOCIETAL IMPACT — how this benefits society, policy, or industry\n3. ECONOMIC IMPACT — jobs, commercialization potential, cost savings\n4. ENVIRONMENTAL IMPACT — sustainability, climate, biodiversity (if applicable)\n5. TRAINING IMPACT — skills development, capacity building\n\nUse specific numbers where possible. Avoid vague claims like 'this will benefit society.'", note:"Different funders weight these differently. NFR cares about Norwegian societal impact; ERC cares about scientific frontier."},
+      {title:"Self-Critique My Proposal", code:"Act as a critical grant reviewer evaluating this proposal for [FUNDER].\n\n[PASTE PROPOSAL SECTION OR FULL PROPOSAL]\n\nEvaluation criteria from the call:\n[PASTE CRITERIA]\n\nProvide:\n1. A score (1-5) for each evaluation criterion with justification\n2. The 3 biggest weaknesses a reviewer would flag\n3. Specific suggestions to address each weakness\n4. Missing elements that the call requires but the proposal doesn't address\n5. One thing the proposal does well (to keep)\n\nBe harsh but constructive. Better to find problems now than in the rejection letter.", note:"Run this 2-3 times with slightly different phrasing to catch different weaknesses."},
+      {title:"Write a Work Package Description", code:"Write a Work Package description for an EU Horizon Europe proposal:\n\nWP number: [N]\nWP title: [TITLE]\nWP leader: [PARTNER NAME]\nDuration: Month [START] to Month [END]\nPerson-months: [TOTAL]\n\nResearch context: [DESCRIBE WHAT THIS WP DOES AND WHY]\n\nPlease generate:\n1. WP Objectives (3-4 bullet points, measurable)\n2. Task descriptions (3-4 tasks, each with responsible partner)\n3. Deliverables (2-3, with type: Report/Dataset/Software/Prototype)\n4. Milestones (1-2, with verification criteria)\n5. Risk assessment (1-2 risks with mitigation)\n\nUse formal EU proposal language.", note:"Keep tasks specific and measurable. Vague tasks are the #1 reason WPs get criticized in reviews."},
+      {title:"Draft a Data Management Plan", code:"Generate a Data Management Plan (DMP) for:\n\nProject: [TITLE]\nFunder: [NFR / Horizon Europe / ERC / other]\nData types we will produce:\n- [e.g., 'Genomic sequencing data (FASTQ, ~500GB)']\n- [e.g., 'Phenotyping measurements (CSV, ~50MB)']\n- [e.g., 'Drone imagery (TIFF, ~2TB)']\n- [e.g., 'Statistical analysis scripts (R/Python)']\n\nAddress these DMP sections:\n1. Data description and collection methods\n2. Documentation and metadata standards\n3. Storage and backup during the project\n4. Data sharing and access policies\n5. Long-term preservation and archiving\n6. Ethical and legal considerations (GDPR, sensitive data)\n\nRepository preferences: [e.g., 'NMBU Open Research Data' / 'Zenodo' / 'NCBI SRA']", note:"Most funders now require a DMP. NFR uses the easyDMP tool; Horizon Europe has its own template."}
+    ],
+    cheatsheet:"Module 5 Cheat Sheet — Grant writing workflow + budget templates"
+  },
+  {
+    id:6, title:"Build Your Knowledge Base (RAG)", status:"soon",
+    desc:"Create a private, searchable AI that knows YOUR papers, YOUR data, and YOUR field. Ask questions and get answers grounded in your own documents.",
+    video:"Module 6 — RAG Knowledge Base (50 min)",
+    takeaways:["Understand RAG: what it is and why it eliminates hallucination","Install AnythingLLM and connect it to your local Ollama","Upload papers, reports, and notes to create your personal knowledge base","Ask complex questions that search across all your documents","Set up workspaces for different projects or topics"],
+    prompts:[
+      {title:"Test Your RAG System", code:"After uploading your papers to AnythingLLM, test with:\n\n'Based on the documents I've uploaded, what are the main methods used to study nitrogen use efficiency in forage grasses? List specific genes or pathways mentioned across multiple papers.'\n\nA good RAG system will cite specific documents and quote relevant passages.", note:"Start with 10-20 key papers. Quality beats quantity for RAG."},
+      {title:"Compare Claims Across Papers", code:"Search my uploaded documents and answer:\n\nWhat do different papers say about [SPECIFIC TOPIC, e.g., 'the role of NRT2.1 in root nitrogen uptake']?\n\nFor each paper that mentions this:\n1. What claim does it make?\n2. What evidence supports it?\n3. Does it agree or disagree with the other papers?\n\nHighlight any contradictions or gaps between papers.", note:"This is where RAG truly shines — finding connections across your literature that you'd miss reading one paper at a time."},
+      {title:"Extract Methods from Multiple Papers", code:"Search my uploaded documents and compile a methods comparison:\n\nTopic: [e.g., 'RNA-seq analysis pipelines for plant transcriptomics']\n\nFor each relevant paper, extract:\n1. Sample preparation method\n2. Sequencing platform and read depth\n3. Bioinformatics pipeline (alignment, quantification, DE analysis)\n4. Statistical thresholds used (FDR, log2FC)\n5. Key software and versions\n\nPresent as a comparison table.", note:"Perfect for writing your own Methods section — see what the standard approach is in your field."},
+      {title:"Generate a Literature Gap Analysis", code:"Based on all documents in this workspace, identify:\n\n1. WELL-COVERED TOPICS: What has been studied extensively? (list with paper count)\n2. EMERGING TOPICS: What appears in recent papers but not older ones?\n3. GAPS: What important questions are NOT addressed by any paper in my collection?\n4. METHODOLOGICAL GAPS: What methods have not been applied to this problem yet?\n5. CONTRADICTIONS: Where do papers disagree, suggesting unresolved questions?\n\nFocus on the field of [YOUR FIELD/TOPIC].", note:"This prompt alone can generate the 'Gap' paragraph for your next grant proposal or paper introduction."},
+      {title:"Build a Concept Map from Documents", code:"Based on the documents in this workspace, create a structured concept map:\n\n1. List the 10 most important concepts/terms that appear across multiple papers\n2. For each concept, list which papers discuss it\n3. Map the relationships between concepts (e.g., 'NRT2.1 → nitrogen uptake → root development')\n4. Identify the central concept that connects the most other concepts\n5. Suggest how these concepts could be organized into thesis chapters or review sections\n\nPresent as a hierarchical outline.", note:"Great for structuring a literature review or thesis chapter from a pile of papers."}
+    ],
+    cheatsheet:"Module 6 Cheat Sheet — RAG setup guide + workspace organization"
+  },
+  {
+    id:7, title:"Automate Your Workflow", status:"soon",
+    desc:"Build dashboards, templates, and automated monitoring systems. Set up Google Scholar alerts with AI digests, project tracking templates, and recurring task automation.",
+    video:"Module 7 — Workflow Automation (45 min)",
+    takeaways:["Set up AI-powered literature monitoring (Scholar Alerts + AI digest)","Build a project tracking dashboard in Notion or Obsidian","Create reusable templates for common tasks","Automate weekly research summaries","Design a personal productivity system around AI tools"],
+    prompts:[
+      {title:"Weekly Literature Digest", code:"Here are the titles and abstracts from my Google Scholar alerts this week:\n\n[PASTE ALERTS]\n\nPlease:\n1. Rank them by relevance to my research on [YOUR TOPIC]\n2. For the top 5: one-sentence summary of why it matters to me\n3. Flag any that I should read in full immediately\n4. Note any emerging trends across this week's papers", note:"Run this every Monday morning. Takes 5 minutes, saves 2 hours of scanning."},
+      {title:"Weekly Progress Report Generator", code:"Here are my rough notes from this week:\n\n[PASTE BULLET POINTS, e.g.:\n- finished DESeq2 analysis, 342 DEGs identified\n- met with supervisor, agreed on paper structure\n- submitted conference abstract to PlantBio\n- ordered new primers for CRISPR validation\n- read 3 papers on NUE signaling]\n\nGenerate a structured weekly progress report with:\n1. KEY ACCOMPLISHMENTS (what was completed)\n2. RESULTS & FINDINGS (any data or insights)\n3. CHALLENGES (what's blocking progress)\n4. NEXT WEEK'S PRIORITIES (top 3)\n5. DECISIONS NEEDED (from supervisor/collaborators)\n\nKeep it under 250 words. Professional tone.", note:"Perfect for PhD progress tracking, project reports, and supervisor updates."},
+      {title:"Conference Abstract from Paper Draft", code:"Condense the following manuscript draft into a conference abstract:\n\n[PASTE PAPER DRAFT OR KEY SECTIONS]\n\nConference: [NAME]\nAbstract requirements:\n- Maximum [WORD LIMIT] words\n- Structure: [e.g., 'Background, Methods, Results, Conclusions' or 'free format']\n- Must include: [e.g., 'keywords (3-5)' / 'presenting author info']\n\nMake it:\n- Self-contained (reader needs no other information)\n- Results-focused (lead with findings, not background)\n- Specific (include key numbers/statistics)", note:"Conference abstracts should tell a complete story. The biggest mistake is spending too many words on background."},
+      {title:"Semester Teaching Prep", code:"Help me prepare a [course name] course for [semester]:\n\nCourse level: [BSc / MSc / PhD]\nNumber of students: [N]\nTotal hours: [lecture hours + lab/seminar hours]\nMy topic area: [FIELD]\n\nGenerate:\n1. A 12-week schedule with weekly topics and learning outcomes\n2. For each week: 1 required reading + 1 recommended reading\n3. 3 assignment ideas (with brief descriptions and assessment criteria)\n4. 1 final exam/project proposal\n5. A list of practical skills students should have by course end\n\nPreferred teaching style: [lectures / flipped classroom / problem-based / mixed]", note:"Customize heavily — AI gives the structure, your expertise fills in the specific content and papers."},
+      {title:"Project Status Dashboard Update", code:"I manage multiple projects. Here are updates from this period:\n\n[PASTE UPDATES PER PROJECT, e.g.:\nProject A: RNA-seq analysis complete, writing Methods section, budget 65% spent\nProject B: field trial delayed 2 weeks due to weather, need to order sensors\nProject C: PhD student submitted paper draft, awaiting co-author feedback]\n\nGenerate a unified dashboard summary:\n1. STATUS OVERVIEW: each project with traffic light (🟢🟡🔴)\n2. ACTION ITEMS: ranked by urgency\n3. BUDGET FLAGS: any projects overspending or underspending\n4. UPCOMING DEADLINES: next 30 days\n5. RISKS: anything that could derail timelines\n\nFormat for quick scanning — a busy PI reads this in 2 minutes.", note:"Run this monthly. Over time you'll build a project history that's invaluable for annual reports."},
+      {title:"Automate Recurring Email Responses", code:"Create email response templates for these common scenarios I handle weekly:\n\n1. STUDENT INQUIRY: Someone asks about MSc/PhD supervision opportunities\n2. COLLABORATION REQUEST: A researcher proposes a joint project\n3. DATA SHARING REQUEST: Someone asks for our published dataset\n4. SEMINAR INVITATION: I'm invited to give a talk\n5. REVIEW REQUEST: A journal asks me to review a manuscript\n\nFor each, provide:\n- A 'YES' version (accepting/interested)\n- A 'NO' version (declining politely)\n- A 'MAYBE' version (need more information)\n\nTone: Professional but warm. Under 100 words each.", note:"Save these as email templates or text shortcuts. Responding to routine emails should never take more than 30 seconds."}
+    ],
+    cheatsheet:"Module 7 Cheat Sheet — Automation recipes + Notion templates"
+  },
+  {
+    id:8, title:"Ethics, Boundaries & The Future", status:"soon",
+    desc:"Navigate journal policies, write proper AI disclosure statements, understand what AI should and shouldn't do in research, and prepare for what's coming next.",
+    video:"Module 8 — Ethics & The Future (35 min)",
+    takeaways:["Current AI policies: Nature, Science, Elsevier, Springer, NFR, Horizon Europe","Write disclosure statements that satisfy any journal","Draw clear boundaries: what AI should and shouldn't do","Understand copyright and IP implications","Prepare for the next 2-3 years of AI in academia"],
+    prompts:[
+      {title:"Generate AI Disclosure Statement", code:"Generate an AI disclosure statement for my manuscript being submitted to [JOURNAL NAME].\n\nAI tools used:\n- [TOOL 1] for [PURPOSE, e.g., 'language editing and proofreading']\n- [TOOL 2] for [PURPOSE, e.g., 'generating initial code for statistical analysis']\n\nThe statement should:\n1. Be transparent about which tools were used and for what\n2. Confirm that all AI output was reviewed and verified by the authors\n3. State that the authors take full responsibility for the content\n4. Follow [JOURNAL]'s specific AI policy if known", note:"When in doubt, disclose more rather than less. No journal has ever rejected a paper for being too transparent about AI use."},
+      {title:"Check Journal AI Policy", code:"Here is the author guidelines text from [JOURNAL NAME]:\n\n[PASTE THE RELEVANT SECTION ON AI/LLM USE]\n\nPlease provide:\n1. A plain-English summary of what they allow and don't allow\n2. Specific actions I need to take (disclosure statement, etc.)\n3. Any grey areas where the policy is ambiguous\n4. Recommended disclosure language that satisfies their requirements\n5. Comparison: is this more or less strict than average?", note:"Policies change frequently. Always check the latest version of a journal's author guidelines before submission."},
+      {title:"Ethical Self-Check for AI Use", code:"I used AI in my research in the following way:\n\n[DESCRIBE HOW YOU USED AI, e.g.:\n- Used ChatGPT to improve English grammar in the manuscript\n- Used Claude to generate initial R code for statistical analysis\n- Used local Ollama to summarize literature\n- Used AI to draft responses to reviewer comments]\n\nFor each use case, assess:\n1. Does this require disclosure? (Yes/No/Depends on journal)\n2. Could this be considered inappropriate? (with reasoning)\n3. Recommended disclosure language\n4. Are there any intellectual property or authorship concerns?\n5. What would a critical reviewer think if they found out?\n\nBe conservative — flag anything borderline.", note:"The rule of thumb: if you'd feel uncomfortable if the editor knew, you should disclose it."},
+      {title:"Write a Student AI Usage Policy", code:"Draft an AI usage policy for [my research group / my university course / my department].\n\nContext: [e.g., 'MSc course in plant biology' / 'PhD research group in genomics']\nStance: [permissive / moderate / strict]\n\nThe policy should cover:\n1. PERMITTED uses of AI (with examples)\n2. PROHIBITED uses of AI (with examples)\n3. DISCLOSURE requirements — how students should report AI use\n4. ACADEMIC INTEGRITY — where the line is between assistance and misconduct\n5. RECOMMENDED TOOLS and how to use them responsibly\n6. CONSEQUENCES for undisclosed AI use\n\nTone: Clear, fair, and educational — not punitive. Students should understand WHY, not just WHAT.", note:"Share this policy on day one of the course or when a student joins your group. Clarity prevents problems."}
+    ],
+    cheatsheet:"Module 8 Cheat Sheet — Disclosure templates + journal policy matrix"
+  }
+];
+
+let completedModules = JSON.parse(localStorage.getItem('afa_completed') || '[]');
+let currentModule = 0;
+
+function renderSidebar() {
+  const list = document.getElementById('moduleList');
+  const liveCount = MODULES.filter(m => m.status === 'live').length;
+  list.innerHTML = MODULES.map((m, i) => `
+    <div class="sb-item ${i===currentModule?'active':''} ${completedModules.includes(m.id)?'completed':''} ${m.status==='soon'?'locked':''}" onclick="loadModule(${i})">
+      <div class="sb-check">${completedModules.includes(m.id)?'✓':m.status==='soon'?'🔒':m.id}</div>
+      <span class="sb-item-text">${m.title}</span>
+      <span class="sb-tag ${m.status}">${m.status==='live'?'LIVE':'🔒'}</span>
+    </div>
+  `).join('');
+  updateProgress();
+}
+
+function updateProgress() {
+  const liveModules = MODULES.filter(m => m.status === 'live').length;
+  const liveCompleted = completedModules.filter(id => MODULES.find(m => m.id === id && m.status === 'live')).length;
+  const pct = Math.round((liveCompleted / liveModules) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${liveCompleted} of ${liveModules} available modules completed`;
+}
+
+function loadModule(idx) {
+  currentModule = idx;
+  const m = MODULES[idx];
+  const isCompleted = completedModules.includes(m.id);
+  const isLocked = m.status === 'soon';
+
+  document.getElementById('mainContent').innerHTML = `
+    <div class="mod-header">
+      <div class="mod-badge">Module ${String(m.id).padStart(2,'0')} ${isLocked ? '· 🔒 Coming Soon' : ''}</div>
+      <h1 class="mod-title">${m.title}</h1>
+      <p class="mod-desc">${m.desc}</p>
+    </div>
+
+    ${isLocked ? `
+    <div class="locked-overlay">
+      <div class="lock-icon">🔒</div>
+      <h3>This module is coming soon</h3>
+      <p>This module includes the video lesson, ${m.prompts.length} prompts, a downloadable cheat sheet, and hands-on exercises. It will be unlocked when released.</p>
+    </div>
+    <div class="content-section">
+      <h2><span class="ico">🎯</span> What You'll Learn (Preview)</h2>
+      <div class="takeaways">
+        ${m.takeaways.map(t => `<div class="takeaway"><div class="takeaway-dot"></div><p>${t}</p></div>`).join('')}
+      </div>
+    </div>
+    <div class="content-section">
+      <h2><span class="ico">⚡</span> ${m.prompts.length} Prompts Included <span class="prompt-count-badge">LOCKED</span></h2>
+      <div class="locked-prompt">
+      ${m.prompts.map((p, pi) => `
+        <div class="prompt-card">
+          <div class="prompt-header">
+            <h4>${p.title}</h4>
+            <span style="font-family:var(--mono);font-size:.6rem;color:var(--text-muted)">🔒</span>
+          </div>
+        </div>
+      `).join('')}
+      </div>
+    </div>
+    ` : `
+    <div class="video-wrap" onclick="this.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);font-size:.9rem\\'>Video player would load here in production</div>'">
+      <div class="video-play">▶</div>
+      <div class="video-label">${m.video}</div>
+    </div>
+
+    <div class="content-section">
+      <h2><span class="ico">🎯</span> Key Takeaways</h2>
+      <div class="takeaways">
+        ${m.takeaways.map(t => `<div class="takeaway"><div class="takeaway-dot"></div><p>${t}</p></div>`).join('')}
+      </div>
+    </div>
+
+    <div class="content-section">
+      <h2><span class="ico">⚡</span> Prompts from This Module <span class="prompt-count-badge">${m.prompts.length} prompts</span></h2>
+      ${m.prompts.map((p, pi) => `
+        <div class="prompt-card" id="prompt-${idx}-${pi}">
+          <div class="prompt-header" onclick="togglePrompt('prompt-${idx}-${pi}')">
+            <h4>${p.title}</h4>
+            <button class="prompt-copy" onclick="event.stopPropagation();copyPrompt(this, \`${encodeURIComponent(p.code)}\`)">Copy</button>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-code">${p.code}</div>
+            ${p.note ? `<p class="prompt-note">💡 ${p.note}</p>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="content-section">
+      <h2><span class="ico">📄</span> Downloads</h2>
+      <div class="cheatsheet">
+        <div class="cheatsheet-icon">📋</div>
+        <div class="cheatsheet-text">
+          <h3>${m.cheatsheet}</h3>
+          <p>PDF download — print it, pin it, use it daily</p>
+        </div>
+        <button class="cheatsheet-btn" onclick="alert('Download would start in production')">Download PDF</button>
+      </div>
+    </div>
+
+    <button class="complete-btn ${isCompleted?'done':''}" onclick="toggleComplete(${m.id})">
+      ${isCompleted ? '✓ Completed — Click to Undo' : '✓ Mark as Complete'}
+    </button>
+    `}
+
+    <div class="mod-nav">
+      ${idx > 0 ? `<button class="mod-nav-btn" onclick="loadModule(${idx-1})">← Previous</button>` : '<div></div>'}
+      ${idx < MODULES.length-1 ? `<button class="mod-nav-btn next" onclick="loadModule(${idx+1})">Next Module →</button>` : '<div></div>'}
+    </div>
+  `;
+  renderSidebar();
+  window.scrollTo(0, 0);
+  if(window.innerWidth < 768) toggleSidebar();
+}
+
+function toggleComplete(id) {
+  if(completedModules.includes(id)) completedModules = completedModules.filter(x => x !== id);
+  else completedModules.push(id);
+  localStorage.setItem('afa_completed', JSON.stringify(completedModules));
+  loadModule(currentModule);
+}
+
+function togglePrompt(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function copyPrompt(btn, encoded) {
+  const text = decodeURIComponent(encoded);
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  });
+}
+
+function showPromptLibrary() {
+  let allPrompts = '';
+  let totalCount = 0;
+  MODULES.forEach(m => {
+    const isLocked = m.status === 'soon';
+    m.prompts.forEach(p => {
+      totalCount++;
+      if(isLocked) {
+        allPrompts += `<div class="prompt-card" style="opacity:.4;pointer-events:none">
+          <div class="prompt-header">
+            <h4><span style="color:var(--gold);font-family:var(--mono);font-size:.65rem;margin-right:.5rem">M${m.id}</span>${p.title}</h4>
+            <span style="font-family:var(--mono);font-size:.6rem;color:var(--text-muted)">🔒</span>
+          </div>
+        </div>`;
+      } else {
+        allPrompts += `<div class="prompt-card" id="lib-${m.id}-${p.title.replace(/\s/g,'')}">
+          <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+            <h4><span style="color:var(--gold);font-family:var(--mono);font-size:.65rem;margin-right:.5rem">M${m.id}</span>${p.title}</h4>
+            <button class="prompt-copy" onclick="event.stopPropagation();copyPrompt(this,\`${encodeURIComponent(p.code)}\`)">Copy</button>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-code">${p.code}</div>
+            ${p.note ? `<p class="prompt-note">💡 ${p.note}</p>` : ''}
+          </div>
+        </div>`;
+      }
+    });
+  });
+
+  const liveCount = MODULES.filter(m => m.status === 'live').reduce((sum, m) => sum + m.prompts.length, 0);
+  document.getElementById('mainContent').innerHTML = `
+    <div class="mod-header">
+      <div class="mod-badge">Resource</div>
+      <h1 class="mod-title">Full Prompt Library</h1>
+      <p class="mod-desc">${totalCount} prompts across all 8 modules. ${liveCount} available now — the rest unlock as modules are released.</p>
+    </div>
+    <div class="content-section">${allPrompts}</div>
+  `;
+  currentModule = -1;
+  renderSidebar();
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.querySelector('.sb-overlay').classList.toggle('show');
+}
+
+// Initialize
+renderSidebar();
+loadModule(0);
+</script>
+</body>
+</html>

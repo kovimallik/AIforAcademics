@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Department AI Transformation — Assessment & Planning</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0c1220;--ink-mid:#111827;--ink-light:#1a2332;--emerald:#34d399;--emerald-dim:#059669;--emerald-glow:rgba(52,211,153,.10);--emerald-border:rgba(52,211,153,.18);--gold:#d4a853;--cyan:#22d3ee;--violet:#a78bfa;--rose:#fb7185;--amber:#fbbf24;--text:#cbd5e1;--text-dim:#94a3b8;--text-muted:#64748b;--surface:rgba(17,24,39,.55);--border:rgba(148,163,184,.07);--border-hover:rgba(52,211,153,.15);--sans:'Outfit',sans-serif;--mono:'IBM Plex Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(52,211,153,.2);color:#fff}
+
+.topbar{background:var(--ink-mid);border-bottom:1px solid var(--border);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.topbar-logo{display:flex;align-items:center;gap:.5rem;font-weight:600;color:#fff;font-size:.95rem}
+.topbar-logo .mark{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--emerald-dim),var(--emerald));display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.topbar-tabs{display:flex;gap:0}
+.topbar-tab{padding:.5rem 1rem;font-size:.78rem;color:var(--text-muted);font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.topbar-tab:hover{color:var(--text)}
+.topbar-tab.active{color:var(--emerald);border-bottom-color:var(--emerald)}
+
+.container{max-width:1100px;margin:0 auto;padding:2rem}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+
+.section{margin-bottom:2.5rem}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.section-title{font-size:1.05rem;color:#fff;font-weight:600;display:flex;align-items:center;gap:.5rem}
+
+/* Assessment Cards */
+.assess-card{padding:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;transition:all .2s}
+.assess-card:hover{border-color:var(--border-hover)}
+.assess-card h3{font-size:.95rem;color:#fff;font-weight:600;margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+.assess-label{font-size:.68rem;color:var(--text-muted);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.5rem}
+
+/* Radar Chart (CSS only) */
+.radar-wrap{display:flex;align-items:center;justify-content:center;padding:2rem}
+.radar-item{display:flex;justify-content:space-between;align-items:center;padding:.55rem 0;border-bottom:1px solid var(--border)}
+.radar-item:last-child{border:none}
+.radar-name{font-size:.82rem;color:var(--text-dim);flex:1}
+.radar-bar{width:180px;height:8px;background:var(--ink-light);border-radius:4px;overflow:hidden;margin:0 1rem}
+.radar-bar-fill{height:100%;border-radius:4px;transition:width .8s var(--ease)}
+.radar-score{font-family:var(--mono);font-size:.78rem;width:32px;text-align:right}
+
+/* Readiness score */
+.readiness{text-align:center;padding:2rem;background:var(--surface);border:1px solid var(--border);border-radius:14px}
+.readiness-score{font-size:4rem;font-weight:700;line-height:1}
+.readiness-label{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+.readiness-ring{width:140px;height:140px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;position:relative}
+.readiness-ring::before{content:'';position:absolute;inset:0;border-radius:50%;border:6px solid var(--ink-light)}
+.readiness-ring::after{content:'';position:absolute;inset:0;border-radius:50%;border:6px solid var(--emerald);border-right-color:transparent;border-bottom-color:transparent;transform:rotate(-10deg)}
+
+/* Workshop Plan */
+.ws-step{display:flex;gap:1rem;padding:1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:.6rem;transition:all .2s}
+.ws-step:hover{border-color:var(--border-hover)}
+.ws-num{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.78rem;font-weight:600;flex-shrink:0}
+.ws-step-content h4{font-size:.9rem;color:#fff;font-weight:600;margin-bottom:.2rem}
+.ws-step-content p{font-size:.78rem;color:var(--text-muted);line-height:1.5}
+.ws-step-content .dur{font-family:var(--mono);font-size:.68rem;color:var(--emerald);margin-top:.3rem}
+
+/* Policy Templates */
+.policy-card{padding:1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:all .2s;cursor:pointer}
+.policy-card:hover{border-color:var(--border-hover)}
+.policy-card h4{font-size:.88rem;color:#fff;font-weight:500;margin-bottom:.3rem}
+.policy-card p{font-size:.75rem;color:var(--text-muted);line-height:1.5}
+.policy-tag{display:inline-block;font-family:var(--mono);font-size:.58rem;padding:.15rem .4rem;border-radius:4px;margin-top:.4rem}
+
+/* ROI Calculator */
+.roi-input{display:flex;align-items:center;gap:.8rem;padding:.8rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:.5rem}
+.roi-input label{font-size:.82rem;color:var(--text-dim);flex:1}
+.roi-input input,.roi-input select{background:var(--ink-light);border:1px solid var(--border);border-radius:6px;color:#fff;font-family:var(--sans);font-size:.85rem;padding:.4rem .6rem;width:100px;outline:none}
+.roi-input input:focus,.roi-input select:focus{border-color:var(--emerald)}
+.roi-result{padding:1.5rem;background:linear-gradient(135deg,var(--ink-light),var(--ink-mid));border:1px solid var(--emerald-border);border-radius:14px;text-align:center;margin-top:1rem}
+.roi-big{font-size:2.5rem;font-weight:700;color:var(--emerald);font-family:var(--mono)}
+.roi-sub{font-size:.82rem;color:var(--text-dim);margin-top:.3rem}
+
+/* Timeline */
+.tl-phase{padding:1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:.5rem;display:flex;align-items:start;gap:1rem}
+.tl-phase-marker{width:40px;text-align:center;flex-shrink:0}
+.tl-phase-marker .week{font-family:var(--mono);font-size:.62rem;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase}
+.tl-phase-marker .dot{width:12px;height:12px;border-radius:50%;margin:.3rem auto 0}
+.tl-phase h4{font-size:.88rem;color:#fff;font-weight:600;margin-bottom:.2rem}
+.tl-phase p{font-size:.78rem;color:var(--text-muted);line-height:1.5}
+.tl-phase .deliverables{margin-top:.4rem;display:flex;gap:.3rem;flex-wrap:wrap}
+.tl-phase .deliverables span{font-size:.65rem;padding:.15rem .4rem;background:var(--emerald-glow);border:1px solid var(--emerald-border);border-radius:4px;color:var(--emerald);font-family:var(--mono)}
+
+.tab-content{display:none}.tab-content.active{display:block}
+@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}.container{padding:1.5rem}.radar-bar{width:100px}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo"><div class="mark">🏛️</div>Dept. Transformation</div>
+  <div class="topbar-tabs">
+    <div class="topbar-tab active" onclick="switchTab('assess',this)">Assessment</div>
+    <div class="topbar-tab" onclick="switchTab('workshop',this)">Workshop Plan</div>
+    <div class="topbar-tab" onclick="switchTab('policy',this)">Policy Templates</div>
+    <div class="topbar-tab" onclick="switchTab('roi',this)">ROI Calculator</div>
+    <div class="topbar-tab" onclick="switchTab('timeline',this)">Implementation</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ASSESSMENT -->
+<div class="tab-content active" id="tab-assess">
+<div class="grid-2" style="margin-bottom:1.5rem">
+  <div class="readiness">
+    <div class="readiness-ring">
+      <div class="readiness-score" style="color:var(--emerald)">62<span style="font-size:1.2rem;color:var(--text-muted)">/100</span></div>
+    </div>
+    <div class="readiness-label">Department AI Readiness Score</div>
+    <p style="font-size:.75rem;color:var(--text-muted);margin-top:.5rem;max-width:280px;margin-left:auto;margin-right:auto">Your department has moderate AI readiness. Key gaps: infrastructure and ethical guidelines. Strong: research motivation and digital skills baseline.</p>
+  </div>
+  <div>
+    <div class="assess-label">Readiness by Dimension</div>
+    <div class="radar-item"><span class="radar-name">Research Motivation</span><div class="radar-bar"><div class="radar-bar-fill" style="width:85%;background:var(--emerald)"></div></div><span class="radar-score" style="color:var(--emerald)">85</span></div>
+    <div class="radar-item"><span class="radar-name">Digital Skills Baseline</span><div class="radar-bar"><div class="radar-bar-fill" style="width:70%;background:var(--emerald)"></div></div><span class="radar-score" style="color:var(--emerald)">70</span></div>
+    <div class="radar-item"><span class="radar-name">Data Management</span><div class="radar-bar"><div class="radar-bar-fill" style="width:58%;background:var(--gold)"></div></div><span class="radar-score" style="color:var(--gold)">58</span></div>
+    <div class="radar-item"><span class="radar-name">AI Tool Awareness</span><div class="radar-bar"><div class="radar-bar-fill" style="width:55%;background:var(--gold)"></div></div><span class="radar-score" style="color:var(--gold)">55</span></div>
+    <div class="radar-item"><span class="radar-name">Infrastructure</span><div class="radar-bar"><div class="radar-bar-fill" style="width:42%;background:var(--rose)"></div></div><span class="radar-score" style="color:var(--rose)">42</span></div>
+    <div class="radar-item"><span class="radar-name">Ethical Guidelines</span><div class="radar-bar"><div class="radar-bar-fill" style="width:35%;background:var(--rose)"></div></div><span class="radar-score" style="color:var(--rose)">35</span></div>
+    <div class="radar-item"><span class="radar-name">Leadership Buy-in</span><div class="radar-bar"><div class="radar-bar-fill" style="width:75%;background:var(--emerald)"></div></div><span class="radar-score" style="color:var(--emerald)">75</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title" style="margin-bottom:.8rem">📋 Staff Survey Summary</div>
+  <div class="grid-3">
+    <div class="assess-card">
+      <h3>👥 Participation</h3>
+      <div style="font-size:2rem;font-weight:700;color:var(--emerald);margin-bottom:.3rem">47 / 62</div>
+      <p style="font-size:.78rem;color:var(--text-muted)">76% response rate across all faculty, postdocs, and PhD students</p>
+    </div>
+    <div class="assess-card">
+      <h3>🔧 Current AI Usage</h3>
+      <div style="display:grid;gap:.3rem;margin-top:.3rem">
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-dim)">Use AI regularly</span><span style="color:var(--emerald);font-family:var(--mono)">28%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-dim)">Tried it a few times</span><span style="color:var(--gold);font-family:var(--mono)">41%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem"><span style="color:var(--text-dim)">Never used AI</span><span style="color:var(--rose);font-family:var(--mono)">31%</span></div>
+      </div>
+    </div>
+    <div class="assess-card">
+      <h3>🎯 Top Needs</h3>
+      <div style="display:grid;gap:.25rem;margin-top:.3rem;font-size:.78rem;color:var(--text-dim)">
+        <div>1. Writing assistance (78%)</div>
+        <div>2. Literature management (65%)</div>
+        <div>3. Data analysis (61%)</div>
+        <div>4. Grant writing (54%)</div>
+        <div>5. Teaching preparation (42%)</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- WORKSHOP PLAN -->
+<div class="tab-content" id="tab-workshop">
+<div class="section">
+  <div class="section-head"><div class="section-title">📚 Customized Workshop Series</div></div>
+  <p style="font-size:.88rem;color:var(--text-dim);margin-bottom:1.5rem;max-width:640px">Based on the assessment results, here's a tailored 3-session workshop series. Each session is hands-on — every participant leaves with working tools on their own laptop.</p>
+
+  <div class="ws-step">
+    <div class="ws-num" style="background:var(--emerald-glow);color:var(--emerald);border:1px solid var(--emerald-border)">01</div>
+    <div class="ws-step-content">
+      <h4>Foundations: AI for Academic Writing & Research</h4>
+      <p>ChatGPT & Claude for academic writing. The 3-pass method. Literature summarization. Prompt engineering for research. Email and admin automation. Live demos on real papers.</p>
+      <div class="dur">Half-day · 3.5 hours · All staff levels</div>
+    </div>
+  </div>
+  <div class="ws-step">
+    <div class="ws-num" style="background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.18)">02</div>
+    <div class="ws-step-content">
+      <h4>Private AI & Data Security</h4>
+      <p>Install Ollama + Open WebUI on every laptop. GDPR-compliant AI usage. Processing sensitive data locally. Building team knowledge bases with RAG. Departmental AI infrastructure options.</p>
+      <div class="dur">Half-day · 3 hours · IT staff invited for infrastructure discussion</div>
+    </div>
+  </div>
+  <div class="ws-step">
+    <div class="ws-num" style="background:rgba(167,139,250,.1);color:var(--violet);border:1px solid rgba(167,139,250,.18)">03</div>
+    <div class="ws-step-content">
+      <h4>Advanced: Grant Writing, Code & Automation</h4>
+      <p>AI for grant proposal writing (NFR, Horizon Europe, ERC). Code generation for non-programmers. Workflow automation. Building departmental AI guidelines. Ethics and disclosure policies.</p>
+      <div class="dur">Half-day · 3.5 hours · Researchers + group leaders</div>
+    </div>
+  </div>
+
+  <div style="padding:1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-top:1.5rem">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div style="font-size:.9rem;color:#fff;font-weight:600">Total Package: 3 Workshop Sessions</div>
+        <div style="font-size:.78rem;color:var(--text-muted);margin-top:.2rem">Includes: pre-assessment survey, customized materials, all templates, 30-day follow-up support</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:var(--mono);font-size:1.3rem;color:var(--emerald);font-weight:700">75,000 NOK</div>
+        <div style="font-size:.68rem;color:var(--text-muted)">+ travel if outside Oslo/Ås area</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- POLICY TEMPLATES -->
+<div class="tab-content" id="tab-policy">
+<div class="section">
+  <div class="section-head"><div class="section-title">📜 Ethical AI Policy Templates</div></div>
+  <p style="font-size:.88rem;color:var(--text-dim);margin-bottom:1.5rem;max-width:640px">Ready-to-customize policy documents for your institution. Each template aligns with Norwegian research ethics standards and EU guidelines.</p>
+
+  <div class="grid-2">
+    <div class="policy-card">
+      <h4>📄 Department AI Usage Policy</h4>
+      <p>Comprehensive policy document covering acceptable AI use, data handling requirements, disclosure obligations, and quality assurance procedures for all department members.</p>
+      <span class="policy-tag" style="background:var(--emerald-glow);color:var(--emerald)">READY TO USE</span>
+    </div>
+    <div class="policy-card">
+      <h4>📝 AI Disclosure Template for Publications</h4>
+      <p>Standard disclosure statement template aligned with policies from Nature, Science, Elsevier, Springer, and Wiley. Customizable for different levels of AI involvement.</p>
+      <span class="policy-tag" style="background:var(--emerald-glow);color:var(--emerald)">READY TO USE</span>
+    </div>
+    <div class="policy-card">
+      <h4>🎓 Student AI Guidelines</h4>
+      <p>Guidelines for Master's and PhD students on appropriate AI use in thesis work, coursework, and publications. Includes examples of acceptable vs. unacceptable use.</p>
+      <span class="policy-tag" style="background:var(--emerald-glow);color:var(--emerald)">READY TO USE</span>
+    </div>
+    <div class="policy-card">
+      <h4>🔒 Data Classification & AI Protocol</h4>
+      <p>Framework for classifying research data sensitivity levels and matching them to appropriate AI tools (cloud vs. local). Includes GDPR compliance checklist.</p>
+      <span class="policy-tag" style="background:var(--emerald-glow);color:var(--emerald)">READY TO USE</span>
+    </div>
+    <div class="policy-card">
+      <h4>💰 Grant Application AI Disclosure</h4>
+      <p>Disclosure language specifically for NFR, Horizon Europe, and ERC applications. Covers how to transparently report AI use in proposal development.</p>
+      <span class="policy-tag" style="background:rgba(34,211,238,.1);color:var(--cyan)">CUSTOMIZABLE</span>
+    </div>
+    <div class="policy-card">
+      <h4>📊 AI Tool Evaluation Matrix</h4>
+      <p>Standardized evaluation framework for assessing new AI tools before departmental adoption. Covers security, privacy, cost, functionality, and integration criteria.</p>
+      <span class="policy-tag" style="background:rgba(34,211,238,.1);color:var(--cyan)">CUSTOMIZABLE</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ROI CALCULATOR -->
+<div class="tab-content" id="tab-roi">
+<div class="section">
+  <div class="section-head"><div class="section-title">📊 ROI Calculator</div></div>
+  <p style="font-size:.88rem;color:var(--text-dim);margin-bottom:1.5rem;max-width:640px">Estimate the return on investment from department-wide AI training based on your team's size and typical workload.</p>
+
+  <div class="grid-2">
+    <div>
+      <div class="roi-input"><label>Number of researchers</label><input type="number" id="roi-researchers" value="25" min="1" max="500" onchange="calcROI()"></div>
+      <div class="roi-input"><label>Average hours saved per person/week</label><input type="number" id="roi-hours" value="5" min="1" max="40" onchange="calcROI()"></div>
+      <div class="roi-input"><label>Average hourly cost (NOK)</label><input type="number" id="roi-rate" value="450" min="100" max="2000" onchange="calcROI()"></div>
+      <div class="roi-input"><label>Training investment (NOK)</label><input type="number" id="roi-invest" value="75000" min="0" onchange="calcROI()"></div>
+      <div class="roi-input"><label>Weeks per year (active)</label><input type="number" id="roi-weeks" value="46" min="1" max="52" onchange="calcROI()"></div>
+    </div>
+    <div>
+      <div class="roi-result" id="roi-result">
+        <div style="font-size:.68rem;font-family:var(--mono);color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem">Annual Time Value Saved</div>
+        <div class="roi-big" id="roi-value">2,587,500</div>
+        <div class="roi-sub">NOK per year</div>
+        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+          <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.3rem"><span style="color:var(--text-dim)">Total hours saved/year</span><span style="color:var(--cyan);font-family:var(--mono)" id="roi-totalhrs">5,750</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.3rem"><span style="color:var(--text-dim)">ROI multiplier</span><span style="color:var(--emerald);font-family:var(--mono)" id="roi-multi">34.5x</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.82rem"><span style="color:var(--text-dim)">Payback period</span><span style="color:var(--gold);font-family:var(--mono)" id="roi-payback">~1.3 weeks</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- IMPLEMENTATION TIMELINE -->
+<div class="tab-content" id="tab-timeline">
+<div class="section">
+  <div class="section-head"><div class="section-title">🗓️ Implementation Roadmap</div></div>
+  <p style="font-size:.88rem;color:var(--text-dim);margin-bottom:1.5rem;max-width:640px">A 12-week transformation plan from assessment to autonomous AI-integrated department.</p>
+
+  <div class="tl-phase"><div class="tl-phase-marker"><div class="week">Wk 1-2</div><div class="dot" style="background:var(--emerald)"></div></div><div><h4>Phase 1: Assessment & Planning</h4><p>Deploy staff survey. Analyze results. Identify champions. Map existing tools and workflows. Produce readiness report.</p><div class="deliverables"><span>Survey</span><span>Readiness Report</span><span>Workshop Plan</span></div></div></div>
+  <div class="tl-phase"><div class="tl-phase-marker"><div class="week">Wk 3-4</div><div class="dot" style="background:var(--cyan)"></div></div><div><h4>Phase 2: Foundation Workshop</h4><p>First workshop session. All staff learn AI basics, academic writing with AI, and prompt engineering. Hands-on with real research tasks.</p><div class="deliverables"><span>Workshop 1</span><span>Prompt Library</span><span>Quick-Start Guide</span></div></div></div>
+  <div class="tl-phase"><div class="tl-phase-marker"><div class="week">Wk 5-6</div><div class="dot" style="background:var(--violet)"></div></div><div><h4>Phase 3: Infrastructure Setup</h4><p>Private AI workshop. Ollama on every laptop. Department RAG system. IT infrastructure discussion. Data classification protocol.</p><div class="deliverables"><span>Workshop 2</span><span>Local AI Setup</span><span>Data Protocol</span></div></div></div>
+  <div class="tl-phase"><div class="tl-phase-marker"><div class="week">Wk 7-8</div><div class="dot" style="background:var(--gold)"></div></div><div><h4>Phase 4: Advanced Training</h4><p>Grant writing, code generation, workflow automation workshop. Group leaders get management tools. Students get thesis navigation system.</p><div class="deliverables"><span>Workshop 3</span><span>Grant Templates</span><span>Automation Recipes</span></div></div></div>
+  <div class="tl-phase"><div class="tl-phase-marker"><div class="week">Wk 9-10</div><div class="dot" style="background:var(--amber)"></div></div><div><h4>Phase 5: Policy & Ethics</h4><p>Finalize departmental AI policy. Publish student guidelines. Create disclosure templates. Align with institutional and funder policies.</p><div class="deliverables"><span>AI Policy</span><span>Student Guidelines</span><span>Disclosure Templates</span></div></div></div>
+  <div class="tl-phase"><div class="tl-phase-marker"><div class="week">Wk 11-12</div><div class="dot" style="background:var(--rose)"></div></div><div><h4>Phase 6: Review & Handoff</h4><p>Follow-up survey measuring adoption. Office hours for Q&A. Identify internal champions for ongoing support. Final report with recommendations.</p><div class="deliverables"><span>Impact Report</span><span>Champion Network</span><span>Follow-up Plan</span></div></div></div>
+</div>
+</div>
+
+</div>
+
+<script>
+function switchTab(n,el){document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.topbar-tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');el.classList.add('active')}
+
+function calcROI(){
+  const r=+document.getElementById('roi-researchers').value;
+  const h=+document.getElementById('roi-hours').value;
+  const rate=+document.getElementById('roi-rate').value;
+  const inv=+document.getElementById('roi-invest').value;
+  const w=+document.getElementById('roi-weeks').value;
+  const totalHrs=r*h*w;
+  const val=totalHrs*rate;
+  const multi=(val/inv).toFixed(1);
+  const paybackWeeks=(inv/(r*h*rate)).toFixed(1);
+  document.getElementById('roi-value').textContent=val.toLocaleString('en-US');
+  document.getElementById('roi-totalhrs').textContent=totalHrs.toLocaleString('en-US');
+  document.getElementById('roi-multi').textContent=multi+'x';
+  document.getElementById('roi-payback').textContent='~'+paybackWeeks+' weeks';
+}
+calcROI();
+</script>
+</body>
+</html>

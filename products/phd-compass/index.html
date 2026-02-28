@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhD Compass — Navigate Your Research Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0c1220;--ink-mid:#111827;--ink-light:#1a2332;--cyan:#22d3ee;--cyan-dim:#0891b2;--cyan-glow:rgba(34,211,238,.10);--cyan-border:rgba(34,211,238,.18);--gold:#d4a853;--emerald:#34d399;--rose:#fb7185;--violet:#a78bfa;--text:#cbd5e1;--text-dim:#94a3b8;--text-muted:#64748b;--surface:rgba(17,24,39,.55);--border:rgba(148,163,184,.07);--border-hover:rgba(34,211,238,.15);--sans:'Outfit',sans-serif;--mono:'IBM Plex Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(34,211,238,.2);color:#fff}
+
+/* Top Bar */
+.topbar{background:var(--ink-mid);border-bottom:1px solid var(--border);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.topbar-logo{display:flex;align-items:center;gap:.5rem;font-weight:600;color:#fff;font-size:.95rem}
+.topbar-logo .mark{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--cyan-dim),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.topbar-tabs{display:flex;gap:0}
+.topbar-tab{padding:.5rem 1.1rem;font-size:.78rem;color:var(--text-muted);font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.topbar-tab:hover{color:var(--text)}
+.topbar-tab.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+
+/* Layout */
+.container{max-width:1100px;margin:0 auto;padding:2rem}
+
+/* Dashboard Cards */
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.dash-card{padding:1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;transition:all .2s}
+.dash-card:hover{border-color:var(--border-hover)}
+.dash-card .label{font-size:.68rem;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.dash-card .val{font-size:1.6rem;font-weight:700;color:#fff;line-height:1}
+.dash-card .sub{font-size:.72rem;color:var(--text-dim);margin-top:.25rem}
+.dash-card.cyan .val{color:var(--cyan)}
+.dash-card.emerald .val{color:var(--emerald)}
+.dash-card.gold .val{color:var(--gold)}
+.dash-card.violet .val{color:var(--violet)}
+
+/* Sections */
+.section{margin-bottom:2.5rem}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.section-title{font-size:1.05rem;color:#fff;font-weight:600;display:flex;align-items:center;gap:.5rem}
+.section-title .ico{font-size:1rem}
+.add-btn{padding:.35rem .8rem;background:var(--cyan-glow);border:1px solid var(--cyan-border);color:var(--cyan);border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .2s}
+.add-btn:hover{background:var(--cyan);color:var(--ink)}
+
+/* Thesis Chapters */
+.chapter-list{display:grid;gap:.5rem}
+.chapter{display:flex;align-items:center;gap:1rem;padding:.8rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:all .2s}
+.chapter:hover{border-color:var(--border-hover)}
+.ch-status{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.ch-status.done{background:var(--emerald)}
+.ch-status.progress{background:var(--cyan)}
+.ch-status.draft{background:var(--gold)}
+.ch-status.todo{background:var(--text-muted)}
+.ch-name{font-size:.85rem;color:#fff;font-weight:500;flex:1}
+.ch-words{font-family:var(--mono);font-size:.7rem;color:var(--text-dim)}
+.ch-bar{width:80px;height:5px;background:var(--ink-light);border-radius:3px;overflow:hidden}
+.ch-bar-fill{height:100%;border-radius:3px;transition:width .5s var(--ease)}
+.ch-bar-fill.done{background:var(--emerald)}
+.ch-bar-fill.progress{background:var(--cyan)}
+.ch-bar-fill.draft{background:var(--gold)}
+
+/* Literature */
+.lit-list{display:grid;gap:.4rem}
+.lit-item{display:flex;align-items:center;gap:.8rem;padding:.7rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;transition:all .2s;cursor:pointer}
+.lit-item:hover{border-color:var(--border-hover)}
+.lit-tag{font-family:var(--mono);font-size:.55rem;padding:.15rem .4rem;border-radius:4px;flex-shrink:0;text-transform:uppercase;letter-spacing:.05em}
+.lit-tag.read{background:rgba(52,211,153,.12);color:var(--emerald)}
+.lit-tag.skim{background:rgba(212,168,83,.1);color:var(--gold)}
+.lit-tag.queue{background:rgba(100,116,139,.15);color:var(--text-muted)}
+.lit-tag.key{background:rgba(34,211,238,.1);color:var(--cyan)}
+.lit-title{font-size:.82rem;color:var(--text);font-weight:400;flex:1;line-height:1.35}
+.lit-year{font-family:var(--mono);font-size:.68rem;color:var(--text-muted);flex-shrink:0}
+.lit-note{font-size:.72rem;color:var(--text-dim);font-style:italic}
+
+/* Supervisor Meetings */
+.meeting-list{display:grid;gap:.6rem}
+.meeting{padding:1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.meeting-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.meeting-date{font-family:var(--mono);font-size:.72rem;color:var(--cyan)}
+.meeting-status{font-size:.65rem;padding:.15rem .4rem;border-radius:4px;font-family:var(--mono)}
+.meeting-status.upcoming{background:rgba(34,211,238,.1);color:var(--cyan)}
+.meeting-status.done{background:rgba(52,211,153,.12);color:var(--emerald)}
+.meeting-topics{margin-top:.4rem}
+.meeting-topic{font-size:.82rem;color:var(--text-dim);padding:.15rem 0 .15rem 1rem;position:relative}
+.meeting-topic::before{content:'–';position:absolute;left:0;color:var(--text-muted)}
+.meeting-actions{margin-top:.6rem;padding-top:.5rem;border-top:1px solid var(--border)}
+.meeting-actions h5{font-size:.7rem;color:var(--gold);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem}
+.action-item{display:flex;align-items:center;gap:.5rem;padding:.2rem 0}
+.action-check{width:14px;height:14px;border-radius:4px;border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.5rem;transition:all .2s}
+.action-check.done{background:var(--emerald);border-color:var(--emerald);color:var(--ink)}
+.action-text{font-size:.8rem;color:var(--text-dim)}
+.action-text.done{text-decoration:line-through;color:var(--text-muted)}
+
+/* Daily Planner */
+.planner{background:linear-gradient(135deg,var(--ink-light),var(--ink-mid));border:1px solid var(--border-hover);border-radius:14px;padding:1.5rem}
+.planner-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.planner h3{font-size:1rem;color:#fff;font-weight:600}
+.planner-date{font-family:var(--mono);font-size:.75rem;color:var(--cyan)}
+.planner-focus{background:rgba(34,211,238,.08);border:1px solid var(--cyan-border);border-radius:10px;padding:1rem;margin-bottom:1rem}
+.planner-focus-label{font-size:.65rem;font-family:var(--mono);color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.planner-focus-text{font-size:.95rem;color:#fff;font-weight:600}
+.planner-tasks{display:grid;gap:.35rem}
+.planner-task{display:flex;align-items:center;gap:.6rem;padding:.4rem 0}
+.planner-task input[type="checkbox"]{accent-color:var(--cyan);width:15px;height:15px;cursor:pointer}
+.planner-task label{font-size:.85rem;color:var(--text-dim);cursor:pointer}
+.planner-task input:checked + label{text-decoration:line-through;color:var(--text-muted)}
+
+/* Milestones Timeline */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}
+.tl-item{position:relative;padding-bottom:1.2rem}
+.tl-dot{position:absolute;left:-20px;top:4px;width:12px;height:12px;border-radius:50%;border:2px solid}
+.tl-dot.done{background:var(--emerald);border-color:var(--emerald)}
+.tl-dot.current{background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 8px rgba(34,211,238,.4)}
+.tl-dot.future{background:transparent;border-color:var(--text-muted)}
+.tl-content h4{font-size:.85rem;color:#fff;font-weight:500}
+.tl-content p{font-size:.72rem;color:var(--text-muted)}
+.tl-content .tl-date{font-family:var(--mono);font-size:.65rem;color:var(--text-muted);margin-top:.15rem}
+
+/* Tabs content */
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+@media(max-width:768px){
+  .dash-grid{grid-template-columns:repeat(2,1fr)}
+  .topbar-tabs{overflow-x:auto}
+  .container{padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo"><div class="mark">🧭</div>PhD Compass</div>
+  <div class="topbar-tabs">
+    <div class="topbar-tab active" onclick="switchTab('dashboard',this)">Dashboard</div>
+    <div class="topbar-tab" onclick="switchTab('thesis',this)">Thesis</div>
+    <div class="topbar-tab" onclick="switchTab('literature',this)">Literature</div>
+    <div class="topbar-tab" onclick="switchTab('meetings',this)">Meetings</div>
+    <div class="topbar-tab" onclick="switchTab('planner',this)">Daily Plan</div>
+    <div class="topbar-tab" onclick="switchTab('milestones',this)">Milestones</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- DASHBOARD -->
+<div class="tab-content active" id="tab-dashboard">
+  <div class="dash-grid">
+    <div class="dash-card cyan"><div class="label">Thesis Progress</div><div class="val">34%</div><div class="sub">18,200 of ~54,000 words</div></div>
+    <div class="dash-card emerald"><div class="label">Papers</div><div class="val">1 / 3</div><div class="sub">1 published · 1 in review · 1 drafting</div></div>
+    <div class="dash-card gold"><div class="label">Training Credits</div><div class="val">16 / 30</div><div class="sub">ECTS completed</div></div>
+    <div class="dash-card violet"><div class="label">Time Remaining</div><div class="val">18 mo</div><div class="sub">Submission target: Sep 2027</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title"><span class="ico">📊</span> This Week's Focus</div></div>
+    <div class="planner">
+      <div class="planner-focus">
+        <div class="planner-focus-label">🎯 Single Most Important Task</div>
+        <div class="planner-focus-text">Complete Methods section draft for Paper 2 (target: 2,500 words)</div>
+      </div>
+      <div class="planner-tasks">
+        <div class="planner-task"><input type="checkbox" id="wt1"><label for="wt1">Finish RNA-seq differential expression analysis</label></div>
+        <div class="planner-task"><input type="checkbox" id="wt2" checked><label for="wt2">Read 3 papers on NUE regulatory networks</label></div>
+        <div class="planner-task"><input type="checkbox" id="wt3"><label for="wt3">Prepare slides for supervisor meeting (Friday)</label></div>
+        <div class="planner-task"><input type="checkbox" id="wt4"><label for="wt4">Submit training course registration (deadline Wed)</label></div>
+        <div class="planner-task"><input type="checkbox" id="wt5"><label for="wt5">Update literature database with 5 new papers</label></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title"><span class="ico">📅</span> Upcoming Deadlines</div></div>
+    <div style="display:grid;gap:.4rem">
+      <div class="chapter"><div class="ch-status progress"></div><span class="ch-name">Paper 2 Methods draft → supervisor</span><span class="ch-words" style="color:var(--cyan)">Mar 7</span></div>
+      <div class="chapter"><div class="ch-status draft"></div><span class="ch-name">Training course: Advanced Statistics (registration)</span><span class="ch-words" style="color:var(--gold)">Mar 5</span></div>
+      <div class="chapter"><div class="ch-status todo"></div><span class="ch-name">Annual progress report to PhD committee</span><span class="ch-words" style="color:var(--text-muted)">Apr 1</span></div>
+      <div class="chapter"><div class="ch-status todo"></div><span class="ch-name">Conference abstract submission — PlantBio 2026</span><span class="ch-words" style="color:var(--text-muted)">Apr 15</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- THESIS -->
+<div class="tab-content" id="tab-thesis">
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title"><span class="ico">📖</span> Thesis Chapters</div>
+      <button class="add-btn" onclick="alert('Add chapter — would open modal in production')">+ Add Chapter</button>
+    </div>
+    <div class="chapter-list">
+      <div class="chapter"><div class="ch-status done"></div><span class="ch-name">1. Introduction & Literature Review</span><span class="ch-words">8,200 words</span><div class="ch-bar"><div class="ch-bar-fill done" style="width:100%"></div></div></div>
+      <div class="chapter"><div class="ch-status progress"></div><span class="ch-name">2. Paper I — Genomic variation in NUE-related genes</span><span class="ch-words">5,400 / 6,000</span><div class="ch-bar"><div class="ch-bar-fill progress" style="width:90%"></div></div></div>
+      <div class="chapter"><div class="ch-status draft"></div><span class="ch-name">3. Paper II — Transcriptomic response to N limitation</span><span class="ch-words">2,100 / 6,000</span><div class="ch-bar"><div class="ch-bar-fill draft" style="width:35%"></div></div></div>
+      <div class="chapter"><div class="ch-status todo"></div><span class="ch-name">4. Paper III — CRISPR validation of candidate genes</span><span class="ch-words">0 / 6,000</span><div class="ch-bar"><div class="ch-bar-fill" style="width:0%"></div></div></div>
+      <div class="chapter"><div class="ch-status todo"></div><span class="ch-name">5. General Discussion & Conclusions</span><span class="ch-words">0 / 4,000</span><div class="ch-bar"><div class="ch-bar-fill" style="width:0%"></div></div></div>
+      <div class="chapter"><div class="ch-status draft"></div><span class="ch-name">6. Summary / Sammendrag</span><span class="ch-words">500 / 2,000</span><div class="ch-bar"><div class="ch-bar-fill draft" style="width:25%"></div></div></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-head"><div class="section-title"><span class="ico">📈</span> Writing Targets</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem">
+      <div style="display:flex;justify-content:space-between;margin-bottom:.8rem">
+        <span style="font-size:.82rem;color:var(--text-dim)">Weekly writing goal</span>
+        <span style="font-family:var(--mono);font-size:.82rem;color:var(--cyan)">1,500 words</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:.8rem">
+        <span style="font-size:.82rem;color:var(--text-dim)">This week written</span>
+        <span style="font-family:var(--mono);font-size:.82rem;color:var(--emerald)">1,120 words ✓</span>
+      </div>
+      <div style="height:8px;background:var(--ink-light);border-radius:4px;overflow:hidden">
+        <div style="height:100%;width:75%;background:linear-gradient(90deg,var(--cyan),var(--emerald));border-radius:4px"></div>
+      </div>
+      <div style="font-size:.7rem;color:var(--text-muted);margin-top:.4rem">380 words remaining this week · On track 🎯</div>
+    </div>
+  </div>
+</div>
+
+<!-- LITERATURE -->
+<div class="tab-content" id="tab-literature">
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title"><span class="ico">📚</span> Literature Database</div>
+      <button class="add-btn" onclick="alert('Add paper — would open modal')">+ Add Paper</button>
+    </div>
+    <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap">
+      <span style="padding:.3rem .6rem;background:var(--cyan-glow);border:1px solid var(--cyan-border);border-radius:6px;font-size:.7rem;color:var(--cyan);cursor:pointer">All (24)</span>
+      <span style="padding:.3rem .6rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:.7rem;color:var(--text-muted);cursor:pointer">Key Papers (8)</span>
+      <span style="padding:.3rem .6rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:.7rem;color:var(--text-muted);cursor:pointer">To Read (6)</span>
+      <span style="padding:.3rem .6rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:.7rem;color:var(--text-muted);cursor:pointer">NUE (12)</span>
+      <span style="padding:.3rem .6rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:.7rem;color:var(--text-muted);cursor:pointer">CRISPR (7)</span>
+    </div>
+    <div class="lit-list">
+      <div class="lit-item"><span class="lit-tag key">KEY</span><span class="lit-title">Nitrogen use efficiency in plants: molecular insights and genomic approaches</span><span class="lit-year">2023</span></div>
+      <div class="lit-item"><span class="lit-tag read">READ</span><span class="lit-title">CRISPR-Cas9 mediated genome editing for crop improvement: current status and perspectives</span><span class="lit-year">2024</span></div>
+      <div class="lit-item"><span class="lit-tag read">READ</span><span class="lit-title">Transcriptomic profiling reveals regulatory networks under nitrogen limitation in Lolium perenne</span><span class="lit-year">2023</span></div>
+      <div class="lit-item"><span class="lit-tag key">KEY</span><span class="lit-title">Genomic selection for forage quality and yield: progress and potential in perennial grasses</span><span class="lit-year">2022</span></div>
+      <div class="lit-item"><span class="lit-tag skim">SKIM</span><span class="lit-title">Single-cell transcriptomics in plants: current methods and emerging applications</span><span class="lit-year">2024</span></div>
+      <div class="lit-item"><span class="lit-tag queue">QUEUE</span><span class="lit-title">Digital twin approaches in precision agriculture: a systematic review</span><span class="lit-year">2025</span></div>
+      <div class="lit-item"><span class="lit-tag queue">QUEUE</span><span class="lit-title">Spatial transcriptomics reveals tissue-level nitrogen signaling pathways in cereals</span><span class="lit-year">2025</span></div>
+      <div class="lit-item"><span class="lit-tag read">READ</span><span class="lit-title">Haplotype-resolved genome assembly of polyploid forage species using long-read sequencing</span><span class="lit-year">2024</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- MEETINGS -->
+<div class="tab-content" id="tab-meetings">
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title"><span class="ico">🤝</span> Supervisor Meetings</div>
+      <button class="add-btn" onclick="alert('Schedule meeting — would open modal')">+ New Meeting</button>
+    </div>
+    <div class="meeting-list">
+      <div class="meeting">
+        <div class="meeting-head"><span class="meeting-date">Friday, Mar 7, 2026 · 10:00</span><span class="meeting-status upcoming">UPCOMING</span></div>
+        <div class="meeting-topics">
+          <div class="meeting-topic">Review Paper 2 Methods section draft</div>
+          <div class="meeting-topic">Discuss RNA-seq results — unexpected expression patterns in NRT2.1</div>
+          <div class="meeting-topic">Conference attendance — PlantBio 2026 abstract deadline Apr 15</div>
+          <div class="meeting-topic">Timeline check: on track for Paper 2 submission by June?</div>
+        </div>
+        <div class="meeting-actions">
+          <h5>Preparation Tasks</h5>
+          <div class="action-item"><div class="action-check" onclick="this.classList.toggle('done')"></div><span class="action-text">Prepare 3 slides summarizing RNA-seq pipeline and QC</span></div>
+          <div class="action-item"><div class="action-check done" onclick="this.classList.toggle('done')">✓</div><span class="action-text done">Update Methods draft to latest version</span></div>
+          <div class="action-item"><div class="action-check" onclick="this.classList.toggle('done')"></div><span class="action-text">List 3 potential target journals for Paper 2</span></div>
+        </div>
+      </div>
+      <div class="meeting">
+        <div class="meeting-head"><span class="meeting-date">Friday, Feb 21, 2026 · 10:00</span><span class="meeting-status done">COMPLETED</span></div>
+        <div class="meeting-topics">
+          <div class="meeting-topic">Reviewed Introduction chapter — approved with minor edits</div>
+          <div class="meeting-topic">Agreed on RNA-seq analysis pipeline (DESeq2 + WGCNA)</div>
+          <div class="meeting-topic">Supervisor suggested adding time-series component to Paper 2</div>
+        </div>
+        <div class="meeting-actions">
+          <h5>Action Items (from this meeting)</h5>
+          <div class="action-item"><div class="action-check done" onclick="this.classList.toggle('done')">✓</div><span class="action-text done">Apply minor edits to Introduction chapter</span></div>
+          <div class="action-item"><div class="action-check done" onclick="this.classList.toggle('done')">✓</div><span class="action-text done">Run preliminary DESeq2 on all 4 timepoints</span></div>
+          <div class="action-item"><div class="action-check" onclick="this.classList.toggle('done')"></div><span class="action-text">Explore time-series clustering options (maSigPro / DEGreport)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DAILY PLANNER -->
+<div class="tab-content" id="tab-planner">
+  <div class="section">
+    <div class="planner">
+      <div class="planner-head">
+        <h3>🌅 The 15-Minute Morning Method</h3>
+        <span class="planner-date" id="todayDate"></span>
+      </div>
+      <div class="planner-focus">
+        <div class="planner-focus-label">🎯 Today's Single Most Important Task</div>
+        <div class="planner-focus-text" contenteditable="true" style="outline:none;cursor:text">Write 500 words of Paper 2 Methods: RNA extraction and library preparation</div>
+      </div>
+      <div style="font-size:.78rem;color:var(--text-muted);margin-bottom:1rem">Click any task to edit. Check off when done.</div>
+      <div class="planner-tasks">
+        <div class="planner-task"><input type="checkbox" id="d1"><label for="d1" contenteditable="true">Morning: 2 hours deep writing (Methods section)</label></div>
+        <div class="planner-task"><input type="checkbox" id="d2"><label for="d2" contenteditable="true">Check email + Slack (max 30 min)</label></div>
+        <div class="planner-task"><input type="checkbox" id="d3"><label for="d3" contenteditable="true">Run WGCNA module detection on cluster (submitted job)</label></div>
+        <div class="planner-task"><input type="checkbox" id="d4"><label for="d4" contenteditable="true">Read 1 paper from queue: spatial transcriptomics review</label></div>
+        <div class="planner-task"><input type="checkbox" id="d5"><label for="d5" contenteditable="true">End of day: update thesis word count + log progress</label></div>
+      </div>
+    </div>
+  </div>
+  <div class="section" style="margin-top:1.5rem">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem">
+      <div class="section-title" style="margin-bottom:.8rem"><span class="ico">💡</span> AI Quick Prompts for Today</div>
+      <div style="display:grid;gap:.4rem">
+        <div style="padding:.6rem .8rem;background:var(--ink-light);border-radius:8px;font-size:.82rem;color:var(--text-dim);cursor:pointer" onclick="alert('Would copy prompt to clipboard')">"Help me outline the RNA extraction methods section for a plant transcriptomics paper targeting New Phytologist"</div>
+        <div style="padding:.6rem .8rem;background:var(--ink-light);border-radius:8px;font-size:.82rem;color:var(--text-dim);cursor:pointer" onclick="alert('Would copy prompt to clipboard')">"Summarize the key differences between DESeq2 and edgeR for RNA-seq differential expression analysis"</div>
+        <div style="padding:.6rem .8rem;background:var(--ink-light);border-radius:8px;font-size:.82rem;color:var(--text-dim);cursor:pointer" onclick="alert('Would copy prompt to clipboard')">"What are the main arguments for using WGCNA vs simple correlation networks for gene co-expression?"</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MILESTONES -->
+<div class="tab-content" id="tab-milestones">
+  <div class="section">
+    <div class="section-head"><div class="section-title"><span class="ico">🏁</span> PhD Timeline</div></div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot done"></div><div class="tl-content"><h4>PhD Start</h4><p>Project kick-off, literature review begun</p><div class="tl-date">Sep 2024</div></div></div>
+      <div class="tl-item"><div class="tl-dot done"></div><div class="tl-content"><h4>Introduction Chapter Completed</h4><p>8,200 words — approved by supervisor</p><div class="tl-date">Jan 2026</div></div></div>
+      <div class="tl-item"><div class="tl-dot done"></div><div class="tl-content"><h4>Paper I Published</h4><p>Genomic variation in NUE genes — published in BMC Genomics</p><div class="tl-date">Feb 2026</div></div></div>
+      <div class="tl-item"><div class="tl-dot current"></div><div class="tl-content"><h4>Paper II — In Progress</h4><p>Transcriptomic response to N limitation — Methods drafting</p><div class="tl-date">Target: Jun 2026</div></div></div>
+      <div class="tl-item"><div class="tl-dot future"></div><div class="tl-content"><h4>Midway Evaluation</h4><p>Present progress to PhD committee</p><div class="tl-date">Target: Sep 2026</div></div></div>
+      <div class="tl-item"><div class="tl-dot future"></div><div class="tl-content"><h4>Paper III — CRISPR Validation</h4><p>Lab work + manuscript</p><div class="tl-date">Target: Mar 2027</div></div></div>
+      <div class="tl-item"><div class="tl-dot future"></div><div class="tl-content"><h4>Thesis Submission</h4><p>Complete manuscript submitted to committee</p><div class="tl-date">Target: Sep 2027</div></div></div>
+      <div class="tl-item"><div class="tl-dot future"></div><div class="tl-content"><h4>Defence 🎓</h4><p>Public defence and disputas</p><div class="tl-date">Target: Dec 2027</div></div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function switchTab(name, el) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.topbar-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  el.classList.add('active');
+}
+document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+</script>
+</body>
+</html>
