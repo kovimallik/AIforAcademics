@@ -8,7 +8,7 @@
 <style>
 :root{--ink:#0c1220;--ink-mid:#111827;--ink-light:#1a2332;--cyan:#22d3ee;--cyan-dim:#0891b2;--cyan-glow:rgba(34,211,238,.10);--cyan-border:rgba(34,211,238,.18);--gold:#d4a853;--emerald:#34d399;--rose:#fb7185;--violet:#a78bfa;--text:#cbd5e1;--text-dim:#94a3b8;--text-muted:#64748b;--surface:rgba(17,24,39,.55);--border:rgba(148,163,184,.07);--border-hover:rgba(34,211,238,.15);--sans:'Outfit',sans-serif;--mono:'IBM Plex Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height:1.72;-webkit-font-smoothing:antialiased}
 ::selection{background:rgba(34,211,238,.2);color:#fff}
 
 /* Top Bar */
@@ -16,20 +16,20 @@ body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height
 .topbar-logo{display:flex;align-items:center;gap:.5rem;font-weight:600;color:#fff;font-size:.95rem}
 .topbar-logo .mark{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--cyan-dim),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:.7rem}
 .topbar-tabs{display:flex;gap:0}
-.topbar-tab{padding:.5rem 1.1rem;font-size:.78rem;color:var(--text-muted);font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.topbar-tab{padding:.5rem 1.2rem;font-size:.83rem;color:var(--text-muted);font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
 .topbar-tab:hover{color:var(--text)}
 .topbar-tab.active{color:var(--cyan);border-bottom-color:var(--cyan)}
 
 /* Layout */
-.container{max-width:1100px;margin:0 auto;padding:2rem}
+.container{max-width:1100px;margin:0 auto;padding:2.5rem}
 
 /* Dashboard Cards */
 .dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
 .dash-card{padding:1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;transition:all .2s}
 .dash-card:hover{border-color:var(--border-hover)}
-.dash-card .label{font-size:.68rem;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
-.dash-card .val{font-size:1.6rem;font-weight:700;color:#fff;line-height:1}
-.dash-card .sub{font-size:.72rem;color:var(--text-dim);margin-top:.25rem}
+.dash-card .label{font-size:.73rem;color:var(--text-muted);font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.dash-card .val{font-size:1.7rem;font-weight:700;color:#fff;line-height:1}
+.dash-card .sub{font-size:.76rem;color:var(--text-dim);margin-top:.25rem}
 .dash-card.cyan .val{color:var(--cyan)}
 .dash-card.emerald .val{color:var(--emerald)}
 .dash-card.gold .val{color:var(--gold)}
@@ -38,7 +38,7 @@ body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height
 /* Sections */
 .section{margin-bottom:2.5rem}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.section-title{font-size:1.05rem;color:#fff;font-weight:600;display:flex;align-items:center;gap:.5rem}
+.section-title{font-size:1.1rem;color:#fff;font-weight:600;display:flex;align-items:center;gap:.5rem}
 .section-title .ico{font-size:1rem}
 .add-btn{padding:.35rem .8rem;background:var(--cyan-glow);border:1px solid var(--cyan-border);color:var(--cyan);border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .2s}
 .add-btn:hover{background:var(--cyan);color:var(--ink)}
@@ -52,8 +52,8 @@ body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height
 .ch-status.progress{background:var(--cyan)}
 .ch-status.draft{background:var(--gold)}
 .ch-status.todo{background:var(--text-muted)}
-.ch-name{font-size:.85rem;color:#fff;font-weight:500;flex:1}
-.ch-words{font-family:var(--mono);font-size:.7rem;color:var(--text-dim)}
+.ch-name{font-size:.9rem;color:#fff;font-weight:500;flex:1}
+.ch-words{font-family:var(--mono);font-size:.75rem;color:var(--text-dim)}
 .ch-bar{width:80px;height:5px;background:var(--ink-light);border-radius:3px;overflow:hidden}
 .ch-bar-fill{height:100%;border-radius:3px;transition:width .5s var(--ease)}
 .ch-bar-fill.done{background:var(--emerald)}
@@ -69,9 +69,9 @@ body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height
 .lit-tag.skim{background:rgba(212,168,83,.1);color:var(--gold)}
 .lit-tag.queue{background:rgba(100,116,139,.15);color:var(--text-muted)}
 .lit-tag.key{background:rgba(34,211,238,.1);color:var(--cyan)}
-.lit-title{font-size:.82rem;color:var(--text);font-weight:400;flex:1;line-height:1.35}
+.lit-title{font-size:.88rem;color:var(--text);font-weight:400;flex:1;line-height:1.4}
 .lit-year{font-family:var(--mono);font-size:.68rem;color:var(--text-muted);flex-shrink:0}
-.lit-note{font-size:.72rem;color:var(--text-dim);font-style:italic}
+.lit-note{font-size:.77rem;color:var(--text-dim);font-style:italic}
 
 /* Supervisor Meetings */
 .meeting-list{display:grid;gap:.6rem}
@@ -82,14 +82,14 @@ body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height
 .meeting-status.upcoming{background:rgba(34,211,238,.1);color:var(--cyan)}
 .meeting-status.done{background:rgba(52,211,153,.12);color:var(--emerald)}
 .meeting-topics{margin-top:.4rem}
-.meeting-topic{font-size:.82rem;color:var(--text-dim);padding:.15rem 0 .15rem 1rem;position:relative}
+.meeting-topic{font-size:.88rem;color:var(--text-dim);padding:.15rem 0 .15rem 1rem;position:relative}
 .meeting-topic::before{content:'–';position:absolute;left:0;color:var(--text-muted)}
 .meeting-actions{margin-top:.6rem;padding-top:.5rem;border-top:1px solid var(--border)}
 .meeting-actions h5{font-size:.7rem;color:var(--gold);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem}
 .action-item{display:flex;align-items:center;gap:.5rem;padding:.2rem 0}
 .action-check{width:14px;height:14px;border-radius:4px;border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.5rem;transition:all .2s}
 .action-check.done{background:var(--emerald);border-color:var(--emerald);color:var(--ink)}
-.action-text{font-size:.8rem;color:var(--text-dim)}
+.action-text{font-size:.85rem;color:var(--text-dim)}
 .action-text.done{text-decoration:line-through;color:var(--text-muted)}
 
 /* Daily Planner */
@@ -99,11 +99,11 @@ body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height
 .planner-date{font-family:var(--mono);font-size:.75rem;color:var(--cyan)}
 .planner-focus{background:rgba(34,211,238,.08);border:1px solid var(--cyan-border);border-radius:10px;padding:1rem;margin-bottom:1rem}
 .planner-focus-label{font-size:.65rem;font-family:var(--mono);color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
-.planner-focus-text{font-size:.95rem;color:#fff;font-weight:600}
+.planner-focus-text{font-size:1rem;color:#fff;font-weight:600}
 .planner-tasks{display:grid;gap:.35rem}
 .planner-task{display:flex;align-items:center;gap:.6rem;padding:.4rem 0}
 .planner-task input[type="checkbox"]{accent-color:var(--cyan);width:15px;height:15px;cursor:pointer}
-.planner-task label{font-size:.85rem;color:var(--text-dim);cursor:pointer}
+.planner-task label{font-size:.9rem;color:var(--text-dim);cursor:pointer}
 .planner-task input:checked + label{text-decoration:line-through;color:var(--text-muted)}
 
 /* Milestones Timeline */
@@ -114,8 +114,8 @@ body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height
 .tl-dot.done{background:var(--emerald);border-color:var(--emerald)}
 .tl-dot.current{background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 8px rgba(34,211,238,.4)}
 .tl-dot.future{background:transparent;border-color:var(--text-muted)}
-.tl-content h4{font-size:.85rem;color:#fff;font-weight:500}
-.tl-content p{font-size:.72rem;color:var(--text-muted)}
+.tl-content h4{font-size:.9rem;color:#fff;font-weight:500}
+.tl-content p{font-size:.77rem;color:var(--text-muted)}
 .tl-content .tl-date{font-family:var(--mono);font-size:.65rem;color:var(--text-muted);margin-top:.15rem}
 
 /* Tabs content */
