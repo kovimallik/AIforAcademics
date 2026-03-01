@@ -124,8 +124,13 @@ body{font-family:var(--sans);background:var(--ink);color:var(--text);line-height
 
 @media(max-width:768px){
   .dash-grid{grid-template-columns:repeat(2,1fr)}
-  .topbar-tabs{overflow-x:auto}
+  .topbar-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .topbar-tab{padding:.65rem 1rem;font-size:.82rem;white-space:nowrap}
+  .topbar{padding:0 1rem}
   .container{padding:1.5rem}
+  .planner{padding:1.2rem}
+  .action-item{padding:.3rem 0}
+  .action-check{width:18px;height:18px}
 }
 </style>
 </head>
